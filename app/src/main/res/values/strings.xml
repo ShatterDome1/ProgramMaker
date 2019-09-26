@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">ProgramMaker</string>
+    <string name="name">Name</string>
+    <string name="send">Send</string>
+
+    <string name="q1">What is your gym goal?</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
+
+    <string name="register_firstname">First Name</string>
+    <string name="register_lastname">Last Name</string>
+    <string name="confirm_password">Confirm Password</string>
+
+    <string-array name="q1_answers">
+        <item>Strength</item>
+        <item>Hypertrophy</item>
+        <item>Fat loss</item>
+        <item>Conditioning</item>
+    </string-array>
+
+</resources>
