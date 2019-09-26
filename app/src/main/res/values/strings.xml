@@ -3,9 +3,6 @@
     <string name="name">Name</string>
     <string name="send">Send</string>
 
-    <string name="q1">What is your gym goal?</string>
-    <string name="title_activity_login">Sign in</string>
-
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in</string>
@@ -15,11 +12,26 @@
     <string name="register_lastname">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
 
+    <string name="q1">What is your gym goal?</string>
     <string-array name="q1_answers">
         <item>Strength</item>
         <item>Hypertrophy</item>
         <item>Fat loss</item>
         <item>Conditioning</item>
     </string-array>
+
+    <string name="q2">How many days per week do you have available?</string>
+    <string-array name="q2_answers">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+    </string-array>
+
+    <string name="q3">How much do you weigh?</string>
+    <string name="weight">Weight</string>
 
 </resources>

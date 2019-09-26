@@ -1,11 +1,11 @@
 package com.example.programmaker;
 
 import android.content.Intent;
-import android.icu.text.IDNA;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,12 +44,10 @@ public class LoginActivity extends AppCompatActivity {
         UserDBHandler dbHandler = new UserDBHandler(this,null);
         User user = dbHandler.findHandler(usernameStr);
         if ( user != null && user.getPassword().equals(passwordStr) ) {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
             startActivity(intent);
         } else {
-            AlertDialog.Builder a_builder = new AlertDialog.Builder(LoginActivity.this);
-            a_builder.setMessage("Incorrect credentials!");
-            System.out.println("Incorrect credential!!!");
+            Toast.makeText(this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
         }
     }
 

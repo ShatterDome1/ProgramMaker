@@ -24,10 +24,10 @@
 
         <activity
             android:name=".DisplayMessageActivity"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".SurveyActivity">
         </activity>
 
-        <activity android:name=".MainActivity" />
+        <activity android:name=".SurveyActivity" />
 
     </application>
 
