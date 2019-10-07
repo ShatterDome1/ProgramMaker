@@ -11,6 +11,7 @@
     <string name="register_firstname">First Name</string>
     <string name="register_lastname">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="date_of_birth">Date Of Birth</string>
 
     <string name="q1">What is your gym goal?</string>
     <string-array name="q1_answers">

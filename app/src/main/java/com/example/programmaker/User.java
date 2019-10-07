@@ -1,5 +1,6 @@
 package com.example.programmaker;
 
+
 public class User {
 
     private String email;
