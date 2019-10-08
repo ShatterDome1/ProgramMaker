@@ -2,6 +2,7 @@ package com.example.programmaker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,7 +53,10 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
             startActivity(intent);
         } else {
-            Toast.makeText(this, "Invalid credentials!", Toast.LENGTH_SHORT).show();
+            // Error handling when user is invalid
+            String displayText = "Invalid credentials!";
+            int duration = Toast.LENGTH_SHORT;
+            Toast.makeText(this, displayText, duration).show();
         }
     }
 

@@ -33,8 +33,8 @@ public class UserRepository {
     }
 
     // Find API for database
-    public void find (String email) {
-        new findAsyncTask(mUserDao).execute(email);
+    public void find (String userEmail) {
+        new findAsyncTask(mUserDao).execute(userEmail);
     }
 
     private static class findAsyncTask extends AsyncTask<String, Void, Void> {
