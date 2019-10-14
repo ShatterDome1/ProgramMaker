@@ -1,21 +1,23 @@
 package com.example.programmaker;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.example.programmaker.db.User;
+
 import java.util.Calendar;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
 
+    private RegisterViewModel mRegisterViewModel;
     private EditText firstName;
     private EditText lastName;
     private EditText email;
@@ -27,6 +29,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        // Get a reference to the ViewModel for this screen.
+        mRegisterViewModel = ViewModelProviders.of(this).get(RegisterViewModel.class);
 
         dateOfBirth = findViewById(R.id.r_dateofbirth);
 
@@ -89,13 +94,10 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
              !dateOfBirthStr.isEmpty() &&
              passwordStr.equals(confPassStr) ) {
 
-            User user = new User(emailStr, passwordStr, firstNameStr, lastNameStr);
-            UserDBHandler dbHandler = new UserDBHandler(this,null);
-            boolean ok = dbHandler.addHandler(user);
-            if (ok) {
-                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intent);
-            }
+            User newUser = new User(firstNameStr, lastNameStr, emailStr, passwordStr, dateOfBirthStr);
+            mRegisterViewModel.insert(newUser);
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
         }
     }
 }

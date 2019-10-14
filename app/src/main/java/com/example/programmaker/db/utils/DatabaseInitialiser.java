@@ -14,12 +14,7 @@ public class DatabaseInitialiser {
                            final String firstName,
                            final String lastName,
                            final Date dateOfBirth) {
-        User user = new User();
-        user.email = email;
-        user.password = password;
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.dateOfBirth = dateOfBirth.toString();
+        User user = new User( firstName, lastName, email, password, dateOfBirth.toString());
 
         db.userModel().addUser(user);
     }

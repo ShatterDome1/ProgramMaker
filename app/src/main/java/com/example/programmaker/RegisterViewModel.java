@@ -5,20 +5,19 @@ import android.app.Application;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 
-import com.example.programmaker.db.User;
 import com.example.programmaker.db.UserRepository;
+import com.example.programmaker.db.User;
 
-public class LoginViewModel extends AndroidViewModel {
+public class RegisterViewModel extends AndroidViewModel {
 
     private UserRepository mRepository;
 
-    public LoginViewModel(@NonNull Application application) {
+    public RegisterViewModel(@NonNull Application application) {
         super(application);
         mRepository = new UserRepository(application);
     }
 
-    public User find(String userEmail) {
-        mRepository.find(userEmail);
-        return mRepository.getSearchResult();
+    public void insert(User user) {
+        mRepository.insert(user);
     }
 }

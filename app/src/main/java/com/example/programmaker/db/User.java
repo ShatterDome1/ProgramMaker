@@ -11,6 +11,13 @@ import java.util.Date;
 @Entity
 public class User {
 
+    @ColumnInfo(name = "first_name")
+    @NonNull
+    public String firstName;
+
+    @ColumnInfo(name = "last_name")
+    public String lastName;
+
     @PrimaryKey
     @NonNull
     @ColumnInfo(name = "email")
@@ -20,15 +27,19 @@ public class User {
     @NonNull
     public String password;
 
-    @ColumnInfo(name = "first_name")
-    @NonNull
-    public String firstName;
-
-    @ColumnInfo(name = "last_name")
-    public String lastName;
-
     @ColumnInfo(name = "date_of_birth")
     @NonNull
-    @TypeConverters(DateConverter.class)
     public String dateOfBirth;
+
+    public User(@NonNull String firstName,
+                String lastName,
+                @NonNull String email,
+                @NonNull String password,
+                @NonNull String dateOfBirth) {
+        this.email = email;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+    }
 }

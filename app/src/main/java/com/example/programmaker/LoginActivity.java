@@ -2,7 +2,6 @@ package com.example.programmaker;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
+
+import com.example.programmaker.db.User;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -47,9 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         String usernameStr = username.getText().toString();
         String passwordStr = password.getText().toString();
 
-        UserDBHandler dbHandler = new UserDBHandler(this,null);
-        User user = dbHandler.findHandler(usernameStr);
-        if ( user != null && user.getPassword().equals(passwordStr) ) {
+        User user = mLoginViewModel.find(usernameStr);
+        if ( user != null && user.password.equals(passwordStr) ) {
             Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
             startActivity(intent);
         } else {
