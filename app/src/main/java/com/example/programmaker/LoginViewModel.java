@@ -17,8 +17,8 @@ public class LoginViewModel extends AndroidViewModel {
         mRepository = new UserRepository(application);
     }
 
-    public User find(String userEmail) {
-        mRepository.find(userEmail);
+    public User find(String userEmail, String userPassword) {
+        mRepository.find(userEmail, userPassword);
         return mRepository.getSearchResult();
     }
 }

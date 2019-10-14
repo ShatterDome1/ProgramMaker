@@ -18,22 +18,6 @@ public class UserRepository {
         new insertAsyncTask(mUserDao).execute(user);
     }
 
-    // Extract the user from the async task using the following method
-    private void searchFinished(User user) {
-        searchResult = user;
-    }
-
-    public User getSearchResult() {
-        return searchResult;
-    }
-
-    // Find API for database
-    public void find (String userEmail) {
-        findAsyncTask task = new findAsyncTask(mUserDao);
-        task.delegate = this;
-        task.execute(userEmail);
-    }
-
     private static class insertAsyncTask extends AsyncTask<User, Void, Void> {
 
         private UserDao mAsyncTaskDao;
@@ -49,6 +33,18 @@ public class UserRepository {
         }
     }
 
+    // Find API for database
+    public void find (String userEmail, String userPassword) {
+        findAsyncTask task = new findAsyncTask(mUserDao);
+        task.delegate = this;
+        task.execute(userEmail, userPassword);
+    }
+
+    // Extract the user from the async task using the following method
+    private void searchFinished(User user) {
+        searchResult = user;
+    }
+
     private static class findAsyncTask extends AsyncTask<String, Void, User> {
 
         private UserDao mAsyncTaskDao;
@@ -60,12 +56,16 @@ public class UserRepository {
 
         @Override
         protected User doInBackground(String... strings) {
-            return mAsyncTaskDao.findUserByEmail(strings[0]);
+            return mAsyncTaskDao.findUserByEmail(strings[0], strings[1]);
         }
 
         @Override
         protected void onPostExecute(User result){
             delegate.searchFinished(result);
         }
+    }
+
+    public User getSearchResult() {
+        return searchResult;
     }
 }

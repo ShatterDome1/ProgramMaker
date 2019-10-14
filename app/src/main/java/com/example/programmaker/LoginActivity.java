@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity {
         String usernameStr = username.getText().toString();
         String passwordStr = password.getText().toString();
 
-        User user = mLoginViewModel.find(usernameStr);
-        if ( user != null && user.password.equals(passwordStr) ) {
+        User user = mLoginViewModel.find(usernameStr, passwordStr);
+        if ( user != null ) {
             Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
             startActivity(intent);
         } else {

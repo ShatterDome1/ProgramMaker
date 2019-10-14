@@ -5,15 +5,15 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import static androidx.room.OnConflictStrategy.FAIL;
+import static androidx.room.OnConflictStrategy.ABORT;
 
 @Dao
 public interface UserDao {
 
-    @Query("SELECT * from User where User.email = :email")
-    User findUserByEmail(String email);
+    @Query("SELECT * from User where User.email = :email and User.password = :password")
+    User findUserByEmail(String email, String password);
 
-    @Insert(onConflict = FAIL)
+    @Insert(onConflict = ABORT)
     void addUser(User user);
 
     @Delete
