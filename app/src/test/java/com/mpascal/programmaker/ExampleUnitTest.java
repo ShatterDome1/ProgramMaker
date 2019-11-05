@@ -1,4 +1,4 @@
-package com.example.programmaker;
+package com.mpascal.programmaker;
 
 import org.junit.Test;
 

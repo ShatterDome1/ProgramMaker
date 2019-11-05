@@ -1,4 +1,4 @@
-package com.example.programmaker;
+package com.mpascal.programmaker;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;

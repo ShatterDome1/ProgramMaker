@@ -1,4 +1,4 @@
-package com.example.programmaker;
+package com.mpascal.programmaker;
 
 import androidx.appcompat.app.AppCompatActivity;
 

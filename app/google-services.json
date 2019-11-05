@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "540845349922",
+    "firebase_url": "https://programmaker-ae036.firebaseio.com",
+    "project_id": "programmaker-ae036",
+    "storage_bucket": "programmaker-ae036.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:540845349922:android:bf104eafb092fca1df7e7b",
+        "android_client_info": {
+          "package_name": "com.mpascal.programmaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "540845349922-9vvnd1fr7bv20oeifoecqjfdls9gc4vo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mpascal.programmaker",
+            "certificate_hash": "53f998599ae91223af83d8909369398efa4ef06b"
+          }
+        },
+        {
+          "client_id": "540845349922-nd14j87jh2qvq17853vddjfv7nl2t3t7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBiPFk3hJflw338c-D0eoE4g-RQtiYEczw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "540845349922-nd14j87jh2qvq17853vddjfv7nl2t3t7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

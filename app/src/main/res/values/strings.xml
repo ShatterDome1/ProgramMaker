@@ -35,4 +35,7 @@
     <string name="q3">How much do you weigh?</string>
     <string name="weight">Weight</string>
 
+    <string name="navigation_draw_open">Open navigation drawer</string>
+    <string name="navigation_draw_close">Close navigation drawer</string>
+
 </resources>
