@@ -2,10 +2,12 @@ package com.mpascal.programmaker;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -14,9 +16,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class SurveyActivity extends AppCompatActivity {
+public class SurveyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
-    private NavigationView navigationView;
     private TextView loggedInUser;
     private TextView loggedInEmail;
 
@@ -36,7 +37,9 @@ public class SurveyActivity extends AppCompatActivity {
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+
+        // Set the logged in user details
         View headerView = navigationView.getHeaderView(0);
         loggedInUser = headerView.findViewById(R.id.logged_in_user);
         loggedInEmail = headerView.findViewById(R.id.logged_in_email);
@@ -44,6 +47,38 @@ public class SurveyActivity extends AppCompatActivity {
         loggedInUser.setText(intent.getStringExtra("firstName"));
         loggedInEmail.setText(intent.getStringExtra("email"));
 
+        // Swap fragments
+        navigationView.setNavigationItemSelectedListener(this);
+
+        // Set the initial fragment shown
+        if (savedInstanceState == null) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new ProfileFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_profile);
+        }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.nav_profile:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ProfileFragment()).commit();
+                break;
+
+            case R.id.nav_user_settings:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AccountFragment()).commit();
+                break;
+
+            case R.id.nav_logout:
+                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+                break;
+        }
+
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return true;
     }
 
     @Override
