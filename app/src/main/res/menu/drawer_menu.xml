@@ -5,13 +5,15 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_routines"
+            android:icon="@drawable/ic_routines"
+            android:title="Routines" />
+
+        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_profile"
             android:title="Profile" />
-        <item
-            android:id="@+id/nav_user_settings"
-            android:icon="@drawable/ic_user_settings"
-            android:title="Account Settings" />
+
     </group>
 
     <item

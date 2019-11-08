@@ -66,13 +66,13 @@ public class SurveyActivity extends AppCompatActivity implements NavigationView.
                         new ProfileFragment()).commit();
                 break;
 
-            case R.id.nav_user_settings:
+            case R.id.nav_routines:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new AccountFragment()).commit();
+                        new RoutineFragment()).commit();
                 break;
 
             case R.id.nav_logout:
-                Toast.makeText(this, "Logout", Toast.LENGTH_SHORT).show();
+                logout();
                 break;
         }
 
@@ -88,5 +88,11 @@ public class SurveyActivity extends AppCompatActivity implements NavigationView.
         } else {
             super.onBackPressed();
         }
+    }
+
+    private void logout() {
+        Intent intent = new Intent(SurveyActivity.this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 }
