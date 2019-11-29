@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -15,6 +14,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
+import com.mpascal.programmaker.fragments.ProfileFragment;
+import com.mpascal.programmaker.fragments.RoutineFragment;
 
 public class SurveyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawerLayout;
@@ -53,8 +54,8 @@ public class SurveyActivity extends AppCompatActivity implements NavigationView.
         // Set the initial fragment shown
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new ProfileFragment()).commit();
-            navigationView.setCheckedItem(R.id.nav_profile);
+                    new RoutineFragment()).commit();
+            navigationView.setCheckedItem(R.id.nav_routines);
         }
     }
 

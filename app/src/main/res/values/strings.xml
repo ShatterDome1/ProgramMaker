@@ -3,8 +3,8 @@
     <string name="name">Name</string>
     <string name="send">Send</string>
 
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
 
@@ -12,6 +12,11 @@
     <string name="register_lastname">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="date_of_birth">Date Of Birth</string>
+
+    <string name="update_details">Update Details</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_new_password">Confirm New Password</string>>
+
 
     <string name="q1">What is your gym goal?</string>
     <string-array name="q1_answers">
