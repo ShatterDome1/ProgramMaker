@@ -66,21 +66,24 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        boolean ok = false;
                         if (documentSnapshot.exists()) {
                             User user = documentSnapshot.toObject(User.class);
-                            Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
-                            intent.putExtra("firstName", user.getFirstName());
-                            intent.putExtra("email", user.getEmail());
-                            startActivity(intent);
-
-                            // make the progress bar invisible
-                            loginProgressBar.setVisibility(View.GONE);
-                        } else {
-                            Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
-
-                            // make the progress bar invisible
-                            loginProgressBar.setVisibility(View.GONE);
+                            if (passwordStr.equals(user.getPassword())) {
+                                Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
+                                intent.putExtra("firstName", user.getFirstName());
+                                intent.putExtra("email", user.getEmail());
+                                startActivity(intent);
+                                ok = true;
+                            }
                         }
+
+                        if (ok == false) {
+                            Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // make the progress bar invisible
+                        loginProgressBar.setVisibility(View.GONE);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
