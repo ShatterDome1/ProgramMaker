@@ -13,13 +13,19 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
 import com.mpascal.programmaker.R;
+import com.mpascal.programmaker.db.User;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
@@ -30,8 +36,8 @@ public class ProfileFragment extends Fragment {
     private EditText newPassword;
     private EditText newPasswordConfirmed;
     private Button   updateDetailsButton;
-    private TextView loggedInUser;
     private TextView loggedInEmail;
+    private DocumentReference accountRef;
 
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -45,28 +51,32 @@ public class ProfileFragment extends Fragment {
         password = view.findViewById(R.id.profilePassword);
         newPassword = view.findViewById(R.id.profileNewPassword);
         newPasswordConfirmed = view.findViewById(R.id.profileNewPasswordConfirm);
+        updateDetailsButton = view.findViewById(R.id.updateDetails);
 
 
-        NavigationView navigationView = view.findViewById(R.id.nav_view);
-        // Set the logged in user details
+        // Get the logged in email from the navigation tab header
+        NavigationView navigationView = getActivity().findViewById(R.id.nav_view);
         View headerView = navigationView.getHeaderView(0);
-        loggedInUser = headerView.findViewById(R.id.logged_in_user);
         loggedInEmail = headerView.findViewById(R.id.logged_in_email);
 
-        db.collection("Users").document(loggedInEmail.toString()).get()
+        // Set the document ref to be the user's account
+        accountRef = db.collection("Users").document(loggedInEmail.getText().toString());
+
+        accountRef.get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if(documentSnapshot.exists()) {
-                            firstName.setText(documentSnapshot.getString("firstName"));
-                            lastName.setText(documentSnapshot.getString("lastName"));
+                            User user = documentSnapshot.toObject(User.class);
+                            firstName.setText(user.getFirstName());
+                            lastName.setText(user.getLastName());
                         }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(view.getContext(), "Error!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity() , "Error!", Toast.LENGTH_SHORT).show();
                         Log.d(TAG, e.toString());
                     }
                 });
@@ -83,6 +93,43 @@ public class ProfileFragment extends Fragment {
 
     private void updateDetails() {
         // TODO update details
+        final String passwordStr = password.getText().toString();
+        final String newPassStr = newPassword.getText().toString();
+        final String newPassConfStr = newPasswordConfirmed.getText().toString();
+        final String firstNameStr = firstName.getText().toString();
+        final String lastNameStr = lastName.getText().toString();
+
+        accountRef.get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        Map<String, Object> updateFields = new HashMap<>();
+
+                        if(documentSnapshot.exists()) {
+                            User user = documentSnapshot.toObject(User.class);
+                            if (passwordStr.equals(user.getPassword())) {
+                                if (firstNameStr != user.getFirstName()) {
+                                    updateFields.put("firstName", firstNameStr);
+                                }
+                                if (lastNameStr != user.getLastName()) {
+                                    updateFields.put("lastName", lastNameStr);
+                                }
+                                if (newPassStr != null && newPassConfStr.equals(newPassStr)) {
+                                    updateFields.put("password", newPassStr);
+                                }
+
+                                accountRef.update(updateFields);
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getActivity() , "Error!", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, e.toString());
+                    }
+                });
     }
 
 }

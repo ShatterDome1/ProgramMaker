@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpascal.programmaker.db.User;
@@ -107,9 +108,10 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
              passwordStr.equals(confPassStr) ) {
 
             final User newUser = new User(firstNameStr, lastNameStr, emailStr, passwordStr, dateOfBirthStr);
-            newUser.setMap();
+            final DocumentReference accountRef = db.collection("Users").document(emailStr);
+
             // Check if user already exists
-            db.collection("Users").document(emailStr).get()
+            accountRef.get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -120,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                 progressBar.setVisibility(View.GONE);
                             } else {
                                 // Add user to database
-                                db.collection("Users").document(emailStr).set(newUser.getMap())
+                                accountRef.set(newUser)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

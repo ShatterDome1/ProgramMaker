@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mpascal.programmaker.db.User;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
@@ -65,11 +66,11 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if (documentSnapshot.exists() &&
-                                (documentSnapshot.getString("password").equals(passwordStr))) {
+                        if (documentSnapshot.exists()) {
+                            User user = documentSnapshot.toObject(User.class);
                             Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
-                            intent.putExtra("firstName", documentSnapshot.getString("firstName"));
-                            intent.putExtra("email", documentSnapshot.getString("email"));
+                            intent.putExtra("firstName", user.getFirstName());
+                            intent.putExtra("email", user.getEmail());
                             startActivity(intent);
 
                             // make the progress bar invisible
