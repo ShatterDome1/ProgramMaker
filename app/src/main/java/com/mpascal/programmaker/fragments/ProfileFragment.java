@@ -16,7 +16,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.SetOptions;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.db.User;
 
@@ -39,7 +38,7 @@ public class ProfileFragment extends Fragment {
     private TextView loggedInEmail;
     private DocumentReference accountRef;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Nullable
     @Override
@@ -92,7 +91,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updateDetails() {
-        // TODO update details
+
         final String passwordStr = password.getText().toString();
         final String newPassStr = newPassword.getText().toString();
         final String newPassConfStr = newPasswordConfirmed.getText().toString();
@@ -108,17 +107,44 @@ public class ProfileFragment extends Fragment {
                         if(documentSnapshot.exists()) {
                             User user = documentSnapshot.toObject(User.class);
                             if (passwordStr.equals(user.getPassword())) {
-                                if (firstNameStr != user.getFirstName()) {
+
+                                if (!firstNameStr.equals(user.getFirstName())) {
                                     updateFields.put("firstName", firstNameStr);
                                 }
-                                if (lastNameStr != user.getLastName()) {
+
+                                if (!lastNameStr.equals(user.getLastName())) {
                                     updateFields.put("lastName", lastNameStr);
                                 }
-                                if (newPassStr != null && newPassConfStr.equals(newPassStr)) {
+
+                                if (!newPassStr.isEmpty() && newPassConfStr.equals(newPassStr)) {
                                     updateFields.put("password", newPassStr);
                                 }
 
-                                accountRef.update(updateFields);
+                                if (!updateFields.isEmpty()) {
+                                    accountRef.update(updateFields)
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void aVoid) {
+                                                    Toast.makeText(getActivity(), " Account Details updated!", Toast.LENGTH_SHORT).show();
+                                                    password.setText("");
+                                                    newPassword.setText("");
+                                                    newPasswordConfirmed.setText("");
+                                                }
+                                            })
+                                            .addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                                                }
+                                            });
+                                } else {
+                                    Toast.makeText(getActivity(), "No Changes Detected!", Toast.LENGTH_SHORT).show();
+                                    password.setText("");
+                                }
+
+                            } else {
+                                Toast.makeText(getActivity(), "Incorrect Password!", Toast.LENGTH_SHORT).show();
+                                password.setText("");
                             }
                         }
                     }

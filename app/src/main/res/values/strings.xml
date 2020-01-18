@@ -1,13 +1,15 @@
 <resources>
-    <string name="app_name">ProgramMaker</string>
-    <string name="name">Name</string>
-    <string name="send">Send</string>
 
+
+    <string name="app_name">ProgramMaker</string>
+
+    <!-- LogIn Activity -->
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
 
+    <!-- Register Activity -->
     <string name="register_firstname">First Name</string>
     <string name="register_lastname">Last Name</string>
     <string name="confirm_password">Confirm Password</string>
@@ -17,30 +19,24 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>>
 
+    <!-- Routine Fragment -->
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
 
-    <string name="q1">What is your gym goal?</string>
-    <string-array name="q1_answers">
-        <item>Strength</item>
-        <item>Hypertrophy</item>
-        <item>Fat loss</item>
-        <item>Conditioning</item>
-    </string-array>
-
-    <string name="q2">How many days per week do you have available?</string>
-    <string-array name="q2_answers">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-    </string-array>
-
-    <string name="q3">How much do you weigh?</string>
-    <string name="weight">Weight</string>
-
+    <!-- Navigation Bar -->
     <string name="navigation_draw_open">Open navigation drawer</string>
     <string name="navigation_draw_close">Close navigation drawer</string>
+    <string name="routines">Routines</string>
+    <string name="profile">Profile</string>
+    <string name="communication">Communication</string>
+    <string name="share">Share</string>
+    <string name="download">Download Routine</string>
+    <string name="account">Account</string>
+    <string name="logout">Log Out</string>
 
 </resources>

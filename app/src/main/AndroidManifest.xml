@@ -24,10 +24,10 @@
 
         <activity
             android:name="com.mpascal.programmaker.DisplayMessageActivity"
-            android:parentActivityName="com.mpascal.programmaker.SurveyActivity">
+            android:parentActivityName="com.mpascal.programmaker.MainActivity">
         </activity>
 
-        <activity android:name="com.mpascal.programmaker.SurveyActivity"
+        <activity android:name="com.mpascal.programmaker.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
     </application>

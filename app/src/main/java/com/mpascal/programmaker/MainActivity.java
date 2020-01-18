@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -17,7 +18,8 @@ import com.google.android.material.navigation.NavigationView;
 import com.mpascal.programmaker.fragments.ProfileFragment;
 import com.mpascal.programmaker.fragments.RoutineFragment;
 
-public class SurveyActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
     private DrawerLayout drawerLayout;
     private TextView loggedInUser;
     private TextView loggedInEmail;
@@ -75,6 +77,16 @@ public class SurveyActivity extends AppCompatActivity implements NavigationView.
             case R.id.nav_logout:
                 logout();
                 break;
+
+            case R.id.nav_share:
+                //TODO Share
+                Toast.makeText(this, "Share!!!", Toast.LENGTH_SHORT).show();
+                break;
+
+            case R.id.nav_download:
+                //TODO Download
+                Toast.makeText(this, "Download!!", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -92,7 +104,7 @@ public class SurveyActivity extends AppCompatActivity implements NavigationView.
     }
 
     private void logout() {
-        Intent intent = new Intent(SurveyActivity.this, LoginActivity.class);
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }

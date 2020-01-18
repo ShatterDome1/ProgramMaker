@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     private Button dateOfBirth;
     private ProgressBar progressBar;
 
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(v);
+                register();
             }
         });
     }
@@ -89,7 +89,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         dateOfBirth.setText(date);
     }
 
-    private void register(View v) {
+    private void register() {
         String firstNameStr = firstName.getText().toString();
         String lastNameStr = lastName.getText().toString();
         final String emailStr = email.getText().toString();
@@ -108,7 +108,12 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
              passwordStr.equals(confPassStr) ) {
 
             final User newUser = new User(firstNameStr, lastNameStr, emailStr, passwordStr, dateOfBirthStr);
-            final DocumentReference accountRef = db.collection("Users").document(emailStr);
+
+            // Encrypt email and set it as the key for the document
+            String emailStrEnc = AESHelper.encrypt(emailStr);
+            Toast.makeText(this, emailStrEnc, Toast.LENGTH_SHORT).show();
+
+            final DocumentReference accountRef = db.collection("Users").document(emailStrEnc);
 
             // Check if user already exists
             accountRef.get()
@@ -157,6 +162,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
 
         } else {
             Toast.makeText(this, "Fields incorrectly populated!", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
         }
 
     }

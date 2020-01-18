@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private ProgressBar loginProgressBar;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                validateLogin(v);
+                validateLogin();
             }
         });
 
@@ -49,20 +49,22 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                register(v);
+                register();
             }
         });
     }
 
-    public void validateLogin(View v) {
+    private void validateLogin() {
 
         String usernameStr = username.getText().toString();
+        String usernameStrEnc = AESHelper.encrypt(usernameStr);
+
         final String passwordStr = password.getText().toString();
 
         // show that something is done after the login button is pressed
         loginProgressBar.setVisibility(View.VISIBLE);
 
-        db.collection("Users").document(usernameStr).get()
+        db.collection("Users").document(usernameStrEnc).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -70,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                         if (documentSnapshot.exists()) {
                             User user = documentSnapshot.toObject(User.class);
                             if (passwordStr.equals(user.getPassword())) {
-                                Intent intent = new Intent(LoginActivity.this, SurveyActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 intent.putExtra("firstName", user.getFirstName());
                                 intent.putExtra("email", user.getEmail());
                                 startActivity(intent);
@@ -78,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
 
-                        if (ok == false) {
+                        if (!ok) {
                             Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
                         }
 
@@ -99,7 +101,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public void register(View v) {
+    private void register() {
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
     }
