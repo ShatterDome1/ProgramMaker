@@ -21,7 +21,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpascal.programmaker.db.User;
 
+import java.security.Key;
 import java.util.Calendar;
+
+import javax.crypto.SecretKey;
 
 public class RegisterActivity extends AppCompatActivity implements DatePickerDialog.OnDateSetListener {
     private static final String TAG = "RegisterActivity";
@@ -107,13 +110,17 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
              !dateOfBirthStr.isEmpty() &&
              passwordStr.equals(confPassStr) ) {
 
-            final User newUser = new User(firstNameStr, lastNameStr, emailStr, passwordStr, dateOfBirthStr);
+            SecretKey secretKey = AESHelper.generateKey();
+            String secretKeyStr = AESHelper.convertSecretKeyToString(secretKey);
 
-            // Encrypt email and set it as the key for the document
-            String emailStrEnc = AESHelper.encrypt(emailStr);
-            Toast.makeText(this, emailStrEnc, Toast.LENGTH_SHORT).show();
+            final User newUser = new User(AESHelper.encrypt(firstNameStr, secretKey),
+                                          AESHelper.encrypt(lastNameStr, secretKey),
+                                          AESHelper.encrypt(emailStr, secretKey),
+                                          AESHelper.encrypt(passwordStr, secretKey),
+                                          AESHelper.encrypt(dateOfBirthStr, secretKey),
+                                          secretKeyStr);
 
-            final DocumentReference accountRef = db.collection("Users").document(emailStrEnc);
+            final DocumentReference accountRef = db.collection("Users").document(emailStr);
 
             // Check if user already exists
             accountRef.get()

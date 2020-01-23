@@ -7,18 +7,21 @@ public class User {
     private String email;
     private String password;
     private String dateOfBirth;
+    private String key;
 
     public User(String firstName,
                 String lastName,
                 String email,
                 String password,
-                String dateOfBirth) {
+                String dateOfBirth,
+                String key) {
 
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
+        this.key = key;
 
     }
 
@@ -42,5 +45,9 @@ public class User {
 
     public String getDateOfBirth() {
         return dateOfBirth;
+    }
+
+    public String getKey() {
+        return key;
     }
 }

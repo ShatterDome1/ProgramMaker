@@ -18,6 +18,8 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpascal.programmaker.db.User;
 
+import javax.crypto.SecretKey;
+
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
@@ -56,49 +58,65 @@ public class LoginActivity extends AppCompatActivity {
 
     private void validateLogin() {
 
-        String usernameStr = username.getText().toString();
-        String usernameStrEnc = AESHelper.encrypt(usernameStr);
+        final String usernameStr = username.getText().toString();
 
-        final String passwordStr = password.getText().toString();
+        if (! usernameStr.isEmpty()) {
 
-        // show that something is done after the login button is pressed
-        loginProgressBar.setVisibility(View.VISIBLE);
+            final String passwordStr = password.getText().toString();
 
-        db.collection("Users").document(usernameStrEnc).get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        boolean ok = false;
-                        if (documentSnapshot.exists()) {
-                            User user = documentSnapshot.toObject(User.class);
-                            if (passwordStr.equals(user.getPassword())) {
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                intent.putExtra("firstName", user.getFirstName());
-                                intent.putExtra("email", user.getEmail());
-                                startActivity(intent);
-                                ok = true;
+            // show that something is done after the login button is pressed
+            loginProgressBar.setVisibility(View.VISIBLE);
+
+            db.collection("Users").document(usernameStr).get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            boolean ok = false;
+                            if (documentSnapshot.exists()) {
+                                User user = documentSnapshot.toObject(User.class);
+
+                                // Retrieve encoded key and convert to SecretKey
+                                SecretKey secretKey = AESHelper.convertStringToSecretKey(user.getKey());
+
+                                // Decrypt user password
+                                String passwordDec = AESHelper.decrypt(user.getPassword(), secretKey);
+
+                                if (passwordStr.equals(passwordDec)) {
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+
+                                    // Retrieve decrypted firstName and email
+                                    String firstNameDec = AESHelper.decrypt(user.getFirstName(), secretKey);
+                                    String lastNameDec = AESHelper.decrypt(user.getLastName(), secretKey);
+                                    String emailDec = AESHelper.decrypt(user.getEmail(), secretKey);
+
+                                    intent.putExtra("fullName", firstNameDec + " " + lastNameDec);
+                                    intent.putExtra("email", emailDec);
+                                    startActivity(intent);
+                                    ok = true;
+                                }
                             }
+
+                            if (!ok) {
+                                Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            // make the progress bar invisible
+                            loginProgressBar.setVisibility(View.GONE);
                         }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, e.toString());
 
-                        if (!ok) {
-                            Toast.makeText(LoginActivity.this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+                            // make the progress bar invisible
+                            loginProgressBar.setVisibility(View.GONE);
                         }
-
-                        // make the progress bar invisible
-                        loginProgressBar.setVisibility(View.GONE);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                        Log.d(TAG, e.toString());
-
-                        // make the progress bar invisible
-                        loginProgressBar.setVisibility(View.GONE);
-                    }
-                });
-
+                    });
+        } else {
+            Toast.makeText(this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void register() {

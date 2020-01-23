@@ -1,5 +1,6 @@
 package com.mpascal.programmaker.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,6 +17,9 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.mpascal.programmaker.AESHelper;
+import com.mpascal.programmaker.LoginActivity;
+import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.db.User;
 
@@ -25,6 +29,8 @@ import androidx.fragment.app.Fragment;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.crypto.SecretKey;
 
 public class ProfileFragment extends Fragment {
     private static final String TAG = "ProfileFragment";
@@ -67,8 +73,12 @@ public class ProfileFragment extends Fragment {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if(documentSnapshot.exists()) {
                             User user = documentSnapshot.toObject(User.class);
-                            firstName.setText(user.getFirstName());
-                            lastName.setText(user.getLastName());
+
+                            // Retrieve encoded key and convert to SecretKey
+                            SecretKey secretKey = AESHelper.convertStringToSecretKey(user.getKey());
+
+                            firstName.setText(AESHelper.decrypt(user.getFirstName(),secretKey));
+                            lastName.setText(AESHelper.decrypt(user.getLastName(),secretKey));
                         }
                     }
                 })
@@ -102,22 +112,36 @@ public class ProfileFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        Map<String, Object> updateFields = new HashMap<>();
-
                         if(documentSnapshot.exists()) {
+                            Map<String, Object> updateFields = new HashMap<>();
                             User user = documentSnapshot.toObject(User.class);
-                            if (passwordStr.equals(user.getPassword())) {
 
-                                if (!firstNameStr.equals(user.getFirstName())) {
-                                    updateFields.put("firstName", firstNameStr);
+                            // Retrieve encoded key and convert to SecretKey
+                            SecretKey secretKey = AESHelper.convertStringToSecretKey(user.getKey());
+
+                            // Decrypt user password
+                            String passwordDec = AESHelper.decrypt(user.getPassword(), secretKey);
+
+                            if (passwordStr.equals(passwordDec)) {
+                                boolean isLogoutNeeded = false;
+
+                                String firstNameDec = AESHelper.decrypt(user.getFirstName(),secretKey);
+                                if (!firstNameStr.equals(firstNameDec)) {
+                                    updateFields.put("firstName", AESHelper.encrypt(firstNameStr, secretKey));
                                 }
 
-                                if (!lastNameStr.equals(user.getLastName())) {
-                                    updateFields.put("lastName", lastNameStr);
+                                String lastNameDec = AESHelper.decrypt(user.getLastName(), secretKey);
+                                if (!lastNameStr.equals(lastNameDec)) {
+                                    updateFields.put("lastName", AESHelper.encrypt(lastNameStr,secretKey));
                                 }
 
-                                if (!newPassStr.isEmpty() && newPassConfStr.equals(newPassStr)) {
-                                    updateFields.put("password", newPassStr);
+                                if (!newPassStr.isEmpty()) {
+                                    if (newPassConfStr.equals(newPassStr)) {
+                                        updateFields.put("password", AESHelper.encrypt(newPassStr, secretKey));
+                                        isLogoutNeeded = true;
+                                    } else {
+                                        Toast.makeText(getActivity(), "New passwords don't match", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
 
                                 if (!updateFields.isEmpty()) {
@@ -137,7 +161,14 @@ public class ProfileFragment extends Fragment {
                                                     Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
                                                 }
                                             });
-                                } else {
+
+                                    if(isLogoutNeeded) {
+                                        Intent intent = new Intent(getActivity(), LoginActivity.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                    }
+
+                                } else if(newPassStr.isEmpty()) {
                                     Toast.makeText(getActivity(), "No Changes Detected!", Toast.LENGTH_SHORT).show();
                                     password.setText("");
                                 }

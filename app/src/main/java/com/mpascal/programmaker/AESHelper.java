@@ -1,43 +1,59 @@
 package com.mpascal.programmaker;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
+import java.security.Key;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import java.security.SecureRandom;
 import java.util.Base64;
 
 import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class AESHelper {
-    // TODO FIX THIS
-    private static SecretKeySpec secretKey;
-    private static final String secret = "key";
 
-    private static void setKey(String myKey)
+    public static SecretKey generateKey()
     {
-        byte[] key;
-        MessageDigest sha;
+        KeyGenerator keyGen = null;
+
         try {
-            key = myKey.getBytes(StandardCharsets.UTF_8);
-            sha = MessageDigest.getInstance("SHA-1");
-            key = sha.digest(key);
-            key = Arrays.copyOf(key, 16);
-            secretKey = new SecretKeySpec(key, "AES");
-        }
-        catch (NoSuchAlgorithmException e) {
+            keyGen = KeyGenerator.getInstance("AES");
+        } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+        //Creating a SecureRandom object
+        SecureRandom secRandom = new SecureRandom();
+
+        //Initializing the KeyGenerator
+        keyGen.init(secRandom);
+
+        //Creating/Generating a key
+        SecretKey key = keyGen.generateKey();
+
+        return key;
     }
 
-    public static String encrypt(String strToEncrypt)
+    public static String convertSecretKeyToString(SecretKey key) {
+        String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());
+        return encodedKey;
+    }
+
+    public static SecretKey convertStringToSecretKey(String encodedKey) {
+        // decode the base64 encoded string
+        byte[] decodedKey = Base64.getDecoder().decode(encodedKey);
+        // rebuild key using SecretKeySpec
+        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
+        return originalKey;
+    }
+
+    public static String encrypt(String strToEncrypt, Key secretKey)
     {
         try
         {
-            setKey(secret);
-            Cipher cipher = Cipher.getInstance("AES/CTR/PKCS7PADDING");
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
         }
         catch (Exception e)
@@ -47,13 +63,12 @@ public class AESHelper {
         return null;
     }
 
-    public static String decrypt(String strToDecrypt)
+    public static String decrypt(String strToDecrypt, Key secretKey)
     {
         try
         {
-            setKey(secret);
-            Cipher cipher = Cipher.getInstance("AES/CTR/PKCS7PADDING");
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, new IvParameterSpec(new byte[16]));
             return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
         }
         catch (Exception e)

@@ -1,0 +1,44 @@
+{
+	"Exercises/Main/Back": [{
+		"Deadlift": [{
+			"category": "Main",
+			"repRange": "1-8",
+			"isSuitableForElders": true,
+			"isCompoundExercise": true,
+			"primaryMover": "Back"
+		}]
+	}],
+	
+	"Exercises/Main/Chest": [
+		{
+			"name": "Bench",
+			"category": "Main",
+			"repRange": "1-8",
+			"isSuitableForElders": true,
+			"isCompoundExercise": true,
+			"primaryMover": "Chest"
+		}
+	],
+	
+	"Exercises/Secondary/Back": [
+		{
+			"category": "Secondary",
+			"name": "Paused Deadlift",
+			"repRange": "1-8",
+			"isSuitableForElders": true,
+			"isCompoundExercise": true,
+			"primaryMover": "Back"
+		}
+	],
+	
+	"Exercises/Accessory/Mid delt": [
+		{
+			"category": "Accessory",
+			"name": "Lateral raise",
+			"repRange": "6-12",
+			"isSuitableForElders": true,
+			"isCompoundExercise": false,
+			"primaryMover": "Mid delt"
+		}
+	]
+}

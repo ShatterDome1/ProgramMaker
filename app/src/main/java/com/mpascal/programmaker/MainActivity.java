@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         loggedInUser = headerView.findViewById(R.id.logged_in_user);
         loggedInEmail = headerView.findViewById(R.id.logged_in_email);
         Intent intent = getIntent();
-        loggedInUser.setText(intent.getStringExtra("firstName"));
+        loggedInUser.setText(intent.getStringExtra("fullName"));
         loggedInEmail.setText(intent.getStringExtra("email"));
 
         // Swap fragments
