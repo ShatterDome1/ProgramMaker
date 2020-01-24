@@ -1,44 +1,58 @@
 {
-	"Exercises/Main/Back": [{
-		"Deadlift": [{
-			"category": "Main",
-			"repRange": "1-8",
-			"isSuitableForElders": true,
-			"isCompoundExercise": true,
-			"primaryMover": "Back"
-		}]
-	}],
-	
-	"Exercises/Main/Chest": [
-		{
-			"name": "Bench",
-			"category": "Main",
-			"repRange": "1-8",
-			"isSuitableForElders": true,
-			"isCompoundExercise": true,
-			"primaryMover": "Chest"
+	"Exercises": 
+	{
+		"Main": {
+			"Back": {
+				"Deadlift": 
+				{
+					"RepRange": "1-8",
+					"SuitableForElders": true,
+					"CompoundExercise": true
+				}
+			},
+			
+			"Chest": {
+				"Bench":
+				{
+					"RepRange": "1-8",
+					"SuitableForElders": true,
+					"CompoundExercise": true
+				}
+			},
+			
+			"Shoulders" : {
+				"OverheadPress":
+				{
+					"RepRange": "1-8",
+					"SuitableForElders": true,
+					"CompoundExercise": true
+				}
+			}
+			
+		},
+
+		"Secondary": {
+			"Back":
+			{
+				"PausedDeadlift":
+				{
+					"RepRange": "1-8",
+					"SuitableForElders": true,
+					"CompoundExercise": true
+				}
+			}
+		},
+		
+		"Accessory": {
+			"MidDelt":
+			{
+				"LateralRaises":
+				{
+					"RepRange": "6-12",
+					"SuitableForElders": true,
+					"CompoundExercise": false
+				}
+			}
 		}
-	],
-	
-	"Exercises/Secondary/Back": [
-		{
-			"category": "Secondary",
-			"name": "Paused Deadlift",
-			"repRange": "1-8",
-			"isSuitableForElders": true,
-			"isCompoundExercise": true,
-			"primaryMover": "Back"
-		}
-	],
-	
-	"Exercises/Accessory/Mid delt": [
-		{
-			"category": "Accessory",
-			"name": "Lateral raise",
-			"repRange": "6-12",
-			"isSuitableForElders": true,
-			"isCompoundExercise": false,
-			"primaryMover": "Mid delt"
-		}
-	]
+	}
 }

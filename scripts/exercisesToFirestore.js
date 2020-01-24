@@ -24,7 +24,7 @@ function isCollection(data, path, depth) {
   }
 
   for (const key in data) {
-    if (typeof data[key] != 'object' || data[key] == null) {
+    if (typeof data[key] !== 'object' || data[key] === null) {
       // If there is at least one non-object item in the data then it cannot be collection.
       return false;
     }
@@ -55,7 +55,7 @@ async function upload(data, path) {
  *
  */
 async function resolve(data, path = []) {
-  if (path.length > 0 && path.length % 2 == 0) {
+  if (path.length > 0 && path.length % 2 === 0) {
     // Document's length of path is always even, however, one of keys can actually be a collection.
 
     // Copy an object.
@@ -74,6 +74,8 @@ async function resolve(data, path = []) {
     // If document is empty then it means it only consisted of collections.
     if (!isEmpty(documentData)) {
       // Upload a document free of collections.
+	  console.log(documentData);
+	  console.log(path);
       await upload(documentData, path);
     }
   } else {
