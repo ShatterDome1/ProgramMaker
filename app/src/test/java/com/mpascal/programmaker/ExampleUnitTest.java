@@ -21,7 +21,7 @@ public class ExampleUnitTest {
     public void encryption() {
         String admin = "Admin";
 
-        SecretKey secretKey = AESHelper.setKey();
+        SecretKey secretKey = AESHelper.generateKey();
 
         String stringKey = ConvertKeyToString(secretKey);
         SecretKey decodedKey = ConvertStringToKey(stringKey);

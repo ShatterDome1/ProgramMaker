@@ -38,5 +38,11 @@
     <string name="download">Download Routine</string>
     <string name="account">Account</string>
     <string name="logout">Log Out</string>
+    
+    <!-- Survey questions -->
+    <string name="survey_fitness_goal">What is your current fitness goal?</string>
+    <string name="survey_days_available">How many days do you want to spend in the gym?</string>
+    <string name="survey_height">What is your height?</string>
+    <string name="survey_weight">What is your weight?</string>
 
 </resources>

@@ -22,7 +22,6 @@ public class User {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.key = key;
-
     }
 
     public User() {}

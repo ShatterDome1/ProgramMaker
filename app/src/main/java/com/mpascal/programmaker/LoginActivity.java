@@ -26,6 +26,8 @@ public class LoginActivity extends AppCompatActivity {
     private EditText username;
     private EditText password;
     private ProgressBar loginProgressBar;
+    private Button loginButton;
+    private Button registerButton;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -36,10 +38,11 @@ public class LoginActivity extends AppCompatActivity {
 
         loginProgressBar = findViewById(R.id.loginProgress);
         loginProgressBar.setVisibility(View.GONE);
+
         username = findViewById(R.id.l_email);
         password = findViewById(R.id.l_password);
 
-        Button loginButton = findViewById(R.id.login);
+        loginButton = findViewById(R.id.login);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        Button registerButton = findViewById(R.id.register);
+        registerButton = findViewById(R.id.register);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,11 +62,9 @@ public class LoginActivity extends AppCompatActivity {
     private void validateLogin() {
 
         final String usernameStr = username.getText().toString();
+        final String passwordStr = password.getText().toString();
 
-        if (! usernameStr.isEmpty()) {
-
-            final String passwordStr = password.getText().toString();
-
+        if (!usernameStr.isEmpty() && !passwordStr.isEmpty()) {
             // show that something is done after the login button is pressed
             loginProgressBar.setVisibility(View.VISIBLE);
 
@@ -72,11 +73,13 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             boolean ok = false;
+
                             if (documentSnapshot.exists()) {
                                 User user = documentSnapshot.toObject(User.class);
 
                                 // Retrieve encoded key and convert to SecretKey
-                                SecretKey secretKey = AESHelper.convertStringToSecretKey(user.getKey());
+                                String key = user.getKey();
+                                SecretKey secretKey = AESHelper.convertStringToSecretKey(key);
 
                                 // Decrypt user password
                                 String passwordDec = AESHelper.decrypt(user.getPassword(), secretKey);
@@ -88,9 +91,11 @@ public class LoginActivity extends AppCompatActivity {
                                     String firstNameDec = AESHelper.decrypt(user.getFirstName(), secretKey);
                                     String lastNameDec = AESHelper.decrypt(user.getLastName(), secretKey);
                                     String emailDec = AESHelper.decrypt(user.getEmail(), secretKey);
+                                    String dateOfBirthDec = AESHelper.decrypt(user.getDateOfBirth(), secretKey);
 
-                                    intent.putExtra("fullName", firstNameDec + " " + lastNameDec);
-                                    intent.putExtra("email", emailDec);
+                                    String[] userDetails = {firstNameDec, lastNameDec, emailDec, passwordDec, dateOfBirthDec, key};
+                                    intent.putExtra("userDetails", userDetails);
+
                                     startActivity(intent);
                                     ok = true;
                                 }

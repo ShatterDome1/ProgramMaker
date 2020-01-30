@@ -29,23 +29,19 @@ public class AESHelper {
         //Initializing the KeyGenerator
         keyGen.init(secRandom);
 
-        //Creating/Generating a key
-        SecretKey key = keyGen.generateKey();
-
-        return key;
+        return keyGen.generateKey();
     }
 
     public static String convertSecretKeyToString(SecretKey key) {
-        String encodedKey = Base64.getEncoder().encodeToString(key.getEncoded());
-        return encodedKey;
+        return Base64.getEncoder().encodeToString(key.getEncoded());
     }
 
     public static SecretKey convertStringToSecretKey(String encodedKey) {
         // decode the base64 encoded string
         byte[] decodedKey = Base64.getDecoder().decode(encodedKey);
-        // rebuild key using SecretKeySpec
-        SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-        return originalKey;
+
+        // rebuild key using SecretKeySpec and return it
+        return new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
     }
 
     public static String encrypt(String strToEncrypt, Key secretKey)
