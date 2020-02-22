@@ -19,15 +19,6 @@
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>>
 
-    <!-- Routine Fragment -->
-    <string name="monday">Mon</string>
-    <string name="tuesday">Tue</string>
-    <string name="wednesday">Wed</string>
-    <string name="thursday">Thu</string>
-    <string name="friday">Fri</string>
-    <string name="saturday">Sat</string>
-    <string name="sunday">Sun</string>
-
     <!-- Navigation Bar -->
     <string name="navigation_draw_open">Open navigation drawer</string>
     <string name="navigation_draw_close">Close navigation drawer</string>
@@ -41,8 +32,44 @@
     
     <!-- Survey questions -->
     <string name="survey_fitness_goal">What is your current fitness goal?</string>
-    <string name="survey_days_available">How many days do you want to spend in the gym?</string>
+    <string-array name="survey_fitness_goal_answer">
+        <item>Strength</item>
+        <item>Hypertrophy</item>
+        <item>Fat loss</item>
+    </string-array>
+
+    <string name="survey_days_available">Which days do you have available for the gym?</string>
+    <!-- Also used in Routine Fragment -->
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+
     <string name="survey_height">What is your height?</string>
+    <string name="survey_weight_hint">Weight</string>
+    <string name="survey_kg">Kg</string>
+    <string name="survey_lbs">Lbs</string>
+
     <string name="survey_weight">What is your weight?</string>
+    <string name="survey_height_hint">Height</string>
+    <string name="survey_cm">Cm</string>
+    <string name="survey_feet">Ft</string>
+
+    <string name="survey_create">Create Routine</string>
+
+    <!-- FragmentRoutineView && RecyclerRoutine -->
+    <string name="title">Title</string>
+
+    <string name="update_routine">Update Routine</string>
+
+    <string name="first_block">Week 1–4</string>
+    <string name="second_block">Week 5–8</string>
+    <string name="third_block">Week 9–12</string>
+
+    <string name="exercises">Exercises</string>
+    <string name="intensity">Intensity</string>
 
 </resources>

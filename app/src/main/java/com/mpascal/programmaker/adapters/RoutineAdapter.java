@@ -1,4 +1,4 @@
-package com.mpascal.programmaker.core;
+package com.mpascal.programmaker.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mpascal.programmaker.R;
+import com.mpascal.programmaker.core.Routine;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
     private ArrayList<Routine> routines;
     private OnItemClickListener listener;
 
+    // Implemented by the RoutineFragment in the buildRecyclerView method
     public interface OnItemClickListener {
         void onItemClick(int position);
         void onDeleteClick(int position);
@@ -29,15 +31,13 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         this.listener = listener;
     }
 
-    public static class RoutineViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView description;
-        public ImageView deleteRoutine;
+    static class RoutineViewHolder extends RecyclerView.ViewHolder {
+        private TextView title;
+        private ImageView deleteRoutine;
 
-        public RoutineViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
+        RoutineViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.routine_title);
-            description = itemView.findViewById(R.id.routine_description);
             deleteRoutine = itemView.findViewById(R.id.delete_routine);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,9 +73,8 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
     @NonNull
     @Override
     public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.routine, parent, false);
-        RoutineViewHolder routineViewHolder = new RoutineViewHolder(v, listener);
-        return routineViewHolder;
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_routine, parent, false);
+        return new RoutineViewHolder(v, listener);
     }
 
     @Override
@@ -83,7 +82,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         Routine currentRoutine = routines.get(position);
 
         holder.title.setText(currentRoutine.getTitle());
-        holder.description.setText(currentRoutine.getText());
     }
 
     @Override

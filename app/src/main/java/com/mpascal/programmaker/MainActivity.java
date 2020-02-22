@@ -1,9 +1,15 @@
 package com.mpascal.programmaker;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.PeriodicSync;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,33 +20,46 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
+import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.db.User;
 import com.mpascal.programmaker.fragments.ProfileFragment;
 import com.mpascal.programmaker.fragments.RoutineFragment;
 import com.mpascal.programmaker.fragments.SurveyFragment;
+import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-                                                               SurveyFragment.SurveyFragmentListener {
+        SurveyFragment.SurveyFragmentListener {
+
+    public static final String PACKAGE_NAME = "com.mpascal.programmaker";
+
+    private static final String TAG = "MainActivity";
 
     private DrawerLayout drawerLayout;
     private TextView loggedInUser;
     private TextView loggedInEmail;
 
-    // Instance of fragment so that we can send information between them
-    private RoutineFragment routineFragment;
+    // the array will store the days available
+    private ArrayList<Integer> daysAvailable;
 
-
-    public static final String EXTRA_MESSAGE = "com.example.programmaker.MESSAGE";
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Create new fragment and always use this instead of always creating it again
-        routineFragment = new RoutineFragment();
+        // This will retrieve the days available from the survey
+        daysAvailable = new ArrayList<>();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,23 +70,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        // Get the intent from LoginActivity
-        Intent intent = getIntent();
+        // Get the user details either from the incoming LoginActivity intent
+        // or from the shared preferences set when the activity calls onPause()
 
-        // Create user object and set user details in header
-        // index 0 = firstNameDec
-        // index 1 = lastNameDec
-        // index 2 = emailDec
-        // index 3 = passwordDec
-        // index 4 = dateOfBirthDec
-        // index 5 = key
-        String[] userDetails = intent.getStringArrayExtra("userDetails");
-        User user = new User(userDetails[0],
-                             userDetails[1],
-                             userDetails[2],
-                             userDetails[3],
-                             userDetails[4],
-                             userDetails[5]);
+        Intent intent = getIntent();
+        if (intent.hasExtra(LoginActivity.PACKAGE_NAME + ".userDetails")) {
+            user = intent.getParcelableExtra(LoginActivity.PACKAGE_NAME + ".userDetails");
+        } else {
+            SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+            user = new User(sharedPref.getString("firstName",""),
+                    sharedPref.getString("lastName",""),
+                    sharedPref.getString("email",""),
+                    sharedPref.getString("password",""),
+                    sharedPref.getString("dateOfBirth", ""),
+                    sharedPref.getString("key", ""));
+        }
 
         // Set the logged in user details
         NavigationView navigationView = findViewById(R.id.nav_view);
@@ -83,24 +100,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         // Set the initial fragment shown
-        if ( savedInstanceState == null ) {
+        if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    routineFragment).commit();
+                    new RoutineFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_routines);
         }
     }
 
     @Override
+    public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+            if ( currentFragment != null &&
+                    currentFragment.getClass() == SurveyFragment.class &&
+                    !daysAvailable.isEmpty()) {
+                daysAvailable = new ArrayList<>();
+            }
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("firstName", user.getFirstName());
+        editor.putString("lastName", user.getLastName());
+        editor.putString("email", user.getEmail());
+        editor.putString("password", user.getPassword());
+        editor.putString("dateOfBirth", user.getDateOfBirth());
+        editor.putString("key", user.getKey());
+        editor.apply();
+    }
+
+    @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch ( menuItem.getItemId() ) {
+        switch (menuItem.getItemId()) {
             case R.id.nav_profile:
+
+                // Store the user details in a bundle and pass them to the user profile
+                Fragment profileFragment = new ProfileFragment();
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(PACKAGE_NAME + ".userDetails", user);
+                profileFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new ProfileFragment()).commit();
+                        profileFragment).commit();
                 break;
 
             case R.id.nav_routines:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        routineFragment).commit();
+                        new RoutineFragment()).commit();
                 break;
 
             case R.id.nav_logout:
@@ -124,27 +178,86 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onBackPressed() {
-        if ( drawerLayout.isDrawerOpen(GravityCompat.START) ) {
-            drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void onSurveyCompleted(String goal, String weight, String height) {
+
+        String[] strDateOfBirth = user.getDateOfBirth().split("/");
+        Log.d(TAG, "onSurveyCompleted: " + strDateOfBirth[0] + " " + strDateOfBirth[1] + " " + strDateOfBirth[2]);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate dateOfBirth = LocalDate.of(Integer.parseInt(strDateOfBirth[2]),
+                                             Integer.parseInt(strDateOfBirth[1]),
+                                             Integer.parseInt(strDateOfBirth[0]));
+
+        int age = Period.between(dateOfBirth, currentDate).getYears();
+
+        // take strings and send to routine fragment
+        RoutineFragment.addRoutine(goal, daysAvailable, weight, height, age);
+
+        // Reinitialise the daysAvailable array so that it's empty when creating
+        // a new routine
+        daysAvailable = new ArrayList<>();
     }
 
-    @Override
-    public void onSurveyCompleted(String title, String description) {
-        // take strings and send to routine fragment
-        routineFragment.addRoutine(title, description);
+    // This will handle the checkbox ticks in the Survey Fragment Days available question
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch (view.getId()) {
+            case R.id.survey_monday:
+                if (checked)
+                    daysAvailable.add(0);
+                else
+                    daysAvailable.remove((Integer) 0);
+                break;
+
+            case R.id.survey_tuesday:
+                if (checked)
+                    daysAvailable.add(1);
+                else
+                    daysAvailable.remove((Integer) 1);
+                break;
+
+            case R.id.survey_wednesday:
+                if (checked)
+                    daysAvailable.add(2);
+                else
+                    daysAvailable.remove((Integer) 2);
+                break;
+
+            case R.id.survey_thursday:
+                if (checked)
+                    daysAvailable.add(3);
+                else
+                    daysAvailable.remove((Integer) 3);
+                break;
+
+            case R.id.survey_friday:
+                if (checked)
+                    daysAvailable.add(4);
+                else
+                    daysAvailable.remove((Integer) 4);
+                break;
+
+            case R.id.survey_saturday:
+                if (checked)
+                    daysAvailable.add(5);
+                else
+                    daysAvailable.remove((Integer) 5);
+                break;
+
+            case R.id.survey_sunday:
+                if (checked)
+                    daysAvailable.add(6);
+                else
+                    daysAvailable.remove((Integer) 6);
+                break;
+        }
     }
 
     private void logout() {
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
-    }
-
-    public RoutineFragment getRoutineFragment() {
-        return routineFragment;
     }
 }

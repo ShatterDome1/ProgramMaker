@@ -17,11 +17,13 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.util.AESHelper;
 
 import javax.crypto.SecretKey;
 
 public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
+    public static final String PACKAGE_NAME = "com.mpascal.programmaker";
 
     private EditText username;
     private EditText password;
@@ -90,11 +92,11 @@ public class LoginActivity extends AppCompatActivity {
                                     // Retrieve decrypted firstName and email
                                     String firstNameDec = AESHelper.decrypt(user.getFirstName(), secretKey);
                                     String lastNameDec = AESHelper.decrypt(user.getLastName(), secretKey);
-                                    String emailDec = AESHelper.decrypt(user.getEmail(), secretKey);
                                     String dateOfBirthDec = AESHelper.decrypt(user.getDateOfBirth(), secretKey);
 
-                                    String[] userDetails = {firstNameDec, lastNameDec, emailDec, passwordDec, dateOfBirthDec, key};
-                                    intent.putExtra("userDetails", userDetails);
+                                    // Create decrypted user object and add it to the intent
+                                    User decUser = new User(firstNameDec, lastNameDec, usernameStr, passwordDec, dateOfBirthDec, key);
+                                    intent.putExtra(PACKAGE_NAME + ".userDetails", decUser);
 
                                     startActivity(intent);
                                     ok = true;

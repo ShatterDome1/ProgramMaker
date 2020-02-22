@@ -1,4 +1,4 @@
-package com.mpascal.programmaker;
+package com.mpascal.programmaker.util;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;

@@ -1,9 +1,8 @@
 package com.mpascal.programmaker;
 
 import org.junit.Test;
-import com.mpascal.programmaker.AESHelper;
+import com.mpascal.programmaker.util.AESHelper;
 
-import java.security.Key;
 import java.util.Base64;
 
 import javax.crypto.SecretKey;
@@ -45,5 +44,10 @@ public class ExampleUnitTest {
         // rebuild key using SecretKeySpec
         SecretKey originalKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         return originalKey;
+    }
+
+    @Test
+    public void splitSelector() {
+
     }
 }

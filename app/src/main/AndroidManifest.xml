@@ -22,13 +22,11 @@
             android:parentActivityName="com.mpascal.programmaker.LoginActivity">
         </activity>
 
-        <activity
-            android:name="com.mpascal.programmaker.DisplayMessageActivity"
-            android:parentActivityName="com.mpascal.programmaker.MainActivity">
-        </activity>
-
         <activity android:name="com.mpascal.programmaker.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity android:name="com.mpascal.programmaker.RoutineViewActivity"
+            android:parentActivityName="com.mpascal.programmaker.MainActivity"/>
 
     </application>
 

@@ -2,6 +2,7 @@ package com.mpascal.programmaker.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +19,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mpascal.programmaker.AESHelper;
+import com.mpascal.programmaker.MainActivity;
+import com.mpascal.programmaker.util.AESHelper;
 import com.mpascal.programmaker.LoginActivity;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.db.User;
@@ -45,23 +47,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.fragment_profile, container, false);
 
-        // Get the logged in user from MainActivity
-        Intent intent = getActivity().getIntent();
 
-        // Create user object and set the logged in user details in the fragment
-        // index 0 = firstNameDec
-        // index 1 = lastNameDec
-        // index 2 = emailDec
-        // index 3 = passwordDec
-        // index 4 = dateOfBirthDec
-        // index 5 = key
-        String[] userDetails = intent.getStringArrayExtra("userDetails");
-        final User user = new User(userDetails[0],
-                userDetails[1],
-                userDetails[2],
-                userDetails[3],
-                userDetails[4],
-                userDetails[5]);
+        // Get the intent from LoginActivity and the user details
+        Bundle bundle = getArguments();
+        final User user = bundle.getParcelable(MainActivity.PACKAGE_NAME + ".userDetails");
 
         password = view.findViewById(R.id.profilePassword);
         newPassword = view.findViewById(R.id.profileNewPassword);

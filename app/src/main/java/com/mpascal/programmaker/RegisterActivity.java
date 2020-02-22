@@ -20,8 +20,8 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.util.AESHelper;
 
-import java.security.Key;
 import java.util.Calendar;
 
 import javax.crypto.SecretKey;
