@@ -417,6 +417,70 @@
             "isCompoundExercise" : false,
             "primaryMover" : "AbsU"
         },
+
+        "Decline DB Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Hammer Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Incline DB Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Preacher Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Reverse Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Rope Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Standing BB Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
+
+        "Standing DB Curls" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Biceps"
+        },
         
         "Arnold Press" : {
             "category" : "Accessory",
@@ -560,6 +624,70 @@
             "isSuitableForElders" : true,
             "isCompoundExercise" : false,
             "primaryMover" : "RearDelts"
+        },
+
+        "BB Skullcrusher" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "Cable Push-Down" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "DB Pullovers" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "DB Skullcrushers" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "Overhead Cable Triceps Extension" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "Overhead Triceps Extension" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "Rope Triceps Pushdown" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
+        },
+
+        "Trcieps Kickbacks" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Triceps"
         },
         
         "1 Arm DB Row" : {
