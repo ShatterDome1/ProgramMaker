@@ -102,6 +102,7 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day0"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -109,6 +110,7 @@
                     android:text="@string/monday" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -116,6 +118,7 @@
                     android:text="@string/tuesday" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -123,6 +126,7 @@
                     android:text="@string/wednesday" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -130,6 +134,7 @@
                     android:text="@string/thursday" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -137,6 +142,7 @@
                     android:text="@string/friday" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -144,6 +150,7 @@
                     android:text="@string/saturday" />
 
                 <TextView
+                    android:id="@+id/exercises_block1_day6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

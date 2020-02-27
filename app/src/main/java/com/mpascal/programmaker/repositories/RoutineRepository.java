@@ -42,9 +42,6 @@ public class RoutineRepository {
     }
 
     private void setRoutines() {
-        // get the routines from the db
-        ArrayList<Integer> daysAvailable = new ArrayList<>(Arrays.asList(0,2,4));
-
-        dataSet.add(new HypertrophyRoutine("Hypertrophy", "Hypertrophy", daysAvailable, "95Kg", "180Cm", 20));
+        // Get the routines from the database
     }
 }

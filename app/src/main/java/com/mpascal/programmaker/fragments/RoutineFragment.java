@@ -24,6 +24,7 @@ import com.mpascal.programmaker.core.HypertrophyRoutine;
 import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.adapters.RoutineAdapter;
 import com.mpascal.programmaker.core.StrengthRoutine;
+import com.mpascal.programmaker.db.Exercise;
 import com.mpascal.programmaker.db.User;
 import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
 
@@ -74,23 +75,56 @@ public class RoutineFragment extends Fragment {
     }
 
     public static void addRoutine(String goal, ArrayList<Integer> daysAvailable, String weight, String height, int age) {
-        // first param of the Routine object is Title, add a way to change title
+        // Get copies of the exercise lists, if we don't get a copy we pass the lists as reference to the new routine object
+        // which will affect the exercise lists values in the repository if a delete/add operation is made
+        ArrayList<Exercise> mainExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Main"));
+        ArrayList<Exercise> secondaryExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Secondary"));
+        ArrayList<Exercise> accessoryExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Accessory"));
+        ArrayList<Exercise> cardioExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Cardio"));
+
+        // first param of the Routine object is Title which will be defaulted to the goal
         switch (goal) {
             case "Hypertrophy":
                 Log.d(TAG, "addRoutine: Hypertrophy");
-                routineFragmentViewModel.addRoutine(new HypertrophyRoutine(goal, goal, daysAvailable, weight, height, age));
+                routineFragmentViewModel.addRoutine(new HypertrophyRoutine(goal,
+                        goal,
+                        daysAvailable,
+                        weight,
+                        height,
+                        age,
+                        mainExercises,
+                        secondaryExercises,
+                        accessoryExercises,
+                        cardioExercises));
                 break;
 
             case "Fat loss":
                 Log.d(TAG, "addRoutine: Fat loss");
-                routineFragmentViewModel.addRoutine(new FatLossRoutine(goal, goal, daysAvailable, weight, height, age));
+                routineFragmentViewModel.addRoutine(new FatLossRoutine(goal,
+                        goal,
+                        daysAvailable,
+                        weight,
+                        height,
+                        age,
+                        mainExercises,
+                        secondaryExercises,
+                        accessoryExercises,
+                        cardioExercises));
                 break;
 
             case "Strength":
                 Log.d(TAG, "addRoutine: Strength");
-                routineFragmentViewModel.addRoutine(new StrengthRoutine(goal, goal, daysAvailable, weight, height, age));
+                routineFragmentViewModel.addRoutine(new StrengthRoutine(goal,
+                        goal,
+                        daysAvailable,
+                        weight,
+                        height,
+                        age,
+                        mainExercises,
+                        secondaryExercises,
+                        accessoryExercises,
+                        cardioExercises));
                 break;
-
         }
 
         adapter.notifyItemInserted(0);
@@ -108,9 +142,10 @@ public class RoutineFragment extends Fragment {
             @Override
             public void onItemClick(int position) {
                 Intent intent= new Intent(getActivity(), RoutineViewActivity.class);
-                intent.putExtra( PACKAGE_NAME + ".routine", routineFragmentViewModel.getRoutine(position));
-                Log.d(TAG, "onItemClick: " + PACKAGE_NAME + ".routine" + routineFragmentViewModel.getRoutine(position).getBmi());
+                Routine currentRoutine = routineFragmentViewModel.getRoutine(position);
+                intent.putExtra( PACKAGE_NAME + ".routine", currentRoutine);
                 startActivity(intent);
+                Log.d(TAG, "onItemClick: " + currentRoutine.getTitle());
             }
 
             @Override

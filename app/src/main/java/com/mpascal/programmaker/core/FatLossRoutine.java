@@ -9,8 +9,16 @@ import java.util.ArrayList;
 
 public class FatLossRoutine extends Routine {
 
-    public FatLossRoutine(String title, String goal, ArrayList<Integer> daysAvailable, String weight, String height, int age) {
-        super(title, goal, daysAvailable, weight, height, age);
+    public FatLossRoutine(String title,
+                          String goal,
+                          ArrayList<Integer> daysAvailable,
+                          String weight, String height,
+                          int age,
+                          ArrayList<Exercise> mainExercises,
+                          ArrayList<Exercise> secondaryExercises,
+                          ArrayList<Exercise> accessoryExercises,
+                          ArrayList<Exercise> cardioExercises) {
+        super(title, goal, daysAvailable, weight, height, age, mainExercises, secondaryExercises, accessoryExercises, cardioExercises);
     }
 
     protected FatLossRoutine(Parcel in) {
@@ -29,8 +37,5 @@ public class FatLossRoutine extends Routine {
         }
     };
 
-    @Override
-    public ArrayList<Exercise> getExercises() {
-        return null;
-    }
+
 }

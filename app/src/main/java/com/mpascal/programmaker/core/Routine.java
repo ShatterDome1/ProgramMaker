@@ -7,8 +7,10 @@ import com.mpascal.programmaker.db.Exercise;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.regex.Pattern;
 
 public abstract class Routine implements Parcelable {
+    private static final String TAG = "Routine";
 
     private String title;
     private String goal;
@@ -16,28 +18,44 @@ public abstract class Routine implements Parcelable {
     private Double bmi;
     private String routineSplit;
     private int age;
+    private String[][] exercisesPerBlock;
 
     public Routine(String title,
                    String goal,
                    ArrayList<Integer> daysAvailable,
                    String weight,
                    String height,
-                   int age) {
+                   int age,
+                   ArrayList<Exercise> mainExercises,
+                   ArrayList<Exercise> secondaryExercises,
+                   ArrayList<Exercise> accessoryExercises,
+                   ArrayList<Exercise> cardioExercises) {
         this.title = title;
         this.goal = goal;
         this.daysAvailable = daysAvailable;
         calcRoutineSplit(daysAvailable, goal);
         calcBMI(weight, height);
         this.age = age;
+        this.exercisesPerBlock = setExercisesForTrainingBlocks(routineSplit,
+                daysAvailable.size(),
+                mainExercises,
+                secondaryExercises,
+                accessoryExercises,
+                cardioExercises);
     }
 
-    protected Routine (Parcel in) {
+    protected Routine(Parcel in) {
+        ClassLoader routineClassLoader = Routine.class.getClassLoader();
         title = in.readString();
         goal = in.readString();
-        daysAvailable = in.readArrayList(Routine.class.getClassLoader());
+        daysAvailable = in.readArrayList(routineClassLoader);
         bmi = in.readDouble();
         routineSplit = in.readString();
         age = in.readInt();
+        exercisesPerBlock = new String[3][daysAvailable.size()];
+        for (int i = 0; i < 3; i++) {
+            in.readStringArray(exercisesPerBlock[i]);
+        }
     }
 
     @Override
@@ -53,6 +71,92 @@ public abstract class Routine implements Parcelable {
         dest.writeDouble(bmi);
         dest.writeString(routineSplit);
         dest.writeInt(age);
+        for(int i = 0 ; i < 3; i++) {
+            dest.writeStringArray(exercisesPerBlock[i]);
+        }
+    }
+
+    public String[][] setExercisesForTrainingBlocks(String routineSplit,
+                                                    int daysAvailable,
+                                                    ArrayList<Exercise> mainExercises,
+                                                    ArrayList<Exercise> secondaryExercises,
+                                                    ArrayList<Exercise> accessoryExercises,
+                                                    ArrayList<Exercise> cardioExercises) {
+
+        // Get the exercise templates for the routine
+        ExerciseTemplateProvider template = new ExerciseTemplateProvider(routineSplit, daysAvailable);
+        String[] dayTemplates = template.getDaysTemplates();
+
+        String[][] exercisesPerBlock = new String[3][dayTemplates.length];
+        // Initialise all strings of every block with empty strings so that we don't have null
+        // when we concatenate the exercise names
+        for (int i = 0; i < daysAvailable; i++) {
+            exercisesPerBlock[0][i] = "";
+            exercisesPerBlock[1][i] = "";
+            exercisesPerBlock[2][i] = "";
+        }
+
+        // Iterate through every training block
+        for (int i = 0; i < 3; i++) {
+            // Iterate through all the day templates
+            for (int j = 0; j < dayTemplates.length; j++) {
+
+                String[] exercisesTypes = dayTemplates[j].split(Pattern.quote("|"));
+
+                for (String exerciseType : exercisesTypes) {
+
+                    // Find the first exercise in the lists given that match the criteria
+                    final String[] exerciseProperties = exerciseType.split(" ");
+                    ArrayList<Exercise> exerciseList = new ArrayList<>();
+                    boolean removeExercise = false;
+
+                    switch (exerciseProperties[0]) {
+                        case "Main":
+                            exerciseList = mainExercises;
+                            break;
+
+                        case "Secondary":
+                            exerciseList = secondaryExercises;
+                            removeExercise = true;
+                            break;
+
+                        case "Accessory":
+                            exerciseList = accessoryExercises;
+                            removeExercise = true;
+                            break;
+
+                        case "Cardio":
+                            exerciseList = cardioExercises;
+                            removeExercise = true;
+                            break;
+                    }
+
+                    for (Exercise exercise : exerciseList) {
+                        if (exercise.getPrimaryMover().equals(exerciseProperties[1])) {
+
+                            String suffix = "";
+                            // Check if it's the last exercise that's substituted from the day template
+                            if (!exerciseType.equals(exercisesTypes[exercisesTypes.length - 1])) {
+                                suffix = "|";
+                            }
+
+                            exercisesPerBlock[i][j] += exercise.getName() + suffix;
+
+                            if (removeExercise) {
+                                if (exerciseProperties[0].equals("Secondary"))
+                                    secondaryExercises.remove(exercise);
+                                else
+                                    accessoryExercises.remove(exercise);
+                            }
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        return exercisesPerBlock;
     }
 
     private void calcRoutineSplit(ArrayList<Integer> daysAvailable, String goal) {
@@ -60,7 +164,7 @@ public abstract class Routine implements Parcelable {
             if (daysAvailable.size() == 4) {
                 // Decide between Upper/Lower and Full Body
                 if (goal.equals("Hypertrophy")) {
-                    routineSplit = "Upper Lower";
+                    routineSplit = "UL";
                 } else {
                     Collections.sort(daysAvailable);
                     // Check if routine has 3 odds or evens
@@ -83,18 +187,18 @@ public abstract class Routine implements Parcelable {
                     }
 
                     if (ct > 1 && ctOdd < 3 && ctEven < 3) {
-                        routineSplit = "Upper Lower";
+                        routineSplit = "UL";
                     } else {
-                        routineSplit = "Full Body";
+                        routineSplit = "FB+GPP";
                     }
                 }
             } else if (daysAvailable.size() == 5) {
-                routineSplit = "Upper Lower";
+                routineSplit = "UL+GPP";
             } else {
-                routineSplit = "Push Pull Legs";
+                routineSplit = "PPL";
             }
         } else {
-            routineSplit = "Full Body";
+            routineSplit = "FB";
         }
     }
 
@@ -151,21 +255,47 @@ public abstract class Routine implements Parcelable {
         return goal;
     }
 
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
+
     public ArrayList<Integer> getDaysAvailable() {
         return daysAvailable;
     }
 
-    public String getRoutineSplit() {
-        return routineSplit;
+    public void setDaysAvailable(ArrayList<Integer> daysAvailable) {
+        this.daysAvailable = daysAvailable;
     }
 
     public Double getBmi() {
         return bmi;
     }
 
+    public void setBmi(Double bmi) {
+        this.bmi = bmi;
+    }
+
+    public String getRoutineSplit() {
+        return routineSplit;
+    }
+
+    public void setRoutineSplit(String routineSplit) {
+        this.routineSplit = routineSplit;
+    }
+
     public int getAge() {
         return age;
     }
 
-    public abstract ArrayList<Exercise> getExercises();
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String[][] getExercisesPerBlock() {
+        return exercisesPerBlock;
+    }
+
+    public void setExercisesPerBlock(String[][] exercisesPerBlock) {
+        this.exercisesPerBlock = exercisesPerBlock;
+    }
 }

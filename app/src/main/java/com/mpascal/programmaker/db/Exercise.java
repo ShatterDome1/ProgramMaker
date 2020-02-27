@@ -1,6 +1,9 @@
 package com.mpascal.programmaker.db;
 
-public class Exercise {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Exercise implements Parcelable {
 
     // Possible values:
     // Main
@@ -40,27 +43,89 @@ public class Exercise {
         this.primaryMover = primaryMover;
     }
 
+    protected Exercise(Parcel in) {
+        category = in.readString();
+        name = in.readString();
+        repRange = in.readString();
+        isSuitableForElders = in.readByte() != 0;
+        isCompoundExercise = in.readByte() != 0;
+        primaryMover = in.readString();
+    }
+
+    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+        @Override
+        public Exercise createFromParcel(Parcel in) {
+            return new Exercise(in);
+        }
+
+        @Override
+        public Exercise[] newArray(int size) {
+            return new Exercise[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(category);
+        dest.writeString(name);
+        dest.writeString(repRange);
+        dest.writeByte((byte) (isSuitableForElders ? 1 : 0));
+        dest.writeByte((byte) (isCompoundExercise ? 1 : 0));
+        dest.writeString(primaryMover);
+    }
+
+    public Exercise() {}
+
     public String getCategory() {
         return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getRepRange() {
         return repRange;
     }
 
-    public boolean isSuitableForElders() {
+    public void setRepRange(String repRange) {
+        this.repRange = repRange;
+    }
+
+    public boolean getIsSuitableForElders() {
         return isSuitableForElders;
     }
 
-    public boolean isCompoundExercise() {
+    public void setIsSuitableForElders(boolean suitableForElders) {
+        isSuitableForElders = suitableForElders;
+    }
+
+    public boolean getIsCompoundExercise() {
         return isCompoundExercise;
+    }
+
+    public void setIsCompoundExercise(boolean compoundExercise) {
+        isCompoundExercise = compoundExercise;
     }
 
     public String getPrimaryMover() {
         return primaryMover;
+    }
+
+    public void setPrimaryMover(String primaryMover) {
+        this.primaryMover = primaryMover;
     }
 }
