@@ -26,6 +26,11 @@ public class StrengthRoutine extends Routine {
         super(in);
     }
 
+    @Override
+    public String[][] calcIntensityPerBlocks() {
+        return new String[0][];
+    }
+
     public static final Parcelable.Creator<StrengthRoutine> CREATOR = new Parcelable.Creator<StrengthRoutine>() {
         @Override
         public StrengthRoutine createFromParcel(Parcel source) {

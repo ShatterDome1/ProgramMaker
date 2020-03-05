@@ -85,7 +85,14 @@ public class RoutineViewActivity extends AppCompatActivity {
 
         for(int i = 0; i < 3; i++) {
             for (int j = 0; j < daysAvailable.size(); j++) {
-                Log.d(TAG, "loadExercises: " + exercisesPerBlock[i][j]);
+                Log.d(TAG, "loadExercises: exercises: " + exercisesPerBlock[i][j]);
+            }
+        }
+
+        String[][] intensityPerBlock = currentRoutine.getIntensityPerBlock();
+        for (int i =0; i < 3; i++) {
+            for (int j = 0; j < 4; j++) {
+                Log.d(TAG, "loadExercises: intensitiy: " + intensityPerBlock[i][j]);
             }
         }
 

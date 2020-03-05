@@ -21,6 +21,11 @@ public class HypertrophyRoutine extends Routine {
         super(title, goal, daysAvailable, weight, height, age, mainExercises, secondaryExercises, accessoryExercises, cardioExercises);
     }
 
+    @Override
+    public String[][] calcIntensityPerBlocks() {
+        return new String[0][];
+    }
+
     protected HypertrophyRoutine (Parcel in) {
         super(in);
     }

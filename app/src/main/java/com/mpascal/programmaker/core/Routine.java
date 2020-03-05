@@ -2,6 +2,7 @@ package com.mpascal.programmaker.core;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.mpascal.programmaker.db.Exercise;
 
@@ -18,6 +19,7 @@ public abstract class Routine implements Parcelable {
     private Double bmi;
     private String routineSplit;
     private int age;
+    private String[][] intensityPerBlock;
     private String[][] exercisesPerBlock;
 
     public Routine(String title,
@@ -36,8 +38,10 @@ public abstract class Routine implements Parcelable {
         calcRoutineSplit(daysAvailable, goal);
         calcBMI(weight, height);
         this.age = age;
-        this.exercisesPerBlock = setExercisesForTrainingBlocks(routineSplit,
+        this.intensityPerBlock = new IntensityTemplateProvider(goal).getIntensityPerBlocks();
+        this.exercisesPerBlock = calcExercisesForTrainingBlocks(routineSplit,
                 daysAvailable.size(),
+                intensityPerBlock,
                 mainExercises,
                 secondaryExercises,
                 accessoryExercises,
@@ -45,13 +49,16 @@ public abstract class Routine implements Parcelable {
     }
 
     protected Routine(Parcel in) {
-        ClassLoader routineClassLoader = Routine.class.getClassLoader();
         title = in.readString();
         goal = in.readString();
-        daysAvailable = in.readArrayList(routineClassLoader);
+        daysAvailable = in.readArrayList(Routine.class.getClassLoader());
         bmi = in.readDouble();
         routineSplit = in.readString();
         age = in.readInt();
+        intensityPerBlock = new String[3][4];
+        for (int i = 0; i < 3 ; i++) {
+            in.readStringArray(intensityPerBlock[i]);
+        }
         exercisesPerBlock = new String[3][daysAvailable.size()];
         for (int i = 0; i < 3; i++) {
             in.readStringArray(exercisesPerBlock[i]);
@@ -71,17 +78,21 @@ public abstract class Routine implements Parcelable {
         dest.writeDouble(bmi);
         dest.writeString(routineSplit);
         dest.writeInt(age);
-        for(int i = 0 ; i < 3; i++) {
+        for (int i = 0; i < 3 ; i++) {
+            dest.writeStringArray(intensityPerBlock[i]);
+        }
+        for (int i = 0; i < 3 ; i++) {
             dest.writeStringArray(exercisesPerBlock[i]);
         }
     }
 
-    public String[][] setExercisesForTrainingBlocks(String routineSplit,
-                                                    int daysAvailable,
-                                                    ArrayList<Exercise> mainExercises,
-                                                    ArrayList<Exercise> secondaryExercises,
-                                                    ArrayList<Exercise> accessoryExercises,
-                                                    ArrayList<Exercise> cardioExercises) {
+    private String[][] calcExercisesForTrainingBlocks(String routineSplit,
+                                                     int daysAvailable,
+                                                     String[][] intensityPerBlock,
+                                                     ArrayList<Exercise> mainExercises,
+                                                     ArrayList<Exercise> secondaryExercises,
+                                                     ArrayList<Exercise> accessoryExercises,
+                                                     ArrayList<Exercise> cardioExercises) {
 
         // Get the exercise templates for the routine
         ExerciseTemplateProvider template = new ExerciseTemplateProvider(routineSplit, daysAvailable);
@@ -96,32 +107,73 @@ public abstract class Routine implements Parcelable {
             exercisesPerBlock[2][i] = "";
         }
 
-        // Iterate through every training block
+        // Iterate through every training block and intensity block
         for (int i = 0; i < 3; i++) {
+
+            // Get the number of reps per exercise type. The exercise rep ranges will not change
+            // weekly. It is safe to get only the first entry from the intensity 2d array and determine
+            // the reps from there
+            int mainRepsPerBlock = -1;
+            int secondaryRepsPerBlock = -1;
+            int accessoryRepsPerBlock = -1;
+
+            // Example String:
+            // "Main-6 reps @ RPE 6,7,8|Secondary-8 reps @ RPE 7,8,9|Accessory-10 reps x 5 sets";
+            String[] exerciseRepRanges = intensityPerBlock[i][0].split(Pattern.quote("|"));
+            for (String exerciseRepRange : exerciseRepRanges) {
+                // Example String:
+                // "Main-6 reps @ RPE 6,7,8"
+                String[] repRangePerType = exerciseRepRange.split("-");
+                if (repRangePerType[0].equals("Main")) {
+                    // get the first string after the -
+                    mainRepsPerBlock = Integer.parseInt(repRangePerType[1].split(" ")[0]);
+                }
+
+                if (repRangePerType[0].equals("Secondary")) {
+                    // get the first string after the -
+                    secondaryRepsPerBlock = Integer.parseInt(repRangePerType[1].split(" ")[0]);
+                }
+
+                if (repRangePerType[0].equals("Accessory")) {
+                    // get the first string after the -
+                    accessoryRepsPerBlock = Integer.parseInt(repRangePerType[1].split(" ")[0]);
+                }
+            }
+
+
             // Iterate through all the day templates
             for (int j = 0; j < dayTemplates.length; j++) {
 
+                // Example String:
+                // "Main Legs|Main Chest|Secondary Back|Accessory AbsL"
                 String[] exercisesTypes = dayTemplates[j].split(Pattern.quote("|"));
 
                 for (String exerciseType : exercisesTypes) {
+                    // Example String:
+                    // "Main Legs"
 
                     // Find the first exercise in the lists given that match the criteria
                     final String[] exerciseProperties = exerciseType.split(" ");
+
                     ArrayList<Exercise> exerciseList = new ArrayList<>();
+                    int repRange = -1;
                     boolean removeExercise = false;
 
                     switch (exerciseProperties[0]) {
                         case "Main":
                             exerciseList = mainExercises;
+                            repRange = mainRepsPerBlock;
                             break;
 
                         case "Secondary":
                             exerciseList = secondaryExercises;
+                            repRange = secondaryRepsPerBlock;
                             removeExercise = true;
                             break;
 
                         case "Accessory":
                             exerciseList = accessoryExercises;
+                            repRange = accessoryRepsPerBlock;
                             removeExercise = true;
                             break;
 
@@ -132,7 +184,19 @@ public abstract class Routine implements Parcelable {
                     }
 
                     for (Exercise exercise : exerciseList) {
-                        if (exercise.getPrimaryMover().equals(exerciseProperties[1])) {
+
+                        boolean betweenRepRange = false;
+                        if (repRange != -1) {
+                            String[] repRanges = exercise.getRepRange().split("-");
+                            int exerciseLowerReps = Integer.parseInt(repRanges[0]);
+                            int exerciseUpperReps = Integer.parseInt(repRanges[1]);
+                            betweenRepRange = (repRange >= exerciseLowerReps) && (repRange <= exerciseUpperReps);
+                        } else {
+                            Log.d(TAG, "calcExercisesForTrainingBlocks: Rep Range is -1 for" + exerciseProperties[0]);
+                            betweenRepRange = true;
+                        }
+
+                        if (exercise.getPrimaryMover().equals(exerciseProperties[1]) && betweenRepRange) {
 
                             String suffix = "";
                             // Check if it's the last exercise that's substituted from the day template
@@ -243,6 +307,8 @@ public abstract class Routine implements Parcelable {
         bmi = weightValue / (heightValue * heightValue);
     }
 
+    public abstract String[][] calcIntensityPerBlocks();
+
     public String getTitle() {
         return title;
     }
@@ -297,5 +363,13 @@ public abstract class Routine implements Parcelable {
 
     public void setExercisesPerBlock(String[][] exercisesPerBlock) {
         this.exercisesPerBlock = exercisesPerBlock;
+    }
+
+    public String[][] getIntensityPerBlock() {
+        return intensityPerBlock;
+    }
+
+    public void setIntensityPerBlock(String[][] intensityPerBlock) {
+        this.intensityPerBlock = intensityPerBlock;
     }
 }

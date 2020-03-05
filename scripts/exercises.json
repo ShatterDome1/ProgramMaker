@@ -4,7 +4,7 @@
         
         "Bench Press" : {
             "category" : "Main",
-            "repRange" : "1-8",
+            "repRange" : "1-10",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -12,7 +12,7 @@
         
         "Deadlift" : {
             "category" : "Main",
-            "repRange" : "1-8",
+            "repRange" : "1-10",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -20,7 +20,7 @@
         
         "Overhead Press" : {
             "category" : "Main",
-            "repRange" : "1-8",
+            "repRange" : "1-10",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -28,7 +28,7 @@
 
         "Squat" : {
             "category" : "Main",
-            "repRange" : "1-8",
+            "repRange" : "1-10",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -36,7 +36,7 @@
         
         "Block Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -44,7 +44,7 @@
         
         "Deficit Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "1-8",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -52,7 +52,7 @@
         
         "Paused Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "1-8",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -60,7 +60,7 @@
         
         "Romanian Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -68,7 +68,7 @@
         
         "Sumo Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -76,7 +76,7 @@
         
         "Trap Bar Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -84,7 +84,7 @@
         
         "Wide Grip Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Back"
@@ -92,7 +92,7 @@
                 
         "2 Count Paused Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -100,7 +100,7 @@
         
         "Close Grip Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -108,7 +108,15 @@
         
         "Decline BB Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : true,
+            "primaryMover" : "Chest"
+        },
+        
+        "Feet Up Bench Press" : {
+            "category" : "Secondary",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -116,7 +124,7 @@
         
         "Floor Press" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -124,7 +132,7 @@
         
         "Incline BB Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -132,7 +140,7 @@
         
         "Pin Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -140,7 +148,7 @@
         
         "Spoto Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -148,7 +156,7 @@
         
         "Wide Grip Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Chest"
@@ -156,7 +164,7 @@
         
         "2 Count Paused Squat" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -164,7 +172,7 @@
         
         "3-0-3 Tempo Squat" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -172,7 +180,7 @@
         
         "Front Squat" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -180,7 +188,7 @@
         
         "Good Morning Squat" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -188,7 +196,7 @@
         
         "Leg Press" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -196,7 +204,7 @@
         
         "Pin Squat" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Legs"
@@ -204,7 +212,7 @@
         
         "Push Press" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -212,7 +220,7 @@
         
         "Pin Press @ Chin" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -220,7 +228,7 @@
         
         "Pin Press @ Forehead" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -228,7 +236,7 @@
         
         "Pin Press @ Nose" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -236,7 +244,7 @@
         
         "Pin Press @ Shoulders" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -244,7 +252,7 @@
         
         "Seated BB Press" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
             "primaryMover" : "Shoulders"
@@ -370,7 +378,7 @@
             "primaryMover" : "AbsU"
         },
         
-        "Rope Pulls" : {
+        "Rope Pulldowns" : {
             "category" : "Accessory",
             "repRange" : "8-15",
             "isSuitableForElders" : true,
@@ -482,6 +490,78 @@
             "primaryMover" : "Biceps"
         },
         
+        "Cable Chest fly" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "DB Bench press" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "DB Pullovers" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "Decline DB Bench press" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "Dips" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "High Cable Chest Fly" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "Incline DB Bench press" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "Low Cable Chest Fly" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
+        "Middle Cable Chest Fly" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Chest"
+        },
+        
         "Arnold Press" : {
             "category" : "Accessory",
             "repRange" : "8-12",
@@ -537,8 +617,24 @@
             "isCompoundExercise" : false,
             "primaryMover" : "Hamstring"
         },
+                
+        "1 Arm DB Row" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "LBack"
+        },
         
         "Back Extension" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "LBack"
+        },
+        
+        "Barbell Row" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
@@ -563,6 +659,22 @@
         },
         
         "DB Lateral Raises" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "MidDelts"
+        },
+        
+        "Isometric Lateral Raises" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "MidDelts"
+        },
+        
+        "Seated DB Lateral Raises" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
@@ -642,14 +754,6 @@
             "primaryMover" : "Triceps"
         },
 
-        "DB Pullovers" : {
-            "category" : "Accessory",
-            "repRange" : "8-12",
-            "isSuitableForElders" : true,
-            "isCompoundExercise" : false,
-            "primaryMover" : "Triceps"
-        },
-
         "DB Skullcrushers" : {
             "category" : "Accessory",
             "repRange" : "8-12",
@@ -682,28 +786,12 @@
             "primaryMover" : "Triceps"
         },
 
-        "Trcieps Kickbacks" : {
+        "Triceps Kickbacks" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : false,
             "primaryMover" : "Triceps"
-        },
-        
-        "1 Arm DB Row" : {
-            "category" : "Accessory",
-            "repRange" : "8-12",
-            "isSuitableForElders" : true,
-            "isCompoundExercise" : false,
-            "primaryMover" : "UBack"
-        },
-        
-        "Barbell Row" : {
-            "category" : "Accessory",
-            "repRange" : "8-12",
-            "isSuitableForElders" : true,
-            "isCompoundExercise" : false,
-            "primaryMover" : "UBack"
         },
         
         "Chin Ups" : {

@@ -46,19 +46,19 @@ public class ExerciseTemplateProvider {
                 }
 
                 if (daysAvailable == 3) {
-                    /**
-                     * FB (Full Body) exercise selection:
-                     *
-                     *      Day1                Day2                   Day3
-                     * Main Legs      |     Secondary Legs      |   Main Back
-                     * Main Chest     |     Main Shoulders      |   Secondary Chest
-                     * Secondary Back |     Secondary Back      |   Secondary Legs
-                     * Accessory AbsL |     Accessory AbsU      |   Accessory AbsS
-                     *
-                     */
-                    daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
-                    daysTemplates[1] = "Secondary Legs|Main Shoulders|Secondary Back|Accessory AbsU";
-                    daysTemplates[2] = "Main Back|Secondary Chest|Secondary Legs|Accessory AbsS";
+                        /**
+                         * FB (Full Body) exercise selection:
+                         *
+                         *      Day1                Day2                   Day3
+                         * Main Legs      |     Secondary Legs      |   Main Back
+                         * Main Chest     |     Main Shoulders      |   Secondary Chest
+                         * Secondary Back |     Secondary Back      |   Secondary Legs
+                         * Accessory AbsL |     Accessory AbsU      |   Accessory AbsS
+                         *
+                         */
+                        daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
+                        daysTemplates[1] = "Secondary Legs|Main Shoulders|Secondary Back|Accessory AbsU";
+                        daysTemplates[2] = "Main Back|Secondary Chest|Secondary Legs|Accessory AbsS";
                 }
                 break;
 
@@ -71,7 +71,6 @@ public class ExerciseTemplateProvider {
                      * Main Chest     |     Main Shoulders |    Secondary Chest |   Accessory Triceps
                      * Secondary Back |     Secondary Back |    Secondary Legs  |   Accessory Biceps
                      * Accessory AbsL |     Accessory AbsU |    Accessory AbsS  |   Cardio LISS
-                     *
                      *
                      */
                     daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
@@ -126,27 +125,26 @@ public class ExerciseTemplateProvider {
                  * PPL (Push Pull Legs) exercise selection:
                  *
                  *      Day1                    Day2                    Day3
-                 * Main Chest          |    Main Back           |   Main Legs
-                 * Secondary Shoulders |    Secondary Back      |   Secondary Legs
-                 * Secondary Chest     |    Accessory UBack     |   Accessory Quads
-                 * Accessory Triceps   |    Accessory Biceps    |   Accessory Hamstrings
+                 * Main Chest          |    Secondary Back      |   Main Legs
+                 * Secondary Shoulders |    Accessory UBack     |   Accessory Quads
+                 * Accessory Chest     |    Accessory Biceps    |   Accessory Hamstrings
                  * Accessory Triceps   |    Accessory RearDelts |   Accessory Calves
                  * Accessory AbsL      |    Accessory AbsU      |   Accessory AbsS
                  *
                  *      Day4                    Day5                    Day6
-                 * Main Shoulders      |    Secondary Back      |   Secondary Legs
-                 * Secondary Chest     |    Secondary Back      |   Secondary Legs
-                 * Secondary Shoulders |    Accessory UBack     |   Accessory Quads
-                 * Accessory Triceps   |    Accessory Biceps    |   Accessory Hamstrings
+                 * Main Shoulders      |    Main Back           |   Secondary Legs
+                 * Secondary Chest     |    Accessory LBack     |   Accessory Quads
+                 * Accessory MidDelt   |    Accessory Biceps    |   Accessory Hamstrings
                  * Accessory Triceps   |    Accessory RearDelts |   Accessory Calves
                  * Accessory AbsL      |    Accessory AbsU      |   Accessory AbsS
+                 *
                  */
-                daysTemplates[0] = "Main Chest|Secondary Shoulders|Secondary Chest|Accessory Triceps|Accessory Triceps|Accessory AbsL";
-                daysTemplates[1] = "Main Back|Secondary Back|Accessory UBack|Accessory Biceps|Accessory RearDelts|Accessory AbsU";
-                daysTemplates[2] = "Main Legs|Secondary Legs|Accessory Quads|Accessory Hamstrings|Accessory Calves|Accessory AbsS";
-                daysTemplates[3] = "Main Shoulders|Secondary Chest|Secondary Shoulders|Accessory Triceps|Accessory Triceps|Accessory AbsL";
-                daysTemplates[4] = "Secondary Back|Secondary Back|Accessory UBack|Accessory Biceps|Accessory RearDelts|Accessory AbsU";
-                daysTemplates[5] = "Secondary Legs|Secondary Legs|Accessory Quads|Accessory Hamstrings|Accessory Calves|Accessory AbsS";
+                daysTemplates[0] = "Main Chest|Secondary Shoulders|Accessory Chest|Accessory Triceps|Accessory AbsL";
+                daysTemplates[1] = "Secondary Back|Accessory UBack|Accessory Biceps|Accessory RearDelts|Accessory AbsU";
+                daysTemplates[2] = "Main Legs|Accessory Quads|Accessory Hamstrings|Accessory Calves|Accessory AbsS";
+                daysTemplates[3] = "Main Shoulders|Secondary Chest|Accessory MidDelt|Accessory Triceps|Accessory AbsL";
+                daysTemplates[4] = "Main Back|Accessory LBack|Accessory Biceps|Accessory RearDelts|Accessory AbsU";
+                daysTemplates[5] = "Secondary Legs|Accessory Quads|Accessory Hamstrings|Accessory Calves|Accessory AbsS";
                 break;
         }
     }
