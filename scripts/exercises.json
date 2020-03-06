@@ -425,15 +425,7 @@
             "isCompoundExercise" : false,
             "primaryMover" : "AbsU"
         },
-
-        "Decline DB Curls" : {
-            "category" : "Accessory",
-            "repRange" : "8-12",
-            "isSuitableForElders" : true,
-            "isCompoundExercise" : false,
-            "primaryMover" : "Biceps"
-        },
-
+        
         "Hammer Curls" : {
             "category" : "Accessory",
             "repRange" : "8-12",
@@ -488,6 +480,30 @@
             "isSuitableForElders" : true,
             "isCompoundExercise" : false,
             "primaryMover" : "Biceps"
+        },
+
+        "Leg Press Calf Raises"  : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Calves"
+        },
+
+        "Seated DB Calf Raises" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Calves"
+        },
+
+        "Standing BB Calf Raises" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Calves"
         },
         
         "Cable Chest fly" : {
@@ -599,15 +615,23 @@
             "repRange" : "8-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : true,
-            "primaryMover" : "Hamstring"
+            "primaryMover" : "Hamstrings"
         },
-        
+
+        "Cable Pull Throughs" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Hamstrings"
+        },
+
         "Glute Ham Raise" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : false,
-            "primaryMover" : "Hamstring"
+            "primaryMover" : "Hamstrings"
         },
         
         "Leg Curl" : {
@@ -615,7 +639,23 @@
             "repRange" : "8-12",
             "isSuitableForElders" : true,
             "isCompoundExercise" : false,
-            "primaryMover" : "Hamstring"
+            "primaryMover" : "Hamstrings"
+        },
+
+        "TRX Hamstring Curl" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Hamstrings"
+        },
+
+        "Stiff-Leg Single-Leg DB Deadlift" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : false,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Hamstrings"
         },
                 
         "1 Arm DB Row" : {
@@ -641,8 +681,24 @@
             "isCompoundExercise" : false,
             "primaryMover" : "LBack"
         },
-        
-        "Cable Pull Throughs" : {
+
+        "Seated Cable Row" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "LBack"
+        },
+
+        "Seated Good Morning" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "LBack"
+        },
+
+        "Standing Cable Row" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
@@ -681,11 +737,35 @@
             "isCompoundExercise" : false,
             "primaryMover" : "MidDelts"
         },
+
+        "BB Lunge" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Quads"
+        },
         
         "Bulgarian Split Squat" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Quads"
+        },
+
+        "DB Lunge" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "Quads"
+        },
+
+        "DB Step Up" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : false,
             "isCompoundExercise" : false,
             "primaryMover" : "Quads"
         },
@@ -721,7 +801,23 @@
             "isCompoundExercise" : true,
             "primaryMover" : "RearDelts"
         },
+
+        "Cable Shoulder External Rotation" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : true,
+            "primaryMover" : "RearDelts"
+        },
         
+        "External Rotation Press" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : true,
+            "primaryMover" : "RearDelts"
+        },
+
         "Face Pull" : {
             "category" : "Accessory",
             "repRange" : "8-12",
@@ -801,8 +897,16 @@
             "isCompoundExercise" : false,
             "primaryMover" : "UBack"
         },
+
+        "Close Grip Lat Pulldown" : {
+            "category" : "Accessory",
+            "repRange" : "8-12",
+            "isSuitableForElders" : true,
+            "isCompoundExercise" : false,
+            "primaryMover" : "UBack"
+        },
         
-        "Lat Pulldown" : {
+        "Wide Grip Lat Pulldown" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,

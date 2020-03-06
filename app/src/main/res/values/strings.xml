@@ -72,4 +72,9 @@
     <string name="exercises">Exercises</string>
     <string name="intensity">Intensity</string>
 
+    <string name="main">Main</string>
+    <string name="secondary">Secondary</string>
+    <string name="accessory">Accessory</string>
+    <string name="cardio">Cardio</string>
+
 </resources>

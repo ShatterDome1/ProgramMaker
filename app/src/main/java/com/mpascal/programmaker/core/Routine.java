@@ -174,7 +174,12 @@ public abstract class Routine implements Parcelable {
                         case "Accessory":
                             exerciseList = accessoryExercises;
                             repRange = accessoryRepsPerBlock;
-                            removeExercise = true;
+
+                            // There aren't enough calves exercises to be able to switch between blocks
+                            if (!exerciseProperties[1].equals("Calves")) {
+                                removeExercise = true;
+                            }
+
                             break;
 
                         case "Cardio":

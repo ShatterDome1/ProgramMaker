@@ -80,44 +80,44 @@ public class ExerciseTemplateProvider {
                 break;
 
             case "UL":
-                    /**
-                     * UL (Upper Lower) exercise selection:
-                     *
-                     *      Day1                    Day2                 Day3                  Day4
-                     * Main Back          |     Secondary Legs   |    Secondary Back    |   Main Legs
-                     * Main Chest         |     Secondary Back   |    Main Shoulders    |   Secondary Back
-                     * Secondary Shoulder |     Accessory Quads  |    Secondary Chest   |   Accessory Hamstring
-                     * Accessory Biceps   |     Accessory LBack  |    Accessory Triceps |   Accessory LBack
-                     * Accessory Triceps  |     Accessory Calves |    Accessory Biceps  |   Accessory Calves
-                     *                          Accessory AbsU                              Accessory AbsL
-                     *                          Accessory AbsS
-                     *
-                     */
-                    daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulder|Accessory Biceps|Accessory Triceps";
-                    daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsU|Accessory AbsS";
-                    daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory Triceps|Accessory Biceps";
-                    daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstring|Accessory LBack|Accessory Calves|Accessory AbsL";
+                /**
+                 * UL (Upper Lower) exercise selection:
+                 *
+                 *      Day1                    Day2                 Day3                  Day4
+                 * Main Back          |     Secondary Legs   |    Secondary Back    |   Main Legs
+                 * Main Chest         |     Secondary Back   |    Main Shoulders    |   Secondary Back
+                 * Secondary Shoulder |     Accessory Quads  |    Secondary Chest   |   Accessory Hamstrings
+                 * Accessory UBack    |     Accessory LBack  |    Accessory UBack   |   Accessory LBack
+                 * Accessory Biceps   |     Accessory Calves |    Accessory Biceps  |   Accessory Calves
+                 * Accessory Triceps  |     Accessory AbsL   |    Accessory Triceps |   Accessory AbsU
+                 *                                                                      Accessory AbsS
+                 *
+                 */
+                daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulder|Accessory UBack|Accessory Biceps|Accessory Triceps";
+                daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsL";
+                daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory UBack|Accessory Triceps|Accessory Biceps";
+                daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU|Accessory AbsS";
                 break;
 
             case "UL+GPP":
                 /**
-                 * UL (Upper Lower + General Physical Preparedness) exercise selection:
+                 * UL+GPP (Upper Lower + General Physical Preparedness) exercise selection:
                  *
                  *      Day1                    Day2                 Day3                  Day4                   Day5
-                 * Main Back          |     Secondary Legs   |    Secondary Back    |   Main Legs           |  Cardio LISS
-                 * Main Chest         |     Secondary Back   |    Main Shoulders    |   Secondary Back      |
-                 * Secondary Shoulder |     Accessory Quads  |    Secondary Chest   |   Accessory Hamstring |
-                 * Accessory Biceps   |     Accessory LBack  |    Accessory Triceps |   Accessory LBack     |
-                 * Accessory Triceps  |     Accessory Calves |    Accessory Biceps  |   Accessory Calves    |
-                 *                          Accessory AbsU                              Accessory AbsL
-                 *                          Accessory AbsS
+                 * Main Back          |     Secondary Legs   |    Secondary Back    |   Main Legs            |  Accessory AbsL
+                 * Main Chest         |     Secondary Back   |    Main Shoulders    |   Secondary Back       |  Accessory AbsU
+                 * Secondary Shoulder |     Accessory Quads  |    Secondary Chest   |   Accessory Hamstrings |  Accessory AbsS
+                 * Accessory UBack    |     Accessory LBack  |    Accessory UBack   |   Accessory LBack      |  Cardio LISS
+                 * Accessory Biceps   |     Accessory Calves |    Accessory Biceps  |   Accessory Calves     |
+                 * Accessory Triceps  |                      |    Accessory Triceps |
+                 *
                  *
                  */
-                daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulder|Accessory Biceps|Accessory Triceps";
-                daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsU|Accessory AbsS";
-                daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory Triceps|Accessory Biceps";
-                daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstring|Accessory LBack|Accessory Calves|Accessory AbsL";
-                daysTemplates[4] = "Cardio LIIS";
+                daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulder|Accessory UBack|Accessory Biceps|Accessory Triceps";
+                daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves";
+                daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory UBack|Accessory Triceps|Accessory Biceps";
+                daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstrings|Accessory LBack|Accessory Calves";
+                daysTemplates[4] = "Accessory AbsL|Accessory AbsU|Accessory AbsS|Cardio LIIS";
                 break;
 
             case "PPL":
@@ -134,7 +134,7 @@ public class ExerciseTemplateProvider {
                  *      Day4                    Day5                    Day6
                  * Main Shoulders      |    Main Back           |   Secondary Legs
                  * Secondary Chest     |    Accessory LBack     |   Accessory Quads
-                 * Accessory MidDelt   |    Accessory Biceps    |   Accessory Hamstrings
+                 * Accessory MidDelts  |    Accessory Biceps    |   Accessory Hamstrings
                  * Accessory Triceps   |    Accessory RearDelts |   Accessory Calves
                  * Accessory AbsL      |    Accessory AbsU      |   Accessory AbsS
                  *
@@ -142,7 +142,7 @@ public class ExerciseTemplateProvider {
                 daysTemplates[0] = "Main Chest|Secondary Shoulders|Accessory Chest|Accessory Triceps|Accessory AbsL";
                 daysTemplates[1] = "Secondary Back|Accessory UBack|Accessory Biceps|Accessory RearDelts|Accessory AbsU";
                 daysTemplates[2] = "Main Legs|Accessory Quads|Accessory Hamstrings|Accessory Calves|Accessory AbsS";
-                daysTemplates[3] = "Main Shoulders|Secondary Chest|Accessory MidDelt|Accessory Triceps|Accessory AbsL";
+                daysTemplates[3] = "Main Shoulders|Secondary Chest|Accessory MidDelts|Accessory Triceps|Accessory AbsL";
                 daysTemplates[4] = "Main Back|Accessory LBack|Accessory Biceps|Accessory RearDelts|Accessory AbsU";
                 daysTemplates[5] = "Secondary Legs|Accessory Quads|Accessory Hamstrings|Accessory Calves|Accessory AbsS";
                 break;
