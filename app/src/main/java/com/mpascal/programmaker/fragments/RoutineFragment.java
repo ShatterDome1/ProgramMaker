@@ -98,7 +98,7 @@ public class RoutineFragment extends Fragment {
                         cardioExercises));
                 break;
 
-            case "Fat loss":
+            case "Fat Loss":
                 Log.d(TAG, "addRoutine: Fat loss");
                 routineFragmentViewModel.addRoutine(new FatLossRoutine(goal,
                         goal,

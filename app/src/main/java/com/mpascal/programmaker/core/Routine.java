@@ -116,6 +116,7 @@ public abstract class Routine implements Parcelable {
             int mainRepsPerBlock = -1;
             int secondaryRepsPerBlock = -1;
             int accessoryRepsPerBlock = -1;
+            int cardioMinsPerBlock = -1;
 
             // Example String:
             // "Main-6 reps @ RPE 6,7,8|Secondary-8 reps @ RPE 7,8,9|Accessory-10 reps x 5 sets";
@@ -137,6 +138,10 @@ public abstract class Routine implements Parcelable {
                 if (repRangePerType[0].equals("Accessory")) {
                     // get the first string after the -
                     accessoryRepsPerBlock = Integer.parseInt(repRangePerType[1].split(" ")[0]);
+                }
+
+                if (repRangePerType[0].equals("Cardio")) {
+                    cardioMinsPerBlock = Integer.parseInt(repRangePerType[1].split(" ")[0]);
                 }
             }
 
@@ -184,7 +189,7 @@ public abstract class Routine implements Parcelable {
 
                         case "Cardio":
                             exerciseList = cardioExercises;
-                            removeExercise = true;
+                            repRange = cardioMinsPerBlock;
                             break;
                     }
 
@@ -197,8 +202,7 @@ public abstract class Routine implements Parcelable {
                             int exerciseUpperReps = Integer.parseInt(repRanges[1]);
                             betweenRepRange = (repRange >= exerciseLowerReps) && (repRange <= exerciseUpperReps);
                         } else {
-                            Log.d(TAG, "calcExercisesForTrainingBlocks: Rep Range is -1 for" + exerciseProperties[0]);
-                            betweenRepRange = true;
+                            Log.d(TAG, "calcExercisesForTrainingBlocks: repRange calculation failed for " + exerciseProperties[0]);
                         }
 
                         if (exercise.getPrimaryMover().equals(exerciseProperties[1]) && betweenRepRange) {
@@ -209,7 +213,7 @@ public abstract class Routine implements Parcelable {
                                 suffix = "|";
                             }
 
-                            exercisesPerBlock[i][j] += exercise.getName() + suffix;
+                            exercisesPerBlock[i][j] +=  exercise.getCategory() + "-" + exercise.getName() + suffix;
 
                             if (removeExercise) {
                                 if (exerciseProperties[0].equals("Secondary"))

@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public void onSurveyCompleted(String goal, String weight, String height) {
+    public boolean onSurveyCompleted(String goal, String weight, String height) {
 
         String[] strDateOfBirth = user.getDateOfBirth().split("/");
         Log.d(TAG, "onSurveyCompleted: " + strDateOfBirth[0] + " " + strDateOfBirth[1] + " " + strDateOfBirth[2]);
@@ -189,12 +189,26 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         int age = Period.between(dateOfBirth, currentDate).getYears();
 
-        // take strings and send to routine fragment
-        RoutineFragment.addRoutine(goal, daysAvailable, weight, height, age);
+        boolean ok = true;
 
-        // Reinitialise the daysAvailable array so that it's empty when creating
-        // a new routine
-        daysAvailable = new ArrayList<>();
+        // If the user has picked 7 days then remove Wednesday and and create the routine
+        if (daysAvailable.size() != 0) {
+            if (daysAvailable.size() == 7) {
+                daysAvailable.remove((Integer) 3);
+            }
+
+            // take strings and send to routine fragment
+            RoutineFragment.addRoutine(goal, daysAvailable, weight, height, age);
+
+            // Reinitialise the daysAvailable array so that it's empty when creating
+            // a new routine
+            daysAvailable = new ArrayList<>();
+        } else {
+            Toast.makeText(this, "Please select days that you can train!", Toast.LENGTH_SHORT).show();
+            ok = false;
+        }
+
+        return ok;
     }
 
     // This will handle the checkbox ticks in the Survey Fragment Days available question

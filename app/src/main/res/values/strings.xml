@@ -35,7 +35,7 @@
     <string-array name="survey_fitness_goal_answer">
         <item>Strength</item>
         <item>Hypertrophy</item>
-        <item>Fat loss</item>
+        <item>Fat Loss</item>
     </string-array>
 
     <string name="survey_days_available">Which days do you have available for the gym?</string>

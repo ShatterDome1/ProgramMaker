@@ -14,17 +14,21 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.common.util.NumberUtils;
 import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.core.Routine;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import io.opencensus.internal.StringUtils;
 
 public class SurveyFragment extends Fragment implements AdapterView.OnItemSelectedListener {
     private SurveyFragmentListener listener;
@@ -33,11 +37,9 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
     private String goal;
 
     private RadioGroup weightGroup;
-    private RadioButton weightUnit;
     private EditText weight;
 
     private RadioGroup heightGroup;
-    private RadioButton heightUnit;
     private EditText height;
 
     private Button createRoutine;
@@ -45,7 +47,7 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
     // This interface is implemented by the MainActivity, the answers from the survey will go there
     // then to the RoutineFragment where the routine will be created
     public interface SurveyFragmentListener {
-        void onSurveyCompleted(String goal, String weight, String height);
+        boolean onSurveyCompleted(String goal, String weight, String height);
     }
 
     @Nullable
@@ -82,18 +84,66 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
     }
 
     private void sendSurveyAnswers(){
+        boolean isOk = true;
+
         int heightRadioId = heightGroup.getCheckedRadioButtonId();
-        heightUnit = getView().findViewById(heightRadioId);
-        String heightStr = height.getText().toString() + heightUnit.getText().toString();
+        RadioButton heightRadio = getView().findViewById(heightRadioId);
+
+        // Check that the correct format is entered
+        String heightUnit = heightRadio.getText().toString();
+        String heightStr = height.getText().toString();
+
+        if (!heightStr.isEmpty()) {
+            if (heightUnit.equals("Ft")) {
+                String[] heightValues = heightStr.split("'");
+                // Check that both strings are numbers
+                try {
+                    Integer.parseInt(heightValues[0]);
+                    Integer.parseInt(heightValues[1]);
+                    heightStr += heightUnit;
+                } catch (NumberFormatException nfe) {
+                    isOk = false;
+                    Toast.makeText(getActivity(), "For Ft please use ?'? format!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            if (heightUnit.equals("Cm")) {
+                // Check that both strings are numbers
+                try {
+                    Integer.parseInt(heightStr);
+                    heightStr += heightUnit;
+                } catch (NumberFormatException nfe) {
+                    isOk = false;
+                    Toast.makeText(getActivity(), "For Cm please add your height as a number!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            Toast.makeText(getActivity(), "Please enter your height!", Toast.LENGTH_SHORT).show();
+            isOk = false;
+        }
 
         int weightRadioId = weightGroup.getCheckedRadioButtonId();
-        weightUnit = getView().findViewById(weightRadioId);
-        String weightStr = weight.getText().toString() + weightUnit.getText().toString();
+        RadioButton weightRadio = getView().findViewById(weightRadioId);
 
-        listener.onSurveyCompleted(goal, weightStr, heightStr);
+        // Check that the weight entered is not empty
+        String weightUnit = weightRadio.getText().toString();
+        String weightStr = weight.getText().toString();
 
-        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new RoutineFragment()).commit();
+        if (!weightStr.isEmpty()) {
+            weightStr += weightUnit;
+        } else {
+            isOk = false;
+            Toast.makeText(getActivity(), "Please enter your weight!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (isOk) {
+            isOk = listener.onSurveyCompleted(goal, weightStr, heightStr);
+        }
+
+        if (isOk) {
+            getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new RoutineFragment()).commit();
+        }
     }
 
     @Override

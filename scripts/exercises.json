@@ -170,7 +170,7 @@
             "primaryMover" : "Legs"
         },
         
-        "3-0-3 Tempo Squat" : {
+        "3 0 3 Tempo Squat" : {
             "category" : "Secondary",
             "repRange" : "1-12",
             "isSuitableForElders" : true,
@@ -650,7 +650,7 @@
             "primaryMover" : "Hamstrings"
         },
 
-        "Stiff-Leg Single-Leg DB Deadlift" : {
+        "Stiff Leg DB Deadlift" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : false,
@@ -842,7 +842,7 @@
             "primaryMover" : "Triceps"
         },
 
-        "Cable Push-Down" : {
+        "Cable Push Down" : {
             "category" : "Accessory",
             "repRange" : "8-12",
             "isSuitableForElders" : true,
