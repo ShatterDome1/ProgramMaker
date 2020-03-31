@@ -19,7 +19,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.util.AESHelper;
 
 import java.util.Calendar;
@@ -113,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             SecretKey secretKey = AESHelper.generateKey();
             String secretKeyStr = AESHelper.convertSecretKeyToString(secretKey);
 
-            final User newUser = new User(AESHelper.encrypt(firstNameStr, secretKey),
+            final UserDB newUser = new UserDB(AESHelper.encrypt(firstNameStr, secretKey),
                                           AESHelper.encrypt(lastNameStr, secretKey),
                                           AESHelper.encrypt(emailStr, secretKey),
                                           AESHelper.encrypt(passwordStr, secretKey),

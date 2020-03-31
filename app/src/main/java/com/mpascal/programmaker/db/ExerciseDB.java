@@ -3,7 +3,7 @@ package com.mpascal.programmaker.db;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Exercise implements Parcelable {
+public class ExerciseDB implements Parcelable {
 
     // Possible values:
     // Main
@@ -29,12 +29,12 @@ public class Exercise implements Parcelable {
     // Target body muscles
     private String primaryMover;
 
-    public Exercise(String category,
-                    String name,
-                    String repRange,
-                    boolean isSuitableForElders,
-                    boolean isCompoundExercise,
-                    String primaryMover) {
+    public ExerciseDB(String category,
+                      String name,
+                      String repRange,
+                      boolean isSuitableForElders,
+                      boolean isCompoundExercise,
+                      String primaryMover) {
         this.category = category;
         this.name = name;
         this.repRange = repRange;
@@ -43,7 +43,7 @@ public class Exercise implements Parcelable {
         this.primaryMover = primaryMover;
     }
 
-    protected Exercise(Parcel in) {
+    protected ExerciseDB(Parcel in) {
         category = in.readString();
         name = in.readString();
         repRange = in.readString();
@@ -52,15 +52,15 @@ public class Exercise implements Parcelable {
         primaryMover = in.readString();
     }
 
-    public static final Creator<Exercise> CREATOR = new Creator<Exercise>() {
+    public static final Creator<ExerciseDB> CREATOR = new Creator<ExerciseDB>() {
         @Override
-        public Exercise createFromParcel(Parcel in) {
-            return new Exercise(in);
+        public ExerciseDB createFromParcel(Parcel in) {
+            return new ExerciseDB(in);
         }
 
         @Override
-        public Exercise[] newArray(int size) {
-            return new Exercise[size];
+        public ExerciseDB[] newArray(int size) {
+            return new ExerciseDB[size];
         }
     };
 
@@ -79,7 +79,7 @@ public class Exercise implements Parcelable {
         dest.writeString(primaryMover);
     }
 
-    public Exercise() {}
+    public ExerciseDB() {}
 
     public String getCategory() {
         return category;

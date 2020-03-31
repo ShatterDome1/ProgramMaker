@@ -1,13 +1,21 @@
 package com.mpascal.programmaker.viewmodels;
 
 import android.util.Log;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.mpascal.programmaker.adapters.RoutineAdapter;
 import com.mpascal.programmaker.core.Routine;
-import com.mpascal.programmaker.db.Exercise;
+import com.mpascal.programmaker.db.ExerciseDB;
+import com.mpascal.programmaker.db.RoutineDB;
 import com.mpascal.programmaker.repositories.ExerciseRepository;
 import com.mpascal.programmaker.repositories.RoutineRepository;
 
@@ -15,76 +23,46 @@ import java.util.ArrayList;
 
 public class RoutineFragmentViewModel extends ViewModel {
 
+    private static final String TAG = "RoutineFragmentViewModel";
+
     private MutableLiveData<ArrayList<Routine>> routines;
     private RoutineRepository routineRepository;
 
-    private MutableLiveData<ArrayList<Exercise>> mainExercises;
-    private MutableLiveData<ArrayList<Exercise>> secondaryExercises;
-    private MutableLiveData<ArrayList<Exercise>> accessoryExercises;
-    private MutableLiveData<ArrayList<Exercise>> cardioExercises;
-    private ExerciseRepository exercisesRepository;
+    private MutableLiveData<Boolean> isFetchingData = new MutableLiveData<>();
+
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     public LiveData<ArrayList<Routine>> getRoutines() {
         return routines;
     }
 
-    public void init() {
+    public void init(String email) {
         if (routines != null) {
             return;
         }
         routineRepository = RoutineRepository.getInstance();
-        routines = routineRepository.getRoutines();
-
-        if (mainExercises != null || secondaryExercises !=null || accessoryExercises != null) {
-            return;
-        }
-        exercisesRepository = ExerciseRepository.getInstance();
-        mainExercises = exercisesRepository.getExercises("Main");
-        secondaryExercises = exercisesRepository.getExercises("Secondary");
-        accessoryExercises = exercisesRepository.getExercises("Accessory");
-        cardioExercises = exercisesRepository.getExercises("Cardio");
+        routines = routineRepository.getRoutines(email, isFetchingData);
     }
 
-    public void addRoutine(final Routine routine) {
-        ArrayList<Routine> currentRoutines = routines.getValue();
+    public void deleteRoutine(final String userEmail, final int position, final RoutineAdapter adapter) {
+        final ArrayList<Routine> currentRoutines = routines.getValue();
+        // Delete the Routine from the database
+        final RoutineDB routine = new RoutineDB(currentRoutines.get(position));
 
-        // Check if another routine with the same title already exists
-        String uniqueTitle = getUniqueTitle(currentRoutines, routine.getTitle(), 0);
-
-        if (!uniqueTitle.equals(routine.getTitle())) {
-            routine.setTitle(uniqueTitle);
-        }
-
-        currentRoutines.add(0, routine);
-        routines.postValue(currentRoutines);
-    }
-
-    private String getUniqueTitle (ArrayList<Routine> currentRoutines, String title, int ct) {
-        boolean isUnique = true;
-
-        String uniqueTitle = title;
-        if (ct != 0) {
-            uniqueTitle = title + ct;
-        }
-
-        for (Routine routine : currentRoutines) {
-            if (routine.getTitle().equals(uniqueTitle)) {
-                isUnique = false;
-                break;
+        db.collection("Routines").document(userEmail + routine.getTitle()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d(TAG, "onSuccess: " + routine.getTitle() + " deleted");
+                currentRoutines.remove(position);
+                routines.postValue(currentRoutines);
+                adapter.notifyItemRemoved(position);
             }
-        }
-
-        if (isUnique) {
-            return uniqueTitle;
-        } else {
-            return getUniqueTitle(currentRoutines, title, ++ct);
-        }
-    }
-
-    public void deleteRoutine(final int position) {
-        ArrayList<Routine> currentRoutines = routines.getValue();
-        currentRoutines.remove(position);
-        routines.postValue(currentRoutines);
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, e.toString());
+            }
+        });
     }
 
     public Routine getRoutine(final int position) {
@@ -92,28 +70,11 @@ public class RoutineFragmentViewModel extends ViewModel {
         return currentRoutines.get(position);
     }
 
-    public ArrayList<Exercise> getExercises(String category) {
-        ArrayList<Exercise> currentExercises = new ArrayList<>();
+    public LiveData<Boolean> getIsFetchingData() {
+        return isFetchingData;
+    }
 
-        // Current Exercises should never be empty
-        switch (category) {
-            case "Main":
-                currentExercises = mainExercises.getValue();
-                break;
-
-            case "Secondary":
-                currentExercises = secondaryExercises.getValue();
-                break;
-
-            case "Accessory":
-                currentExercises = accessoryExercises.getValue();
-                break;
-
-            case "Cardio":
-                currentExercises = cardioExercises.getValue();
-                break;
-        }
-
-        return currentExercises;
+    public void clearData() {
+        routineRepository.clearData();
     }
 }

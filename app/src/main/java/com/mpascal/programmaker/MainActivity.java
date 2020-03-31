@@ -2,15 +2,12 @@ package com.mpascal.programmaker;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.PeriodicSync;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,21 +18,16 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
-import com.mpascal.programmaker.core.Routine;
-import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.fragments.ProfileFragment;
 import com.mpascal.programmaker.fragments.RoutineFragment;
 import com.mpascal.programmaker.fragments.SurveyFragment;
-import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         SurveyFragment.SurveyFragmentListener {
@@ -51,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // the array will store the days available
     private ArrayList<Integer> daysAvailable;
 
-    private User user;
+    private UserDB user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             user = intent.getParcelableExtra(LoginActivity.PACKAGE_NAME + ".userDetails");
         } else {
             SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-            user = new User(sharedPref.getString("firstName",""),
+            user = new UserDB(sharedPref.getString("firstName",""),
                     sharedPref.getString("lastName",""),
                     sharedPref.getString("email",""),
                     sharedPref.getString("password",""),
@@ -100,9 +92,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
         // Set the initial fragment shown
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PACKAGE_NAME + ".userDetails", user);
+
+        Fragment routineFragment = new RoutineFragment();
+        routineFragment.setArguments(bundle);
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new RoutineFragment()).commit();
+                    routineFragment, "RoutineFragment").commit();
             navigationView.setCheckedItem(R.id.nav_routines);
         }
     }
@@ -139,22 +137,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.nav_profile:
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(PACKAGE_NAME + ".userDetails", user);
 
+        switch (menuItem.getItemId()) {
+
+            case R.id.nav_profile:
                 // Store the user details in a bundle and pass them to the user profile
                 Fragment profileFragment = new ProfileFragment();
-                Bundle bundle = new Bundle();
-                bundle.putParcelable(PACKAGE_NAME + ".userDetails", user);
                 profileFragment.setArguments(bundle);
 
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        profileFragment).commit();
+                        profileFragment, "ProfileFragment").commit();
                 break;
 
             case R.id.nav_routines:
+                // Store the user details in a bundle and pass them to the user profile
+                Fragment routineFragment = new RoutineFragment();
+                routineFragment.setArguments(bundle);
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new RoutineFragment()).commit();
+                        routineFragment, "RoutineFragment").commit();
                 break;
 
             case R.id.nav_logout:
@@ -198,7 +201,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             // take strings and send to routine fragment
-            RoutineFragment.addRoutine(goal, daysAvailable, weight, height, age);
+            SurveyFragment fragment = (SurveyFragment) getSupportFragmentManager().findFragmentByTag("SurveyFragment");
+            fragment.addRoutine(goal, daysAvailable, weight, height, age);
 
             // Reinitialise the daysAvailable array so that it's empty when creating
             // a new routine

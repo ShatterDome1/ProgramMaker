@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.util.AESHelper;
 
 import javax.crypto.SecretKey;
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
                             boolean ok = false;
 
                             if (documentSnapshot.exists()) {
-                                User user = documentSnapshot.toObject(User.class);
+                                UserDB user = documentSnapshot.toObject(UserDB.class);
 
                                 // Retrieve encoded key and convert to SecretKey
                                 String key = user.getKey();
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                                     String dateOfBirthDec = AESHelper.decrypt(user.getDateOfBirth(), secretKey);
 
                                     // Create decrypted user object and add it to the intent
-                                    User decUser = new User(firstNameDec, lastNameDec, usernameStr, passwordDec, dateOfBirthDec, key);
+                                    UserDB decUser = new UserDB(firstNameDec, lastNameDec, usernameStr, passwordDec, dateOfBirthDec, key);
                                     intent.putExtra(PACKAGE_NAME + ".userDetails", decUser);
 
                                     startActivity(intent);

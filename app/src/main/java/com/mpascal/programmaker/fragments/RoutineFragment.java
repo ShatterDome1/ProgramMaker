@@ -1,5 +1,6 @@
 package com.mpascal.programmaker.fragments;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,13 +20,12 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.RoutineViewActivity;
-import com.mpascal.programmaker.core.FatLossRoutine;
-import com.mpascal.programmaker.core.HypertrophyRoutine;
 import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.adapters.RoutineAdapter;
-import com.mpascal.programmaker.core.StrengthRoutine;
-import com.mpascal.programmaker.db.Exercise;
-import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.db.ExerciseDB;
+
+import com.mpascal.programmaker.db.UserDB;
+import com.mpascal.programmaker.dialogs.LoadingDialog;
 import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
 
 import java.util.ArrayList;
@@ -39,26 +39,28 @@ public class RoutineFragment extends Fragment {
     private static RoutineAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
+    private UserDB currentUser;
+
     private ViewModelProvider viewModelProvider;
-    private static RoutineFragmentViewModel routineFragmentViewModel;
+    private RoutineFragmentViewModel routineFragmentViewModel;
 
     private FloatingActionButton createRoutine;
+
+    private LoadingDialog loadingDialog;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routines, container, false);
 
+        // Get the current user
+        final Bundle bundle = getArguments();
+        currentUser = bundle.getParcelable(MainActivity.PACKAGE_NAME + ".userDetails");
+
         viewModelProvider = new ViewModelProvider(this);
         routineFragmentViewModel = viewModelProvider.get(RoutineFragmentViewModel.class);
 
-        routineFragmentViewModel.init();
-        routineFragmentViewModel.getRoutines().observe(getActivity(), new Observer<List<Routine>>() {
-            @Override
-            public void onChanged(List<Routine> routines) {
-                adapter.notifyDataSetChanged();
-            }
-        });
+        routineFragmentViewModel.init(currentUser.getEmail());
 
         buildRecyclerView(view);
 
@@ -66,74 +68,36 @@ public class RoutineFragment extends Fragment {
         createRoutine.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                SurveyFragment surveyFragment = new SurveyFragment();
+                surveyFragment.setArguments(bundle);
                 getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new SurveyFragment()).addToBackStack(null).commit();
+                        surveyFragment, "SurveyFragment").addToBackStack(null).commit();
             }
         });
 
         return view;
     }
 
-    public static void addRoutine(String goal, ArrayList<Integer> daysAvailable, String weight, String height, int age) {
-        // Get copies of the exercise lists, if we don't get a copy we pass the lists as reference to the new routine object
-        // which will affect the exercise lists values in the repository if a delete/add operation is made
-        ArrayList<Exercise> mainExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Main"));
-        ArrayList<Exercise> secondaryExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Secondary"));
-        ArrayList<Exercise> accessoryExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Accessory"));
-        ArrayList<Exercise> cardioExercises = new ArrayList<>(routineFragmentViewModel.getExercises("Cardio"));
-
-        // first param of the Routine object is Title which will be defaulted to the goal
-        switch (goal) {
-            case "Hypertrophy":
-                Log.d(TAG, "addRoutine: Hypertrophy");
-                routineFragmentViewModel.addRoutine(new HypertrophyRoutine(goal,
-                        goal,
-                        daysAvailable,
-                        weight,
-                        height,
-                        age,
-                        mainExercises,
-                        secondaryExercises,
-                        accessoryExercises,
-                        cardioExercises));
-                break;
-
-            case "Fat Loss":
-                Log.d(TAG, "addRoutine: Fat loss");
-                routineFragmentViewModel.addRoutine(new FatLossRoutine(goal,
-                        goal,
-                        daysAvailable,
-                        weight,
-                        height,
-                        age,
-                        mainExercises,
-                        secondaryExercises,
-                        accessoryExercises,
-                        cardioExercises));
-                break;
-
-            case "Strength":
-                Log.d(TAG, "addRoutine: Strength");
-                routineFragmentViewModel.addRoutine(new StrengthRoutine(goal,
-                        goal,
-                        daysAvailable,
-                        weight,
-                        height,
-                        age,
-                        mainExercises,
-                        secondaryExercises,
-                        accessoryExercises,
-                        cardioExercises));
-                break;
-        }
-
-        adapter.notifyItemInserted(0);
-    }
-
     private void buildRecyclerView(View view) {
         recyclerView = view.findViewById(R.id.recyclerView);
         layoutManager = new LinearLayoutManager(view.getContext());
+
         adapter = new RoutineAdapter(routineFragmentViewModel.getRoutines().getValue());
+
+        loadingDialog = new LoadingDialog(getActivity());
+        routineFragmentViewModel.getIsFetchingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean) {
+                    loadingDialog.showLoadingDialog();
+                    Log.d(TAG, "onChanged: data is being fetched");
+                } else {
+                    Log.d(TAG, "onChanged: notified");
+                    adapter.notifyDataSetChanged();
+                    loadingDialog.dismissLoadingDialog();
+                }
+            }
+        });
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
@@ -141,9 +105,9 @@ public class RoutineFragment extends Fragment {
         adapter.setOnItemClickListener(new RoutineAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent= new Intent(getActivity(), RoutineViewActivity.class);
+                Intent intent = new Intent(getActivity(), RoutineViewActivity.class);
                 Routine currentRoutine = routineFragmentViewModel.getRoutine(position);
-                intent.putExtra( PACKAGE_NAME + ".routine", currentRoutine);
+                intent.putExtra(PACKAGE_NAME + ".routine", currentRoutine);
                 startActivity(intent);
                 Log.d(TAG, "onItemClick: " + currentRoutine.getTitle());
             }
@@ -151,10 +115,16 @@ public class RoutineFragment extends Fragment {
             @Override
             public void onDeleteClick(int position) {
                 Log.d(TAG, "onDeleteClick: " + position);
-                routineFragmentViewModel.deleteRoutine(position);
-                adapter.notifyItemRemoved(position);
+                routineFragmentViewModel.deleteRoutine(currentUser.getEmail(), position, adapter);
             }
         });
     }
 
+    @Override
+    public void onDestroyView() {
+        routineFragmentViewModel.getIsFetchingData().removeObservers(getViewLifecycleOwner());
+        adapter.clearData();
+        routineFragmentViewModel.clearData();
+        super.onDestroyView();
+    }
 }

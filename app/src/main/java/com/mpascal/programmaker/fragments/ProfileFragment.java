@@ -2,7 +2,6 @@ package com.mpascal.programmaker.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.util.AESHelper;
 import com.mpascal.programmaker.LoginActivity;
 import com.mpascal.programmaker.R;
-import com.mpascal.programmaker.db.User;
+import com.mpascal.programmaker.db.UserDB;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,10 +46,9 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view =inflater.inflate(R.layout.fragment_profile, container, false);
 
-
-        // Get the intent from LoginActivity and the user details
+        // Get the Bundle given by the Main Activity
         Bundle bundle = getArguments();
-        final User user = bundle.getParcelable(MainActivity.PACKAGE_NAME + ".userDetails");
+        final UserDB user = bundle.getParcelable(MainActivity.PACKAGE_NAME + ".userDetails");
 
         password = view.findViewById(R.id.profilePassword);
         newPassword = view.findViewById(R.id.profileNewPassword);
@@ -72,7 +70,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    private void updateDetails(User user) {
+    private void updateDetails(UserDB user) {
 
         final String passwordStr = password.getText().toString();
         final String newPassStr = newPassword.getText().toString();

@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 import com.google.firebase.firestore.Exclude;
 
-public class User implements Parcelable {
+public class UserDB implements Parcelable {
 
     private String firstName;
     private String lastName;
@@ -14,12 +14,12 @@ public class User implements Parcelable {
     private String dateOfBirth;
     private String key;
 
-    public User(String firstName,
-                String lastName,
-                String email,
-                String password,
-                String dateOfBirth,
-                String key) {
+    public UserDB(String firstName,
+                  String lastName,
+                  String email,
+                  String password,
+                  String dateOfBirth,
+                  String key) {
 
         this.email = email;
         this.password = password;
@@ -29,9 +29,9 @@ public class User implements Parcelable {
         this.key = key;
     }
 
-    public User() {}
+    public UserDB() {}
 
-    protected User(Parcel in) {
+    protected UserDB(Parcel in) {
         firstName = in.readString();
         lastName = in.readString();
         email = in.readString();
@@ -40,15 +40,15 @@ public class User implements Parcelable {
         key = in.readString();
     }
 
-    public static final Creator<User> CREATOR = new Creator<User>() {
+    public static final Creator<UserDB> CREATOR = new Creator<UserDB>() {
         @Override
-        public User createFromParcel(Parcel in) {
-            return new User(in);
+        public UserDB createFromParcel(Parcel in) {
+            return new UserDB(in);
         }
 
         @Override
-        public User[] newArray(int size) {
-            return new User[size];
+        public UserDB[] newArray(int size) {
+            return new UserDB[size];
         }
     };
 

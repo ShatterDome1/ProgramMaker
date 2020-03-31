@@ -31,6 +31,33 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         this.listener = listener;
     }
 
+    public RoutineAdapter(ArrayList<Routine> routines) {
+        this.routines = routines;
+    }
+
+    public void clearData () {
+        routines.clear();
+    }
+
+    @NonNull
+    @Override
+    public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_routine, parent, false);
+        return new RoutineViewHolder(v, listener);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull RoutineViewHolder holder, int position) {
+        Routine currentRoutine = routines.get(position);
+
+        holder.title.setText(currentRoutine.getTitle());
+    }
+
+    @Override
+    public int getItemCount() {
+        return routines.size();
+    }
+
     static class RoutineViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
         private ImageView deleteRoutine;
@@ -64,28 +91,5 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
                 }
             });
         }
-    }
-
-    public RoutineAdapter(ArrayList<Routine> routines) {
-        this.routines = routines;
-    }
-
-    @NonNull
-    @Override
-    public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_routine, parent, false);
-        return new RoutineViewHolder(v, listener);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull RoutineViewHolder holder, int position) {
-        Routine currentRoutine = routines.get(position);
-
-        holder.title.setText(currentRoutine.getTitle());
-    }
-
-    @Override
-    public int getItemCount() {
-        return routines.size();
     }
 }

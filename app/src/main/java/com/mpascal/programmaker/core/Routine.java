@@ -4,66 +4,110 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.mpascal.programmaker.db.Exercise;
+import com.mpascal.programmaker.db.ExerciseDB;import com.mpascal.programmaker.db.RoutineDB;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.regex.Pattern;
 
-public abstract class Routine implements Parcelable {
+public class Routine extends RoutineDB implements Parcelable {
     private static final String TAG = "Routine";
 
-    private String title;
-    private String goal;
-    private ArrayList<Integer> daysAvailable;
-    private Double bmi;
-    private String routineSplit;
-    private int age;
+
     private String[][] intensityPerBlock;
     private String[][] exercisesPerBlock;
 
     public Routine(String title,
                    String goal,
                    ArrayList<Integer> daysAvailable,
+                   Double bmi,
+                   String routineSplit,
+                   int age,
+                   String intensityPerBlockStr,
+                   String exercisesPerBlockStr,
+                   String email,
                    String weight,
                    String height,
+                   ArrayList<ExerciseDB> mainExercises,
+                   ArrayList<ExerciseDB> secondaryExercises,
+                   ArrayList<ExerciseDB> accessoryExercises,
+                   ArrayList<ExerciseDB> cardioExercises) {
+        super(title, goal, daysAvailable, bmi, routineSplit, age, intensityPerBlockStr, exercisesPerBlockStr, email);
+
+        if (routineSplit.isEmpty()) {
+            setRoutineSplit(calcRoutineSplit(daysAvailable, goal));
+        }
+
+        if (bmi == 0) {
+            setBmi(calcBMI(weight, height));
+        }
+
+        if (intensityPerBlockStr.isEmpty()) {
+            this.intensityPerBlock = new IntensityTemplateProvider(goal).getIntensityPerBlocks();
+            setIntensityPerBlockStr(convert2dArrayToStr(intensityPerBlock));
+        } else {
+            this.intensityPerBlock = convertStrTo2dArray(intensityPerBlockStr);
+        }
+
+        if (exercisesPerBlockStr.isEmpty()) {
+            this.exercisesPerBlock = calcExercisesForTrainingBlocks(getRoutineSplit(),
+                    daysAvailable.size(),
+                    intensityPerBlock,
+                    mainExercises,
+                    secondaryExercises,
+                    accessoryExercises,
+                    cardioExercises);
+            setExercisesPerBlockStr(convert2dArrayToStr(exercisesPerBlock));
+        } else {
+            this.exercisesPerBlock = convertStrTo2dArray(exercisesPerBlockStr);
+        }
+
+    }
+
+    public Routine(String title,
+                   String goal,
+                   ArrayList<Integer> daysAvailable,
+                   Double bmi,
+                   String routineSplit,
                    int age,
-                   ArrayList<Exercise> mainExercises,
-                   ArrayList<Exercise> secondaryExercises,
-                   ArrayList<Exercise> accessoryExercises,
-                   ArrayList<Exercise> cardioExercises) {
-        this.title = title;
-        this.goal = goal;
-        this.daysAvailable = daysAvailable;
-        calcRoutineSplit(daysAvailable, goal);
-        calcBMI(weight, height);
-        this.age = age;
-        this.intensityPerBlock = new IntensityTemplateProvider(goal).getIntensityPerBlocks();
-        this.exercisesPerBlock = calcExercisesForTrainingBlocks(routineSplit,
-                daysAvailable.size(),
-                intensityPerBlock,
-                mainExercises,
-                secondaryExercises,
-                accessoryExercises,
-                cardioExercises);
+                   String intensityPerBlockStr,
+                   String exercisesPerBlockStr,
+                   String email) {
+
+        super(title, goal, daysAvailable, bmi, routineSplit, age, intensityPerBlockStr, exercisesPerBlockStr, email);
+        this.intensityPerBlock = convertStrTo2dArray(intensityPerBlockStr);
+        this.exercisesPerBlock = convertStrTo2dArray(exercisesPerBlockStr);
+
     }
 
     protected Routine(Parcel in) {
-        title = in.readString();
-        goal = in.readString();
-        daysAvailable = in.readArrayList(Routine.class.getClassLoader());
-        bmi = in.readDouble();
-        routineSplit = in.readString();
-        age = in.readInt();
+        setTitle(in.readString());
+        setGoal(in.readString());
+        setDaysAvailable(in.readArrayList(Routine.class.getClassLoader()));
+        setBmi(in.readDouble());
+        setRoutineSplit(in.readString());
+        setAge(in.readInt());
         intensityPerBlock = new String[3][4];
         for (int i = 0; i < 3 ; i++) {
             in.readStringArray(intensityPerBlock[i]);
         }
-        exercisesPerBlock = new String[3][daysAvailable.size()];
+        exercisesPerBlock = new String[3][getDaysAvailable().size()];
         for (int i = 0; i < 3; i++) {
             in.readStringArray(exercisesPerBlock[i]);
         }
     }
+
+    public static final Creator<Routine> CREATOR = new Creator<Routine>() {
+        @Override
+        public Routine createFromParcel(Parcel in) {
+            return new Routine(in);
+        }
+
+        @Override
+        public Routine[] newArray(int size) {
+            return new Routine[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -72,12 +116,12 @@ public abstract class Routine implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(title);
-        dest.writeString(goal);
-        dest.writeList(daysAvailable);
-        dest.writeDouble(bmi);
-        dest.writeString(routineSplit);
-        dest.writeInt(age);
+        dest.writeString(getTitle());
+        dest.writeString(getGoal());
+        dest.writeList(getDaysAvailable());
+        dest.writeDouble(getBmi());
+        dest.writeString(getRoutineSplit());
+        dest.writeInt(getAge());
         for (int i = 0; i < 3 ; i++) {
             dest.writeStringArray(intensityPerBlock[i]);
         }
@@ -86,13 +130,44 @@ public abstract class Routine implements Parcelable {
         }
     }
 
+    private String convert2dArrayToStr(String[][] array) {
+        String result = "";
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < array[i].length; j++) {
+                String suffix = "!";
+                if (j == array[i].length - 1) {
+                    suffix = "";
+                }
+                result += array[i][j] + suffix;
+            }
+            if (i != 2) {
+                result += "?";
+            }
+        }
+
+        return result.toString();
+    }
+
+    private String[][] convertStrTo2dArray(String str) {
+        String[][] result = new String[3][7];
+        
+        String[] blocks = str.split(Pattern.quote("?"));
+        for (int i = 0; i < blocks.length; i++) {
+            String[] dayTemplates = blocks[i].split("!");
+            result[i] = dayTemplates;
+        }
+        
+        return result;
+    }
+
     private String[][] calcExercisesForTrainingBlocks(String routineSplit,
                                                      int daysAvailable,
                                                      String[][] intensityPerBlock,
-                                                     ArrayList<Exercise> mainExercises,
-                                                     ArrayList<Exercise> secondaryExercises,
-                                                     ArrayList<Exercise> accessoryExercises,
-                                                     ArrayList<Exercise> cardioExercises) {
+                                                     ArrayList<ExerciseDB> mainExercises,
+                                                     ArrayList<ExerciseDB> secondaryExercises,
+                                                     ArrayList<ExerciseDB> accessoryExercises,
+                                                     ArrayList<ExerciseDB> cardioExercises) {
 
         // Get the exercise templates for the routine
         ExerciseTemplateProvider template = new ExerciseTemplateProvider(routineSplit, daysAvailable);
@@ -160,7 +235,7 @@ public abstract class Routine implements Parcelable {
                     // Find the first exercise in the lists given that match the criteria
                     final String[] exerciseProperties = exerciseType.split(" ");
 
-                    ArrayList<Exercise> exerciseList = new ArrayList<>();
+                    ArrayList<ExerciseDB> exerciseList = new ArrayList<>();
                     int repRange = -1;
                     boolean removeExercise = false;
 
@@ -193,7 +268,7 @@ public abstract class Routine implements Parcelable {
                             break;
                     }
 
-                    for (Exercise exercise : exerciseList) {
+                    for (ExerciseDB exercise : exerciseList) {
 
                         boolean betweenRepRange = false;
                         if (repRange != -1) {
@@ -232,7 +307,8 @@ public abstract class Routine implements Parcelable {
         return exercisesPerBlock;
     }
 
-    private void calcRoutineSplit(ArrayList<Integer> daysAvailable, String goal) {
+    private String calcRoutineSplit(ArrayList<Integer> daysAvailable, String goal) {
+        String routineSplit;
         if (daysAvailable.size() > 3) {
             if (daysAvailable.size() == 4) {
                 // Decide between Upper/Lower and Full Body
@@ -273,9 +349,12 @@ public abstract class Routine implements Parcelable {
         } else {
             routineSplit = "FB";
         }
+
+        return routineSplit;
     }
 
-    private void calcBMI(String weight, String height) {
+    private Double calcBMI(String weight, String height) {
+
         // Weight possible values: eg "42.5kg" "225lbs"
         String weightSuffix = weight.substring(weight.length() - 2);
         Double weightValue;
@@ -313,57 +392,7 @@ public abstract class Routine implements Parcelable {
             heightValue = inches * 0.0254;
         }
 
-        bmi = weightValue / (heightValue * heightValue);
-    }
-
-    public abstract String[][] calcIntensityPerBlocks();
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getGoal() {
-        return goal;
-    }
-
-    public void setGoal(String goal) {
-        this.goal = goal;
-    }
-
-    public ArrayList<Integer> getDaysAvailable() {
-        return daysAvailable;
-    }
-
-    public void setDaysAvailable(ArrayList<Integer> daysAvailable) {
-        this.daysAvailable = daysAvailable;
-    }
-
-    public Double getBmi() {
-        return bmi;
-    }
-
-    public void setBmi(Double bmi) {
-        this.bmi = bmi;
-    }
-
-    public String getRoutineSplit() {
-        return routineSplit;
-    }
-
-    public void setRoutineSplit(String routineSplit) {
-        this.routineSplit = routineSplit;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
+        return weightValue / (heightValue * heightValue);
     }
 
     public String[][] getExercisesPerBlock() {
