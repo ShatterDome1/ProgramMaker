@@ -8,6 +8,7 @@
     <string name="password">Password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
+    <string name="forgot_password">Forgot Password?</string>
 
     <!-- Register Activity -->
     <string name="register_firstname">First Name</string>
@@ -16,8 +17,11 @@
     <string name="date_of_birth">Date Of Birth</string>
 
     <string name="update_details">Update Details</string>
+    <string name="delete_account">Delete Account</string>
+
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>>
+    <string name="change_password">Change Password</string>
 
     <!-- Navigation Bar -->
     <string name="navigation_draw_open">Open navigation drawer</string>
@@ -78,4 +82,5 @@
     <string name="cardio">Cardio</string>
 
     <string name="loading">Loading…</string>
+
 </resources>

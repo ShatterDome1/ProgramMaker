@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
-import com.mpascal.programmaker.db.ExerciseDB;import com.mpascal.programmaker.db.RoutineDB;
+import com.mpascal.programmaker.db.ExerciseDB;
+import com.mpascal.programmaker.db.RoutineDB;
 
 import java.util.ArrayList;
 import java.util.Collections;

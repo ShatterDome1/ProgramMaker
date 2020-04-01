@@ -3,11 +3,8 @@ package com.mpascal.programmaker.dialogs;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
-import android.widget.TextView;
 
 import com.mpascal.programmaker.R;
-
-import javax.annotation.Nullable;
 
 public class LoadingDialog {
     private Activity activity;

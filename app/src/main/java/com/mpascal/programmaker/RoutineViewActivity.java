@@ -1,11 +1,8 @@
 package com.mpascal.programmaker;
 
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,7 +17,6 @@ import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.fragments.RoutineFragment;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.regex.Pattern;
 

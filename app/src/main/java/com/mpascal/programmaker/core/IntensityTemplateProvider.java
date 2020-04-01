@@ -1,7 +1,5 @@
 package com.mpascal.programmaker.core;
 
-import androidx.constraintlayout.solver.widgets.ConstraintAnchor;
-
 public class IntensityTemplateProvider {
 
     private String[][] intensityPerBlocks;

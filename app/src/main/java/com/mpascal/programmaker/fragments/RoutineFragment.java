@@ -1,12 +1,12 @@
 package com.mpascal.programmaker.fragments;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,16 +20,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.RoutineViewActivity;
-import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.adapters.RoutineAdapter;
-import com.mpascal.programmaker.db.ExerciseDB;
-
+import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.db.UserDB;
-import com.mpascal.programmaker.dialogs.LoadingDialog;
 import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RoutineFragment extends Fragment {
     private static final String TAG = "RoutineFragment";
@@ -46,12 +40,15 @@ public class RoutineFragment extends Fragment {
 
     private FloatingActionButton createRoutine;
 
-    private LoadingDialog loadingDialog;
+    private ProgressBar progressBar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routines, container, false);
+
+        progressBar = view.findViewById(R.id.routines_progress_bar);
+        progressBar.setVisibility(View.GONE);
 
         // Get the current user
         final Bundle bundle = getArguments();
@@ -84,17 +81,16 @@ public class RoutineFragment extends Fragment {
 
         adapter = new RoutineAdapter(routineFragmentViewModel.getRoutines().getValue());
 
-        loadingDialog = new LoadingDialog(getActivity());
         routineFragmentViewModel.getIsFetchingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
-                    loadingDialog.showLoadingDialog();
+                    progressBar.setVisibility(View.VISIBLE);
                     Log.d(TAG, "onChanged: data is being fetched");
                 } else {
                     Log.d(TAG, "onChanged: notified");
                     adapter.notifyDataSetChanged();
-                    loadingDialog.dismissLoadingDialog();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

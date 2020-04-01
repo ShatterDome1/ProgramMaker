@@ -6,16 +6,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
         <EditText
             android:id="@+id/profileFirstName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="64dp"
             android:layout_marginTop="64dp"
-            android:layout_marginEnd="64dp"
             android:hint="@string/register_firstname"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
@@ -27,9 +26,7 @@
             android:id="@+id/profileLastName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="@string/register_lastname"
             android:importantForAutofill="no"
@@ -40,62 +37,33 @@
 
         <Button
             android:id="@+id/updateDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="62dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
+            android:layout_marginTop="16dp"
             android:text="@string/update_details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.503"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileNewPasswordConfirm" />
-
-        <EditText
-            android:id="@+id/profileNewPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
-            android:ems="10"
-            android:hint="@string/new_password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profilePassword" />
-
-        <EditText
-            android:id="@+id/profilePassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
-            android:ems="10"
-            android:hint="@string/password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profileLastName" />
 
-        <EditText
-            android:id="@+id/profileNewPasswordConfirm"
-            android:layout_width="0dp"
+        <Button
+            android:id="@+id/change_password"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="64dp"
-            android:ems="10"
-            android:hint="@string/confirm_new_password"
-            android:importantForAutofill="no"
-            android:inputType="textPassword"
+            android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileNewPassword" />
+            android:text="@string/change_password"
+            app:layout_constraintTop_toBottomOf="@+id/updateDetails" />
+
+        <Button
+            android:id="@+id/delete_account"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:text="@string/delete_account"
+            app:layout_constraintTop_toBottomOf="@+id/change_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

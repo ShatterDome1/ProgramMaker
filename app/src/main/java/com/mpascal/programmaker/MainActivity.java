@@ -19,8 +19,15 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.mpascal.programmaker.db.UserDB;
+import com.mpascal.programmaker.dialogs.ChangePasswordDialog;
 import com.mpascal.programmaker.fragments.ProfileFragment;
 import com.mpascal.programmaker.fragments.RoutineFragment;
 import com.mpascal.programmaker.fragments.SurveyFragment;
@@ -30,7 +37,8 @@ import java.time.Period;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
-        SurveyFragment.SurveyFragmentListener {
+        SurveyFragment.SurveyFragmentListener,
+        ChangePasswordDialog.ChangePasswordDialogListener {
 
     public static final String PACKAGE_NAME = "com.mpascal.programmaker";
 
@@ -44,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private ArrayList<Integer> daysAvailable;
 
     private UserDB user;
+
+    private final FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,9 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             user = new UserDB(sharedPref.getString("firstName",""),
                     sharedPref.getString("lastName",""),
                     sharedPref.getString("email",""),
-                    sharedPref.getString("password",""),
-                    sharedPref.getString("dateOfBirth", ""),
-                    sharedPref.getString("key", ""));
+                    sharedPref.getString("dateOfBirth", ""));
         }
 
         // Set the logged in user details
@@ -115,6 +123,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     currentFragment.getClass() == SurveyFragment.class &&
                     !daysAvailable.isEmpty()) {
                 daysAvailable = new ArrayList<>();
+            } else if (currentFragment.getClass() != SurveyFragment.class) {
+                auth.signOut();
             }
             super.onBackPressed();
         }
@@ -129,9 +139,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         editor.putString("firstName", user.getFirstName());
         editor.putString("lastName", user.getLastName());
         editor.putString("email", user.getEmail());
-        editor.putString("password", user.getPassword());
         editor.putString("dateOfBirth", user.getDateOfBirth());
-        editor.putString("key", user.getKey());
         editor.apply();
     }
 
@@ -274,8 +282,49 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     private void logout() {
+        auth.signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
+    }
+
+    // This action happens in the profile fragment but the base activity is MainActivoty, so the
+    // dialog listener logic must be implemented here
+    @Override
+    public void changePassword(String password, final String newPassStr, String newPassConfStr) {
+        if (newPassConfStr.equals(newPassStr)) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+            // Get auth credentials from the user for re-authentication. The example below shows
+            // email and password credentials but there are multiple possible providers,
+            // such as GoogleAuthProvider or FacebookAuthProvider.
+            AuthCredential credential = EmailAuthProvider
+                    .getCredential(user.getEmail(), password);
+
+            // Prompt the user to re-provide their sign-in credentials
+            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        auth.getCurrentUser().updatePassword(newPassStr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(MainActivity.this, "Password Changed", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "onComplete: password updated");
+                                } else {
+                                    Toast.makeText(MainActivity.this, "Password Update Failed", Toast.LENGTH_SHORT).show();
+                                    Log.d(TAG, "onComplete: ", task.getException());
+                                }
+                            }
+                        });
+                    } else {
+                        Toast.makeText( MainActivity.this, "Authentication Failed!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(MainActivity.this, "New Passwords Don't Match!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

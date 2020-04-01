@@ -10,23 +10,17 @@ public class UserDB implements Parcelable {
     private String firstName;
     private String lastName;
     private String email;
-    private String password;
     private String dateOfBirth;
-    private String key;
 
     public UserDB(String firstName,
                   String lastName,
                   String email,
-                  String password,
-                  String dateOfBirth,
-                  String key) {
+                  String dateOfBirth) {
 
         this.email = email;
-        this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
-        this.key = key;
     }
 
     public UserDB() {}
@@ -35,9 +29,7 @@ public class UserDB implements Parcelable {
         firstName = in.readString();
         lastName = in.readString();
         email = in.readString();
-        password = in.readString();
         dateOfBirth = in.readString();
-        key = in.readString();
     }
 
     public static final Creator<UserDB> CREATOR = new Creator<UserDB>() {
@@ -62,9 +54,7 @@ public class UserDB implements Parcelable {
         dest.writeString(firstName);
         dest.writeString(lastName);
         dest.writeString(email);
-        dest.writeString(password);
         dest.writeString(dateOfBirth);
-        dest.writeString(key);
     }
 
     public String getFirstName() {
@@ -80,16 +70,9 @@ public class UserDB implements Parcelable {
         return email;
     }
 
-    public String getPassword() {
-        return password;
-    }
+    public void setEmail(String email) {this.email = email;}
 
     public String getDateOfBirth() {
         return dateOfBirth;
     }
-
-    public String getKey() {
-        return key;
-    }
-
 }
