@@ -137,7 +137,7 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
                     heightStr += heightUnit;
                 } catch (NumberFormatException nfe) {
                     isOk = false;
-                    Toast.makeText(getActivity(), "For Ft please use ?'? format!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "For Ft please use ?'? format", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -148,11 +148,11 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
                     heightStr += heightUnit;
                 } catch (NumberFormatException nfe) {
                     isOk = false;
-                    Toast.makeText(getActivity(), "For Cm please add your height as a number!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "For Cm please add your height as a number", Toast.LENGTH_SHORT).show();
                 }
             }
         } else {
-            Toast.makeText(getActivity(), "Please enter your height!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please enter your height", Toast.LENGTH_SHORT).show();
             isOk = false;
         }
 
@@ -167,7 +167,7 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
             weightStr += weightUnit;
         } else {
             isOk = false;
-            Toast.makeText(getActivity(), "Please enter your weight!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please enter your weight", Toast.LENGTH_SHORT).show();
         }
 
         if (isOk) {

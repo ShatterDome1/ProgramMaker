@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(RegisterActivity.this, "Verification email sent to " + user.getEmail() + "!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_SHORT).show();
                                             auth.signOut();
 
                                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
@@ -139,7 +139,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                             startActivity(intent);
 
                                         } else {
-                                            Toast.makeText(RegisterActivity.this, "Failed to send verification email!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Failed to send verification email", Toast.LENGTH_SHORT).show();
                                             Log.d(TAG, "onComplete: failed", task.getException());
 
                                             // make the progress bar invisible
@@ -151,7 +151,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(RegisterActivity.this, "Error while registering!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(RegisterActivity.this, "Error while registering", Toast.LENGTH_SHORT).show();
                                 Log.d(TAG, e.toString());
 
                                 // make the progress bar invisible

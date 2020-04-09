@@ -30,6 +30,7 @@ import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.R;
 import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.dialogs.ChangePasswordDialog;
+import com.mpascal.programmaker.dialogs.DeleteAccountDialog;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -81,7 +82,8 @@ public class ProfileFragment extends Fragment {
         deleteAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteAccount();
+                DeleteAccountDialog deleteAccount = new DeleteAccountDialog();
+                deleteAccount.show(getFragmentManager(), "DeleteAccount");
             }
         });
 
@@ -136,47 +138,5 @@ public class ProfileFragment extends Fragment {
         } else {
             Toast.makeText(getActivity(), "No Changes Detected!", Toast.LENGTH_SHORT).show();
         }
-    }
-
-    private void deleteAccount() {
-        final FirebaseUser currentUser = auth.getCurrentUser();
-
-        // Firebase user should never be null in this part of the application
-        db.collection("Routines").whereEqualTo("email", currentUser.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-            @Override
-            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                    db.collection("Routines").document(documentSnapshot.getId()).delete().addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Log.d(TAG, "onFailure: failed" + e.toString());
-                        }
-                    });
-                }
-                db.collection("Users").document(currentUser.getEmail()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Log.d(TAG, "onComplete: Account Deleted");
-                                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                    startActivity(intent);
-                                } else {
-                                    Log.d(TAG, "onComplete: failed", task.getException());
-                                }
-                            }
-                        });
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "onFailure: failed" + e.toString());
-                    }
-                });
-            }
-        });
     }
 }

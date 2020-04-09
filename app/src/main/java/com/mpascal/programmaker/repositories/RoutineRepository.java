@@ -70,7 +70,7 @@ public class RoutineRepository {
                                 routine.getIntensityPerBlockStr(),
                                 routine.getExercisesPerBlockStr(),
                                 email));
-                        Log.d(TAG, "onSuccess: " + routine.getTitle() + " retreived");
+                        Log.d(TAG, "onSuccess: " + routine.getTitle() + " retrieved for email " + email);
                 }
                 isFetchingData.postValue(false);
             }
@@ -83,6 +83,7 @@ public class RoutineRepository {
     }
 
     public void clearData() {
+        Log.d(TAG, "clearData: remove data on logout");
         dataSet.clear();
         isRoutinesSet = false;
     }

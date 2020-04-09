@@ -37,6 +37,7 @@ public class RoutineFragmentViewModel extends ViewModel {
             return;
         }
         routineRepository = RoutineRepository.getInstance();
+
         routines = routineRepository.getRoutines(email, isFetchingData);
     }
 
@@ -68,9 +69,5 @@ public class RoutineFragmentViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsFetchingData() {
         return isFetchingData;
-    }
-
-    public void clearData() {
-        routineRepository.clearData();
     }
 }

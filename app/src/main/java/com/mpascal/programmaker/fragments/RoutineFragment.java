@@ -104,6 +104,8 @@ public class RoutineFragment extends Fragment {
                 Intent intent = new Intent(getActivity(), RoutineViewActivity.class);
                 Routine currentRoutine = routineFragmentViewModel.getRoutine(position);
                 intent.putExtra(PACKAGE_NAME + ".routine", currentRoutine);
+                intent.putExtra(PACKAGE_NAME + ".user", currentUser);
+                intent.putExtra(PACKAGE_NAME + ".routinePosition", position);
                 startActivity(intent);
                 Log.d(TAG, "onItemClick: " + currentRoutine.getTitle());
             }
@@ -114,13 +116,5 @@ public class RoutineFragment extends Fragment {
                 routineFragmentViewModel.deleteRoutine(currentUser.getEmail(), position, adapter);
             }
         });
-    }
-
-    @Override
-    public void onDestroyView() {
-        routineFragmentViewModel.getIsFetchingData().removeObservers(getViewLifecycleOwner());
-        adapter.clearData();
-        routineFragmentViewModel.clearData();
-        super.onDestroyView();
     }
 }

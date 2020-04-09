@@ -88,6 +88,7 @@ public class Routine extends RoutineDB implements Parcelable {
         setBmi(in.readDouble());
         setRoutineSplit(in.readString());
         setAge(in.readInt());
+        setEmail(in.readString());
         intensityPerBlock = new String[3][4];
         for (int i = 0; i < 3 ; i++) {
             in.readStringArray(intensityPerBlock[i]);
@@ -96,6 +97,8 @@ public class Routine extends RoutineDB implements Parcelable {
         for (int i = 0; i < 3; i++) {
             in.readStringArray(exercisesPerBlock[i]);
         }
+        setIntensityPerBlockStr(in.readString());
+        setExercisesPerBlockStr(in.readString());
     }
 
     public static final Creator<Routine> CREATOR = new Creator<Routine>() {
@@ -123,12 +126,15 @@ public class Routine extends RoutineDB implements Parcelable {
         dest.writeDouble(getBmi());
         dest.writeString(getRoutineSplit());
         dest.writeInt(getAge());
+        dest.writeString(getEmail());
         for (int i = 0; i < 3 ; i++) {
             dest.writeStringArray(intensityPerBlock[i]);
         }
         for (int i = 0; i < 3 ; i++) {
             dest.writeStringArray(exercisesPerBlock[i]);
         }
+        dest.writeString(getIntensityPerBlockStr());
+        dest.writeString(getExercisesPerBlockStr());
     }
 
     private String convert2dArrayToStr(String[][] array) {
@@ -147,7 +153,7 @@ public class Routine extends RoutineDB implements Parcelable {
             }
         }
 
-        return result.toString();
+        return result;
     }
 
     private String[][] convertStrTo2dArray(String str) {

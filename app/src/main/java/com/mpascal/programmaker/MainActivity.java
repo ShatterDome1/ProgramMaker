@@ -20,17 +20,24 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.dialogs.ChangePasswordDialog;
+import com.mpascal.programmaker.dialogs.DeleteAccountDialog;
 import com.mpascal.programmaker.fragments.ProfileFragment;
 import com.mpascal.programmaker.fragments.RoutineFragment;
 import com.mpascal.programmaker.fragments.SurveyFragment;
+import com.mpascal.programmaker.repositories.RoutineRepository;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -38,7 +45,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         SurveyFragment.SurveyFragmentListener,
-        ChangePasswordDialog.ChangePasswordDialogListener {
+        ChangePasswordDialog.ChangePasswordDialogListener,
+        DeleteAccountDialog.DeleteAccountDialogListener {
 
     public static final String PACKAGE_NAME = "com.mpascal.programmaker";
 
@@ -54,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UserDB user;
 
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +133,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     !daysAvailable.isEmpty()) {
                 daysAvailable = new ArrayList<>();
             } else if (currentFragment.getClass() != SurveyFragment.class) {
+                // When the user signs out, clear the data from the RoutinesRepository
+                RoutineRepository routineRepository = RoutineRepository.getInstance();
+                routineRepository.clearData();
+
                 auth.signOut();
             }
             super.onBackPressed();
@@ -216,7 +229,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // a new routine
             daysAvailable = new ArrayList<>();
         } else {
-            Toast.makeText(this, "Please select days that you can train!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please select days that you can train", Toast.LENGTH_SHORT).show();
             ok = false;
         }
 
@@ -283,30 +296,34 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private void logout() {
         auth.signOut();
+
+        // When the user signs out, clear the data from the RoutinesRepository
+        RoutineRepository routineRepository = RoutineRepository.getInstance();
+        routineRepository.clearData();
+
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
-    // This action happens in the profile fragment but the base activity is MainActivoty, so the
-    // dialog listener logic must be implemented here
+    // This action happens in the profile fragment but the base activity is MainActivity, so the
+    // dialog listeners logic must be implemented here
     @Override
     public void changePassword(String password, final String newPassStr, String newPassConfStr) {
         if (newPassConfStr.equals(newPassStr)) {
-            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            final FirebaseUser currentUser = auth.getCurrentUser();
 
             // Get auth credentials from the user for re-authentication. The example below shows
             // email and password credentials but there are multiple possible providers,
             // such as GoogleAuthProvider or FacebookAuthProvider.
             AuthCredential credential = EmailAuthProvider
-                    .getCredential(user.getEmail(), password);
+                    .getCredential(currentUser.getEmail(), password);
 
-            // Prompt the user to re-provide their sign-in credentials
-            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            currentUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if (task.isSuccessful()) {
-                        auth.getCurrentUser().updatePassword(newPassStr).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        currentUser.updatePassword(newPassStr).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
@@ -326,5 +343,69 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             Toast.makeText(MainActivity.this, "New Passwords Don't Match!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void deleteAccount(String password) {
+        final FirebaseUser currentUser = auth.getCurrentUser();
+
+        // Get auth credentials from the user for re-authentication. The example below shows
+        // email and password credentials but there are multiple possible providers,
+        // such as GoogleAuthProvider or FacebookAuthProvider.
+        AuthCredential credential = EmailAuthProvider
+                .getCredential(currentUser.getEmail(), password);
+
+        currentUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    db.collection("Routines").whereEqualTo("email", currentUser.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                        @Override
+                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                            // Delete Routines
+                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                db.collection("Routines").document(documentSnapshot.getId()).delete().addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.d(TAG, "onFailure: failed" + e.toString());
+                                    }
+                                });
+                            }
+
+                            // Delete user record from database
+                            db.collection("Users").document(currentUser.getEmail()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+
+                                    // Delete Authentication user
+                                    currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                auth.signOut();
+                                                Log.d(TAG, "onComplete: Account Deleted");
+                                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                                startActivity(intent);
+                                            } else {
+                                                Log.d(TAG, "onComplete: failed", task.getException());
+                                            }
+                                        }
+                                    });
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Log.d(TAG, "onFailure: failed" + e.toString());
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    Log.d(TAG, "onComplete: reauth failed", task.getException());
+                    Toast.makeText(MainActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 }

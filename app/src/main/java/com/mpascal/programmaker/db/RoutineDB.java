@@ -11,9 +11,10 @@ public class RoutineDB {
     private Double bmi;
     private String routineSplit;
     private int age;
+    private String email;
     private String intensityPerBlockStr;
     private String exercisesPerBlockStr;
-    private String email;
+
 
     // This is used to store the Routine object in the online database
 
@@ -24,9 +25,9 @@ public class RoutineDB {
         this.bmi = bmi;
         this.routineSplit = routineSplit;
         this.age = age;
+        this.email = email;
         this.intensityPerBlockStr = intensityPerBlockStr;
         this.exercisesPerBlockStr = exercisesPerBlockStr;
-        this.email = email;
     }
 
     public RoutineDB(Routine routine) {
@@ -36,9 +37,9 @@ public class RoutineDB {
         this.bmi = routine.getBmi();
         this.routineSplit = routine.getRoutineSplit();
         this.age = routine.getAge();
+        this.email = routine.getEmail();
         this.intensityPerBlockStr = routine.getIntensityPerBlockStr();
         this.exercisesPerBlockStr = routine.getExercisesPerBlockStr();
-        this.email = routine.getEmail();
     }
 
     public RoutineDB() {

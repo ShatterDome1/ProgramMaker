@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
                         if (user.isEmailVerified()) {
                             getLoggedInUserDetails(usernameStr);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Email is not verified!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Email is not verified", Toast.LENGTH_SHORT).show();
 
                             // show that something is done after the login button is pressed
                             auth.signOut();
@@ -120,7 +120,7 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(LoginActivity.this, "Authentication failed.",
+                        Toast.makeText(LoginActivity.this, "Authentication failed",
                                 Toast.LENGTH_SHORT).show();
 
                         loginProgressBar.setVisibility(View.GONE);
@@ -129,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
             });
 
         } else {
-            Toast.makeText(this, "Invalid Credentials!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -153,19 +153,18 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
 
                     // make the progress bar invisible
                     loadingDialog.dismissLoadingDialog();
-
-                    // make the progress bar invisible
                     loginProgressBar.setVisibility(View.GONE);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, e.toString());
 
                 // make the progress bar invisible
                 loginProgressBar.setVisibility(View.GONE);
+                loadingDialog.dismissLoadingDialog();
             }
         });
     }
@@ -176,10 +175,10 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Reset password email sent!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Reset password email sent", Toast.LENGTH_SHORT).show();
                 } else {
                     Log.d(TAG, "onComplete: failure", task.getException());
-                    Toast.makeText(LoginActivity.this, "Reset password email not sent!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "Reset password email not sent", Toast.LENGTH_SHORT).show();
                 }
             }
         });

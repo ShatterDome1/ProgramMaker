@@ -1,7 +1,7 @@
 <resources>
 
 
-    <string name="app_name">ProgramMaker</string>
+    <string name="app_name">Routine Maker</string>
 
     <!-- LogIn Activity -->
     <string name="email">Email</string>
@@ -9,6 +9,7 @@
     <string name="action_sign_in">Sign in</string>
     <string name="action_register">Register</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="logo">Application Logo</string>
 
     <!-- Register Activity -->
     <string name="register_firstname">First Name</string>
