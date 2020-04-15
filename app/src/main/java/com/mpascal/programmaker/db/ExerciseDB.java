@@ -24,7 +24,7 @@ public class ExerciseDB implements Parcelable {
     private boolean isSuitableForElders;
 
     // Is compound exercise
-    private boolean isCompoundExercise;
+    private boolean isPersistent;
 
     // Target body muscles
     private String primaryMover;
@@ -33,13 +33,13 @@ public class ExerciseDB implements Parcelable {
                       String name,
                       String repRange,
                       boolean isSuitableForElders,
-                      boolean isCompoundExercise,
+                      boolean isPersistent,
                       String primaryMover) {
         this.category = category;
         this.name = name;
         this.repRange = repRange;
         this.isSuitableForElders = isSuitableForElders;
-        this.isCompoundExercise = isCompoundExercise;
+        this.isPersistent = isPersistent;
         this.primaryMover = primaryMover;
     }
 
@@ -48,7 +48,7 @@ public class ExerciseDB implements Parcelable {
         name = in.readString();
         repRange = in.readString();
         isSuitableForElders = in.readByte() != 0;
-        isCompoundExercise = in.readByte() != 0;
+        isPersistent = in.readByte() != 0;
         primaryMover = in.readString();
     }
 
@@ -75,7 +75,7 @@ public class ExerciseDB implements Parcelable {
         dest.writeString(name);
         dest.writeString(repRange);
         dest.writeByte((byte) (isSuitableForElders ? 1 : 0));
-        dest.writeByte((byte) (isCompoundExercise ? 1 : 0));
+        dest.writeByte((byte) (isPersistent ? 1 : 0));
         dest.writeString(primaryMover);
     }
 
@@ -113,12 +113,12 @@ public class ExerciseDB implements Parcelable {
         isSuitableForElders = suitableForElders;
     }
 
-    public boolean getIsCompoundExercise() {
-        return isCompoundExercise;
+    public boolean getIsPersistent() {
+        return isPersistent;
     }
 
-    public void setIsCompoundExercise(boolean compoundExercise) {
-        isCompoundExercise = compoundExercise;
+    public void getIsPersistent(boolean compoundExercise) {
+        isPersistent = compoundExercise;
     }
 
     public String getPrimaryMover() {

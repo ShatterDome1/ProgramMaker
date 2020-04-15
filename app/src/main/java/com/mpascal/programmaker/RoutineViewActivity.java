@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
@@ -226,13 +227,27 @@ public class RoutineViewActivity extends AppCompatActivity {
 
                 // Hide the update routine button before drawing the constraint layout
                 updateRoutine.setVisibility(View.GONE);
+                routineTitle.setVisibility(View.GONE);
 
                 // Converts the layout and it's contents to a bitmap
                 PdfDocument document = new PdfDocument();
                 PdfDocument.PageInfo firstPage =  new PdfDocument.PageInfo.Builder(constraintLayout.getWidth(), constraintLayout.getHeight(), 1).create();
 
                 PdfDocument.Page page = document.startPage(firstPage);
+
+                Canvas canvas = page.getCanvas();
+
+                Paint textPaint = new Paint();
+                textPaint.setTextAlign(Paint.Align.CENTER);
+                textPaint.setTextSize(100);
+
+                int xPos = (canvas.getWidth() / 2);
+                int yPos = 250 ;
+                //((textPaint.descent() + textPaint.ascent()) / 2) is the distance from the baseline to the center.
+                canvas.drawText(currentRoutine.getTitle(), xPos, yPos, textPaint);
+
                 constraintLayout.draw(page.getCanvas());
+
                 document.finishPage(page);
 
                 try {
@@ -247,6 +262,7 @@ public class RoutineViewActivity extends AppCompatActivity {
                     e.printStackTrace();
                 } finally {
                     // Whatever the result of the action make sure the button is visible again
+                    routineTitle.setVisibility(View.VISIBLE);
                     updateRoutine.setVisibility(View.VISIBLE);
                 }
             }

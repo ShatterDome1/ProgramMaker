@@ -3,6 +3,7 @@ package com.mpascal.programmaker;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -72,7 +73,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // This will retrieve the days available from the survey
         daysAvailable = new ArrayList<>();
 
+        // Set the custom toolbar so that the navigation menu foes over it
         Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setBackgroundColor(Color.parseColor("#FF6200EE"));
         setSupportActionBar(toolbar);
 
         drawerLayout = findViewById(R.id.drawer_layout);
@@ -184,16 +187,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_logout:
                 logout();
                 break;
-
-            case R.id.nav_share:
-                //TODO Share
-                Toast.makeText(this, "Share!!!", Toast.LENGTH_SHORT).show();
-                break;
-
-            case R.id.nav_download:
-                //TODO Download
-                Toast.makeText(this, "Download!!", Toast.LENGTH_SHORT).show();
-                break;
         }
 
         drawerLayout.closeDrawer(GravityCompat.START);
@@ -215,10 +208,62 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         boolean ok = true;
 
-        // If the user has picked 7 days then remove Wednesday and and create the routine
+
         if (daysAvailable.size() != 0) {
+            // If the user has picked 7 days then remove Wednesday and and create the routine
             if (daysAvailable.size() == 7) {
                 daysAvailable.remove((Integer) 3);
+            }
+
+            // If the user picks 6 days and if the goal is not Hypertrophy, force the routine split
+            // to be calculated to FB+GPP
+            if (daysAvailable.size() == 6 && !goal.equals("Hypertrophy")) {
+                // Check which day is missing
+                int missingDay = -1;
+                for (int i =0; i < 7; i++) {
+                    boolean isMissing= daysAvailable.contains(i);
+                    if (isMissing) {
+                        missingDay = i;
+                        break;
+                    }
+                }
+
+                // Remove the
+                switch (missingDay) {
+                    case 0:
+                        daysAvailable.remove((Integer) 5);
+                        daysAvailable.remove((Integer) 2);
+                        break;
+
+                    case 1:
+                        daysAvailable.remove((Integer) 6);
+                        daysAvailable.remove((Integer) 3);
+                        break;
+
+                    case 2:
+                        daysAvailable.remove((Integer) 0);
+                        daysAvailable.remove((Integer) 4);
+
+                    case 3:
+                        daysAvailable.remove((Integer) 1);
+                        daysAvailable.remove((Integer) 5);
+                        break;
+
+                    case 4:
+                        daysAvailable.remove((Integer) 2);
+                        daysAvailable.remove((Integer) 6);
+                        break;
+
+                    case 5:
+                        daysAvailable.remove((Integer) 3);
+                        daysAvailable.remove((Integer) 1);
+                        break;
+
+                    case 6:
+                        daysAvailable.remove((Integer) 4);
+                        daysAvailable.remove((Integer) 2);
+                        break;
+                }
             }
 
             // take strings and send to routine fragment

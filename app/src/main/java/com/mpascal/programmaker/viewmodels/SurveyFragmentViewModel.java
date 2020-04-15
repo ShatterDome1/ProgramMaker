@@ -112,6 +112,7 @@ public class SurveyFragmentViewModel extends ViewModel {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                isAddingRoutine.postValue(false);
                 Log.d(TAG, e.toString());
             }
         });

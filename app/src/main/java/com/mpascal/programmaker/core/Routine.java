@@ -35,16 +35,16 @@ public class Routine extends RoutineDB implements Parcelable {
                    ArrayList<ExerciseDB> cardioExercises) {
         super(title, goal, daysAvailable, bmi, routineSplit, age, intensityPerBlockStr, exercisesPerBlockStr, email);
 
-        if (routineSplit.isEmpty()) {
-            setRoutineSplit(calcRoutineSplit(daysAvailable, goal));
-        }
-
         if (bmi == 0) {
             setBmi(calcBMI(weight, height));
         }
 
+        if (routineSplit.isEmpty()) {
+            setRoutineSplit(calcRoutineSplit(daysAvailable, goal, getBmi()));
+        }
+
         if (intensityPerBlockStr.isEmpty()) {
-            this.intensityPerBlock = new IntensityTemplateProvider(goal).getIntensityPerBlocks();
+            this.intensityPerBlock = new IntensityTemplateProvider(goal, getBmi()).getIntensityPerBlocks();
             setIntensityPerBlockStr(convert2dArrayToStr(intensityPerBlock));
         } else {
             this.intensityPerBlock = convertStrTo2dArray(intensityPerBlockStr);
@@ -53,6 +53,8 @@ public class Routine extends RoutineDB implements Parcelable {
         if (exercisesPerBlockStr.isEmpty()) {
             this.exercisesPerBlock = calcExercisesForTrainingBlocks(getRoutineSplit(),
                     daysAvailable.size(),
+                    age,
+                    goal,
                     intensityPerBlock,
                     mainExercises,
                     secondaryExercises,
@@ -170,6 +172,8 @@ public class Routine extends RoutineDB implements Parcelable {
 
     private String[][] calcExercisesForTrainingBlocks(String routineSplit,
                                                      int daysAvailable,
+                                                     int age,
+                                                     String goal,
                                                      String[][] intensityPerBlock,
                                                      ArrayList<ExerciseDB> mainExercises,
                                                      ArrayList<ExerciseDB> secondaryExercises,
@@ -177,8 +181,11 @@ public class Routine extends RoutineDB implements Parcelable {
                                                      ArrayList<ExerciseDB> cardioExercises) {
 
         // Get the exercise templates for the routine
-        ExerciseTemplateProvider template = new ExerciseTemplateProvider(routineSplit, daysAvailable);
+        ExerciseTemplateProvider template = new ExerciseTemplateProvider(routineSplit, daysAvailable, goal);
         String[] dayTemplates = template.getDaysTemplates();
+
+        // Boolean for checking if the routine creator is an elder based on the age
+        boolean isElder = age > 60;
 
         String[][] exercisesPerBlock = new String[3][dayTemplates.length];
         // Initialise all strings of every block with empty strings so that we don't have null
@@ -199,6 +206,11 @@ public class Routine extends RoutineDB implements Parcelable {
             int secondaryRepsPerBlock = -1;
             int accessoryRepsPerBlock = -1;
             int cardioMinsPerBlock = -1;
+
+            // This list will hold all the persistent exercises and add them back to the appropriate
+            // lists once the block is completed. Doing this removes the prescription of the same
+            // same exercise twice a week
+            ArrayList<ExerciseDB> exercisesToAddBack = new ArrayList<>();
 
             // Example String:
             // "Main-6 reps @ RPE 6,7,8|Secondary-8 reps @ RPE 7,8,9|Accessory-10 reps x 5 sets";
@@ -244,7 +256,6 @@ public class Routine extends RoutineDB implements Parcelable {
 
                     ArrayList<ExerciseDB> exerciseList = new ArrayList<>();
                     int repRange = -1;
-                    boolean removeExercise = false;
 
                     switch (exerciseProperties[0]) {
                         case "Main":
@@ -255,18 +266,11 @@ public class Routine extends RoutineDB implements Parcelable {
                         case "Secondary":
                             exerciseList = secondaryExercises;
                             repRange = secondaryRepsPerBlock;
-                            removeExercise = true;
                             break;
 
                         case "Accessory":
                             exerciseList = accessoryExercises;
                             repRange = accessoryRepsPerBlock;
-
-                            // There aren't enough calves exercises to be able to switch between blocks
-                            if (!exerciseProperties[1].equals("Calves")) {
-                                removeExercise = true;
-                            }
-
                             break;
 
                         case "Cardio":
@@ -275,6 +279,7 @@ public class Routine extends RoutineDB implements Parcelable {
                             break;
                     }
 
+                    // Exercise List should never be null
                     for (ExerciseDB exercise : exerciseList) {
 
                         boolean betweenRepRange = false;
@@ -287,7 +292,8 @@ public class Routine extends RoutineDB implements Parcelable {
                             Log.d(TAG, "calcExercisesForTrainingBlocks: repRange calculation failed for " + exerciseProperties[0]);
                         }
 
-                        if (exercise.getPrimaryMover().equals(exerciseProperties[1]) && betweenRepRange) {
+                        // Check if the user is an elder and if so, check if the exercise is suitable
+                        if ((!isElder || exercise.getIsSuitableForElders()) && exercise.getPrimaryMover().equals(exerciseProperties[1]) && betweenRepRange) {
 
                             String suffix = "";
                             // Check if it's the last exercise that's substituted from the day template
@@ -297,16 +303,35 @@ public class Routine extends RoutineDB implements Parcelable {
 
                             exercisesPerBlock[i][j] +=  exercise.getCategory() + "-" + exercise.getName() + suffix;
 
-                            if (removeExercise) {
-                                if (exerciseProperties[0].equals("Secondary"))
-                                    secondaryExercises.remove(exercise);
-                                else
-                                    accessoryExercises.remove(exercise);
+                            if (exercise.getIsPersistent()) {
+                                exercisesToAddBack.add(exercise);
                             }
+                            exerciseList.remove(exercise);
 
                             break;
                         }
                     }
+                }
+            }
+
+            // Add back the exercises removed to build the current block
+            for (ExerciseDB exercise : exercisesToAddBack) {
+                switch (exercise.getCategory()) {
+                    case "Main":
+                        mainExercises.add(0, exercise);
+                        break;
+
+                    case "Secondary":
+                        secondaryExercises.add(0, exercise);
+                        break;
+
+                    case "Accessory":
+                        accessoryExercises.add(0, exercise);
+                        break;
+
+                    case "Cardio":
+                        cardioExercises.add(0, exercise);
+                        break;
                 }
             }
         }
@@ -314,12 +339,12 @@ public class Routine extends RoutineDB implements Parcelable {
         return exercisesPerBlock;
     }
 
-    private String calcRoutineSplit(ArrayList<Integer> daysAvailable, String goal) {
+    private String calcRoutineSplit(ArrayList<Integer> daysAvailable, String goal, Double bmi) {
         String routineSplit;
         if (daysAvailable.size() > 3) {
             if (daysAvailable.size() == 4) {
                 // Decide between Upper/Lower and Full Body
-                if (goal.equals("Hypertrophy")) {
+                if (goal.equals("Hypertrophy") && bmi < 30) {
                     routineSplit = "UL";
                 } else {
                     Collections.sort(daysAvailable);

@@ -131,13 +131,18 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
             if (heightUnit.equals("Ft")) {
                 String[] heightValues = heightStr.split("'");
                 // Check that both strings are numbers
-                try {
-                    Integer.parseInt(heightValues[0]);
-                    Integer.parseInt(heightValues[1]);
-                    heightStr += heightUnit;
-                } catch (NumberFormatException nfe) {
+                if (heightValues.length == 2) {
+                    try {
+                        Integer.parseInt(heightValues[0]);
+                        Integer.parseInt(heightValues[1]);
+                        heightStr += heightUnit;
+                    } catch (NumberFormatException nfe) {
+                        isOk = false;
+                        Toast.makeText(getActivity(), "For Ft please use ?'? format (e.g. 5'7)", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
                     isOk = false;
-                    Toast.makeText(getActivity(), "For Ft please use ?'? format", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "For Ft please use ?'? format (e.g. 5'7)", Toast.LENGTH_SHORT).show();
                 }
             }
 

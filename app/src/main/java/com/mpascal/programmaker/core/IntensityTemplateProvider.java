@@ -4,175 +4,243 @@ public class IntensityTemplateProvider {
 
     private String[][] intensityPerBlocks;
 
-    public IntensityTemplateProvider(String goal) {
-        calcIntensityPerBlocks(goal);
+    public IntensityTemplateProvider(String goal, Double bmi) {
+        calcIntensityPerBlocks(goal, bmi);
     }
 
-    private void calcIntensityPerBlocks(String goal) {
+    private void calcIntensityPerBlocks(String goal, Double bmi) {
         intensityPerBlocks = new String[4][4];
 
         switch (goal) {
             case "Fat Loss":
-                // Fat loss routine
-                intensityPerBlocks[0] = getFatLossBlock();
-                intensityPerBlocks[1] = getHypertrophyBlock(goal,1);
-                intensityPerBlocks[2] = getStrengthBlock(goal, 3);
+                if (bmi > 30) {
+                    // First Block -> Strength block
+                    intensityPerBlocks[0][0] = "Main-6 reps @ RPE 6,7,8x2|" +
+                            "Secondary-8 reps @ RPE 6,7,8|" +
+                            "Accessory-10 reps x 3 sets @ RPE 6|" +
+                            "Cardio-20 minutes";
+                    intensityPerBlocks[0][1] = "Main-6 reps @ RPE 6,7,8x3|" +
+                            "Secondary-8 reps @ RPE 6x2,7x2|" +
+                            "Accessory-10 reps x 4 sets @ RPE 6|" +
+                            "Cardio-20 minutes";
+                    intensityPerBlocks[0][2] = "Main-6 reps @ RPE 6,7,8x4|" +
+                            "Secondary-8 reps @ RPE 6,7,8x2|" +
+                            "Accessory-10 reps x 3 sets @ RPE 7|" +
+                            "Cardio-20 minutes";
+                    intensityPerBlocks[0][3] = "Main-6 reps @ RPE 6,7,8|" +
+                            "Secondary-8 reps @ RPE 6,7,8|" +
+                            "Accessory-10 reps x 4 sets @ RPE 7|" +
+                            "Cardio-20 minutes";;
+
+                    // Second Block -> Fat Loss Block
+                    intensityPerBlocks[1][0] = "Main-10 reps @ RPE 5,6,7|" +
+                            "Secondary-12 reps @ RPE 6,7,8|" +
+                            "Accessory-15 reps x 3 sets @ RPE 6|" +
+                            "Cardio-25 minutes";
+                    intensityPerBlocks[1][1] = "Main-10 reps @ RPE 5,6,7x2|" +
+                            "Secondary-12 reps @ RPE 6x2,7x2|" +
+                            "Accessory-15 reps x 4 sets @ RPE 6|" +
+                            "Cardio-25 minutes";
+                    intensityPerBlocks[1][2] = "Main-10 reps @ RPE 5,6,7x3|" +
+                            "Secondary-12 reps @ RPE 6,7x3|" +
+                            "Accessory-15 reps x 3 sets @ RPE 7|" +
+                            "Cardio-25 minutes";
+                    intensityPerBlocks[1][3] = "Main-10 reps @ RPE 5,6,7|" +
+                            "Secondary-12 reps @ RPE 6,7,8|" +
+                            "Accessory-15 reps x 4 sets @ RPE 7|" +
+                            "Cardio-25 minutes";
+
+                    // Third Block -> Fat Loss Block
+                    intensityPerBlocks[2][0] = "Main-12 reps @ RPE 5,6,7|" +
+                            "Secondary-15 reps @ RPE 6,7,8|" +
+                            "Accessory-18 reps x 3 sets @ RPE 6|" +
+                            "Cardio-30 minutes";
+                    intensityPerBlocks[2][1] = "Main-12 reps @ RPE 5,6,7x2|" +
+                            "Secondary-15 reps @ RPE 6x2,7x2|" +
+                            "Accessory-18 reps x 4 sets @ RPE 6|" +
+                            "Cardio-30 minutes";
+                    intensityPerBlocks[2][2] = "Main-12 reps @ RPE 5,6,7x3|" +
+                            "Secondary-15 reps @ RPE 6,7x3|" +
+                            "Accessory-18 reps x 3 sets @ RPE 7|" +
+                            "Cardio-30 minutes";
+                    intensityPerBlocks[2][3] = "Main-12 reps @ RPE 5,6,7|" +
+                            "Secondary-15 reps @ RPE 6,7,8|" +
+                            "Accessory-18 reps x 4 sets @ RPE 7|" +
+                            "Cardio-30 minutes";
+                } else {
+//                    intensityPerBlocks[0] = calcFatLossBlock(goal, bmi, 1);
+//                    intensityPerBlocks[1] = calcStrengthBlock(goal, bmi, 2);
+//                    intensityPerBlocks[2] = calcHypertrophyBlock(goal, bmi, 3);
+
+                    // Create the templates for each routine
+                    // First Block -> Strength block
+                    intensityPerBlocks[0][0] = "Main-6 reps @ RPE 6,7,8x2|" +
+                            "Secondary-8 reps @ RPE 6,7,8|" +
+                            "Accessory-10 reps x 3 sets @ RPE 6|" +
+                            "Cardio-20 minutes";
+                    intensityPerBlocks[0][1] = "Main-6 reps @ RPE 6,7,8x3|" +
+                            "Secondary-8 reps @ RPE 6x2,7x2|" +
+                            "Accessory-10 reps x 4 sets @ RPE 6|" +
+                            "Cardio-20 minutes";
+                    intensityPerBlocks[0][2] = "Main-6 reps @ RPE 6,7,8x4|" +
+                            "Secondary-8 reps @ RPE 6,7x3|" +
+                            "Accessory-10 reps x 3 sets @ RPE 7|" +
+                            "Cardio-20 minutes";
+                    intensityPerBlocks[0][3] = "Main-6 reps @ RPE 6,7,8|" +
+                            "Secondary-8 reps @ RPE 6,7,8|" +
+                            "Accessory-10 reps x 4 sets @ RPE 7|" +
+                            "Cardio-20 minutes";
+
+                    // Second Block -> Hypertrophy Block
+                    intensityPerBlocks[1][0] = "Main-8 reps @ RPE 5,6,7|" +
+                            "Secondary-10 reps @ RPE 6,7,8|" +
+                            "Accessory-12 reps x 3 sets @ RPE 6|" +
+                            "Cardio-25 minutes";
+                    intensityPerBlocks[1][1] = "Main-8 reps @ RPE 5,6,7x2|" +
+                            "Secondary-10 reps @ RPE 6x2,7x2|" +
+                            "Accessory-12 reps x 4 sets @ RPE 6|" +
+                            "Cardio-25 minutes";
+                    intensityPerBlocks[1][2] = "Main-8 reps @ RPE 5,6,7x3|" +
+                            "Secondary-10 reps @ RPE 6,7x3|" +
+                            "Accessory-12 reps x 3 sets @ RPE 7|" +
+                            "Cardio-25 minutes";
+                    intensityPerBlocks[1][3] = "Main-8 reps @ RPE 5,6,7|" +
+                            "Secondary-10 reps @ RPE 6,7,8|" +
+                            "Accessory-12 reps x 4 sets @ RPE 7|" +
+                            "Cardio-25 minutes";
+
+                    // Third Block -> Fat Loss Block
+                    intensityPerBlocks[2][0] = "Main-10 reps @ RPE 5,6,7|" +
+                            "Secondary-12 reps @ RPE 6,7,8|" +
+                            "Accessory-15 reps x 3 sets @ RPE 6|" +
+                            "Cardio-30 minutes";
+                    intensityPerBlocks[2][1] = "Main-10 reps @ RPE 5,6,7x2|" +
+                            "Secondary-12 reps @ RPE 6x2,7x2|" +
+                            "Accessory-15 reps x 4 sets @ RPE 6|" +
+                            "Cardio-30 minutes";
+                    intensityPerBlocks[2][2] = "Main-10 reps @ RPE 5,6,7x3|" +
+                            "Secondary-12 reps @ RPE 6,7x3|" +
+                            "Accessory-15 reps x 3 sets @ RPE 7|" +
+                            "Cardio-30 minutes";
+                    intensityPerBlocks[2][3] = "Main-10 reps @ RPE 5,6,7|" +
+                            "Secondary-12 reps @ RPE 6,7,8|" +
+                            "Accessory-15 reps x 4 sets @ RPE 7|" +
+                            "Cardio-30 minutes";
+                }
                 break;
 
             case "Hypertrophy":
-                // Hypertrophy routine
-                intensityPerBlocks[0] = getHypertrophyBlock(goal, 1);
-                intensityPerBlocks[1] = getHypertrophyBlock(goal,2);
-                intensityPerBlocks[2] = getStrengthBlock(goal, 3);
+                // First Block -> Hypertrophy block
+                intensityPerBlocks[0][0] = "Main-10 reps @ RPE 5,6,7|" +
+                        "Secondary-12 reps @ RPE 6,7,8|" +
+                        "Accessory-15 reps x 3 sets @ RPE 6|" +
+                        "Cardio-20 minutes";
+                intensityPerBlocks[0][1] = "Main-10 reps @ RPE 5,6,7x2|" +
+                        "Secondary-12 reps @ RPE 6x2,7x2|" +
+                        "Accessory-15 reps x 4 sets @ RPE 6|" +
+                        "Cardio-20 minutes";
+                intensityPerBlocks[0][2] = "Main-10 reps @ RPE 5,6,7x3|" +
+                        "Secondary-12 reps @ RPE 6,7x3|" +
+                        "Accessory-15 reps x 3 sets @ RPE 7|" +
+                        "Cardio-20 minutes";
+                intensityPerBlocks[0][3] = "Main-10 reps @ RPE 5,6,7|" +
+                        "Secondary-12 reps @ RPE 6,7,8|" +
+                        "Accessory-15 reps x 4 sets @ RPE 7|" +
+                        "Cardio-20 minutes";
+
+                // Second Block -> Hypertrophy Block
+                intensityPerBlocks[1][0] = "Main-8 reps @ RPE 5,6,7|" +
+                        "Secondary-10 reps @ RPE 6,7,8|" +
+                        "Accessory-12 reps x 3 sets @ RPE 6|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[1][1] = "Main-8 reps @ RPE 5,6,7x2|" +
+                        "Secondary-10 reps @ RPE 6x2,7x2|" +
+                        "Accessory-12 reps x 4 sets @ RPE 6|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[1][2] = "Main-8 reps @ RPE 5,6,7x3|" +
+                        "Secondary-10 reps @ RPE 6,7x3|" +
+                        "Accessory-12 reps x 3 sets @ RPE 7|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[1][3] = "Main-8 reps @ RPE 5,6,7|" +
+                        "Secondary-10 reps @ RPE 6,7,8|" +
+                        "Accessory-12 reps x 4 sets @ RPE 7|" +
+                        "Cardio-25 minutes";
+
+                // Third Block -> Strength Block
+                intensityPerBlocks[2][0] = "Main-6 reps @ RPE 6,7,8x2|" +
+                        "Secondary-8 reps @ RPE 6,7,8|" +
+                        "Accessory-10 reps x 3 sets @ RPE 6|" +
+                        "Cardio-30 minutes";
+                intensityPerBlocks[2][1] = "Main-6 reps @ RPE 6,7,8x3|" +
+                        "Secondary-8 reps @ RPE 6x2,7x2|" +
+                        "Accessory-10 reps x 4 sets @ RPE 6|" +
+                        "Cardio-30 minutes";
+                intensityPerBlocks[2][2] = "Main-6 reps @ RPE 6,7,8x4|" +
+                        "Secondary-8 reps @ RPE 6,7x3|" +
+                        "Accessory-10 reps x 3 sets @ RPE 7|" +
+                        "Cardio-30 minutes";
+                intensityPerBlocks[2][3] = "Main-6 reps @ RPE 6,7,8|" +
+                        "Secondary-8 reps @ RPE 6,7,8|" +
+                        "Accessory-10 reps x 4 sets @ RPE 7|" +
+                        "Cardio-30 minutes";
                 break;
 
             case "Strength":
-                // Strength routine
-                intensityPerBlocks[0] = getHypertrophyBlock(goal, 1);
-                intensityPerBlocks[1] = getStrengthBlock(goal,2);
-                intensityPerBlocks[2] = getStrengthBlock(goal, 3);
+                // First Block -> Strength block
+                intensityPerBlocks[0][0] = "Main-4 reps @ RPE 6,7,8x2|" +
+                        "Secondary-6 reps @ RPE 6,7,8|" +
+                        "Accessory-8 reps x 4 sets @ RPE 6|" +
+                        "Cardio-20 minutes";
+                intensityPerBlocks[0][1] = "Main-4 reps @ RPE 6,7,8x3|" +
+                        "Secondary-6 reps @ RPE 6,7,8x2|" +
+                        "Accessory-8 reps x 5 sets @ RPE 6|" +
+                        "Cardio-20 minutes";
+                intensityPerBlocks[0][2] = "Main-4 reps @ RPE 6,7,8x4|" +
+                        "Secondary-6 reps @ RPE 6,7,8x3|" +
+                        "Accessory-8 reps x 4 sets @ RPE 7|" +
+                        "Cardio-20 minutes";
+                intensityPerBlocks[0][3] = "Main-4 reps @ RPE 6,7,8|" +
+                        "Secondary-6 reps @ RPE 6,7,8|" +
+                        "Accessory-8 reps x 5 sets @ RPE 7|" +
+                        "Cardio-20 minutes";
+
+                // Second Block -> Strength Block
+                intensityPerBlocks[1][0] = "Main-6 reps @ RPE 6,7,8x2|" +
+                        "Secondary-8 reps @ RPE 6,7,8|" +
+                        "Accessory-10 reps x 3 sets @ RPE 6|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[1][1] = "Main-6 reps @ RPE 6,7,8x3|" +
+                        "Secondary-8 reps @ RPE 6x2,7x2|" +
+                        "Accessory-10 reps x 4 sets @ RPE 6|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[1][2] = "Main-6 reps @ RPE 6,7,8x4|" +
+                        "Secondary-8 reps @ RPE 6,7x3|" +
+                        "Accessory-10 reps x 3 sets @ RPE 7|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[1][3] = "Main-6 reps @ RPE 6,7,8|" +
+                        "Secondary-8 reps @ RPE 6,7,8|" +
+                        "Accessory-10 reps x 4 sets @ RPE 7|" +
+                        "Cardio-25 minutes";
+
+                // Third Block -> Hypertrophy Block
+                intensityPerBlocks[2][0] = "Main-8 reps @ RPE 5,6,7|" +
+                        "Secondary-10 reps @ RPE 6,7,8|" +
+                        "Accessory-12 reps x 3 sets @ RPE 6|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[2][1] = "Main-8 reps @ RPE 5,6,7x2|" +
+                        "Secondary-10 reps @ RPE 6x2,7x2|" +
+                        "Accessory-12 reps x 4 sets @ RPE 6|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[2][2] = "Main-8 reps @ RPE 5,6,7x3|" +
+                        "Secondary-10 reps @ RPE 6,7x3|" +
+                        "Accessory-12 reps x 3 sets @ RPE 7|" +
+                        "Cardio-25 minutes";
+                intensityPerBlocks[2][3] = "Main-8 reps @ RPE 5,6,7|" +
+                        "Secondary-10 reps @ RPE 6,7,8|" +
+                        "Accessory-12 reps x 4 sets @ RPE 7|" +
+                        "Cardio-25 minutes";
                 break;
         }
-    }
-
-    // Hypertrophy blocks can be only the first 2 blocks
-    private String[] getHypertrophyBlock(String goal, int currentBlock) {
-        String[] intensityPerWeek = new String[4];
-
-        int cardioTime = 0;
-        // Ramp up the cardio to 30 if it's the first training block
-        if (currentBlock == 1) {
-            cardioTime = 25;
-        } else {
-            cardioTime = 30;
-        }
-
-        if (currentBlock == 1 || (goal.equals("Fat Loss") && currentBlock == 2)) { // Higher Rep Range
-
-            intensityPerWeek[0] =  "Main-8 reps @ RPE 6,7,8|" +
-                                   "Secondary-10 reps @ RPE 7,8,9|" +
-                                   "Accessory-12 reps x 4 sets|" +
-                                   "Cardio-" + cardioTime + " minutes";
-
-            intensityPerWeek[1] =  "Main-8 reps @ RPE 6,7,8x2|" +
-                                   "Secondary-10 reps @ RPE 7,8,9|" +
-                                   "Accessory-12 reps x 4 sets|" +
-                                   "Cardio-" + cardioTime + " minutes";
-
-            intensityPerWeek[2] =  "Main-8 reps @ RPE 6,7,8x3|" +
-                                   "Secondary-10 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-12 reps x 4 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[3] =  "Main-8 reps @ RPE 7,8,9|" +
-                                   "Secondary-10 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-12 reps x 4 sets|" +
-                                   "Cardio-30 minutes";
-
-
-
-        } else if (currentBlock == 2 && goal.equals("Hypertrophy")) { // Lower Rep Range
-
-            intensityPerWeek[0] =  "Main-6 reps @ RPE 6,7,8|" +
-                                   "Secondary-8 reps @ RPE 7,8,9|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[1] =  "Main-6 reps @ RPE 6,7,8x2|" +
-                                   "Secondary-8 reps @ RPE 7,8,9|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[2] =  "Main-6 reps @ RPE 6,7,8x3|" +
-                                   "Secondary-8 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[3] =  "Main-6 reps @ RPE 7,8,9|" +
-                                   "Secondary-8 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-        }
-
-        return intensityPerWeek;
-    }
-
-    private String[] getStrengthBlock(String goal, int currentBlock) {
-        String[] intensityPerWeek = new String[4];
-
-        if (currentBlock == 2 || !goal.equals("Strength")) { // Higher Rep Range
-
-            intensityPerWeek[0] =  "Main-5 reps @ RPE 6,7,8x2|" +
-                                   "Secondary-6 reps @ RPE 7,8,9|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[1] =  "Main-5 reps @ RPE 6,7,8x3|" +
-                                   "Secondary-6 reps @ RPE 7,8,9|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[2] =  "Main-5 reps @ RPE 6,7,8x4|" +
-                                   "Secondary-6 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[3] =  "Main-5 reps @ RPE 7,8,9|" +
-                                   "Secondary-6 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-10 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-        } else if (currentBlock == 3) { // Lower Rep Range
-
-            intensityPerWeek[0] =  "Main-1 rep @ RPE 8, 3 reps @ RPE 8x2|" +
-                                   "Secondary-4 reps @ RPE 7,8,9|" +
-                                   "Accessory-12 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[1] =  "Main-1 rep @ RPE 8, 3 reps @ RPE 8x3|" +
-                                   "Secondary-4 reps @ RPE 7,8,9|" +
-                                   "Accessory-12 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[2] =  "Main-1 rep @ RPE 8, 3 reps @ RPE 8x4|" +
-                                   "Secondary-4 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-12 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-
-            intensityPerWeek[3] =  "Main-1 rep @ RPE 8, 3 reps @ RPE 8x2|" +
-                                   "Secondary-4 reps @ RPE 7,8,9x2|" +
-                                   "Accessory-12 reps x 5 sets|" +
-                                   "Cardio-30 minutes";
-        }
-
-        return intensityPerWeek;
-    }
-
-    private String[] getFatLossBlock() { // Only available when goal is Fat Loss
-        String[] intensityPerWeek = new String[4];
-
-        intensityPerWeek[0] =  "Main-10 reps @ RPE 6,7,8|" +
-                               "Secondary-12 reps @ RPE 7,8,9|" +
-                               "Accessory-12 reps x 4 sets|" +
-                               "Cardio-25 minutes";
-
-        intensityPerWeek[1] =  "Main-10 reps @ RPE 6,7,8x2|" +
-                               "Secondary-12 reps @ RPE 7,8,9|" +
-                               "Accessory-12 reps x 4 sets|" +
-                               "Cardio-25 minutes";
-
-        intensityPerWeek[2] =  "Main-10 reps @ RPE 6,7,8x3|" +
-                               "Secondary-12 reps @ RPE 7,8,9x2|" +
-                               "Accessory-12 reps x 4 sets|" +
-                               "Cardio-30 minutes";
-
-        intensityPerWeek[3] =  "Main-10 reps @ RPE 7,8,9|" +
-                               "Secondary-12 reps @ RPE 7,8,9x2|" +
-                               "Accessory-12 reps x 4 sets|" +
-                               "Cardio-30 minutes";
-
-        return intensityPerWeek;
     }
 
     public String[][] getIntensityPerBlocks() {

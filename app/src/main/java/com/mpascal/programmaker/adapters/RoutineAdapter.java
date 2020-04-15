@@ -35,10 +35,6 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         this.routines = routines;
     }
 
-    public void clearData () {
-        routines.clear();
-    }
-
     @NonNull
     @Override
     public RoutineViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
