@@ -33,6 +33,10 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.mpascal.programmaker.db.UserDB;
+import com.mpascal.programmaker.dialogs.ChangeDateOfBirthDialog;
+import com.mpascal.programmaker.dialogs.ChangeEmailDialog;
+import com.mpascal.programmaker.dialogs.ChangeFirstNameDialog;
+import com.mpascal.programmaker.dialogs.ChangeLastNameDialog;
 import com.mpascal.programmaker.dialogs.ChangePasswordDialog;
 import com.mpascal.programmaker.dialogs.DeleteAccountDialog;
 import com.mpascal.programmaker.fragments.ProfileFragment;
@@ -43,11 +47,17 @@ import com.mpascal.programmaker.repositories.RoutineRepository;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         SurveyFragment.SurveyFragmentListener,
         ChangePasswordDialog.ChangePasswordDialogListener,
-        DeleteAccountDialog.DeleteAccountDialogListener {
+        DeleteAccountDialog.DeleteAccountDialogListener,
+        ChangeFirstNameDialog.ChangeFirstNameDialogListener,
+        ChangeLastNameDialog.ChangeLastNameDialogListener,
+        ChangeEmailDialog.ChangeEmailDialogListener,
+        ChangeDateOfBirthDialog.ChangeDateOfBirthDialogListener {
 
     public static final String PACKAGE_NAME = "com.mpascal.programmaker";
 
@@ -92,9 +102,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             user = intent.getParcelableExtra(LoginActivity.PACKAGE_NAME + ".userDetails");
         } else {
             SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-            user = new UserDB(sharedPref.getString("firstName",""),
-                    sharedPref.getString("lastName",""),
-                    sharedPref.getString("email",""),
+            user = new UserDB(sharedPref.getString("firstName", ""),
+                    sharedPref.getString("lastName", ""),
+                    sharedPref.getString("email", ""),
                     sharedPref.getString("dateOfBirth", ""));
         }
 
@@ -131,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawerLayout.closeDrawer(GravityCompat.START);
         } else {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-            if ( currentFragment != null &&
+            if (currentFragment != null &&
                     currentFragment.getClass() == SurveyFragment.class &&
                     !daysAvailable.isEmpty()) {
                 daysAvailable = new ArrayList<>();
@@ -201,8 +211,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Log.d(TAG, "onSurveyCompleted: " + strDateOfBirth[0] + " " + strDateOfBirth[1] + " " + strDateOfBirth[2]);
         LocalDate currentDate = LocalDate.now();
         LocalDate dateOfBirth = LocalDate.of(Integer.parseInt(strDateOfBirth[2]),
-                                             Integer.parseInt(strDateOfBirth[1]),
-                                             Integer.parseInt(strDateOfBirth[0]));
+                Integer.parseInt(strDateOfBirth[1]),
+                Integer.parseInt(strDateOfBirth[0]));
 
         int age = Period.between(dateOfBirth, currentDate).getYears();
 
@@ -220,8 +230,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (daysAvailable.size() == 6 && !goal.equals("Hypertrophy")) {
                 // Check which day is missing
                 int missingDay = -1;
-                for (int i =0; i < 7; i++) {
-                    boolean isMissing= daysAvailable.contains(i);
+                for (int i = 0; i < 7; i++) {
+                    boolean isMissing = daysAvailable.contains(i);
                     if (isMissing) {
                         missingDay = i;
                         break;
@@ -354,103 +364,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // This action happens in the profile fragment but the base activity is MainActivity, so the
     // dialog listeners logic must be implemented here
     @Override
+    public void changeFirstName(final String newFirstName) {
+        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+        fragment.changeFirstName(newFirstName);
+    }
+
+    @Override
+    public void changeLastName(String newLastName) {
+        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+        fragment.changeLastName(newLastName);
+    }
+
+    @Override
+    public void changeEmail(String newEmail, String password) {
+        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+        fragment.changeEmail(newEmail, password);
+    }
+
+    @Override
+    public void changeDateOfBirth(String newDateOfBirth) {
+        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+        fragment.changeDateOfBirth(newDateOfBirth);
+    }
+
+    @Override
     public void changePassword(String password, final String newPassStr, String newPassConfStr) {
-        if (newPassConfStr.equals(newPassStr)) {
-            final FirebaseUser currentUser = auth.getCurrentUser();
-
-            // Get auth credentials from the user for re-authentication. The example below shows
-            // email and password credentials but there are multiple possible providers,
-            // such as GoogleAuthProvider or FacebookAuthProvider.
-            AuthCredential credential = EmailAuthProvider
-                    .getCredential(currentUser.getEmail(), password);
-
-            currentUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        currentUser.updatePassword(newPassStr).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    Toast.makeText(MainActivity.this, "Password Changed", Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "onComplete: password updated");
-                                } else {
-                                    Toast.makeText(MainActivity.this, "Password Update Failed", Toast.LENGTH_SHORT).show();
-                                    Log.d(TAG, "onComplete: ", task.getException());
-                                }
-                            }
-                        });
-                    } else {
-                        Toast.makeText( MainActivity.this, "Authentication Failed!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-        } else {
-            Toast.makeText(MainActivity.this, "New Passwords Don't Match!", Toast.LENGTH_SHORT).show();
-        }
+        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+        fragment.changePassword(password, newPassStr, newPassConfStr);
     }
 
     @Override
     public void deleteAccount(String password) {
-        final FirebaseUser currentUser = auth.getCurrentUser();
-
-        // Get auth credentials from the user for re-authentication. The example below shows
-        // email and password credentials but there are multiple possible providers,
-        // such as GoogleAuthProvider or FacebookAuthProvider.
-        AuthCredential credential = EmailAuthProvider
-                .getCredential(currentUser.getEmail(), password);
-
-        currentUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    db.collection("Routines").whereEqualTo("email", currentUser.getEmail()).get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                        @Override
-                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                            // Delete Routines
-                            for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
-                                db.collection("Routines").document(documentSnapshot.getId()).delete().addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.d(TAG, "onFailure: failed" + e.toString());
-                                    }
-                                });
-                            }
-
-                            // Delete user record from database
-                            db.collection("Users").document(currentUser.getEmail()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                                @Override
-                                public void onSuccess(Void aVoid) {
-
-                                    // Delete Authentication user
-                                    currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                auth.signOut();
-                                                Log.d(TAG, "onComplete: Account Deleted");
-                                                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(intent);
-                                            } else {
-                                                Log.d(TAG, "onComplete: failed", task.getException());
-                                            }
-                                        }
-                                    });
-                                }
-                            }).addOnFailureListener(new OnFailureListener() {
-                                @Override
-                                public void onFailure(@NonNull Exception e) {
-                                    Log.d(TAG, "onFailure: failed" + e.toString());
-                                }
-                            });
-                        }
-                    });
-                } else {
-                    Log.d(TAG, "onComplete: reauth failed", task.getException());
-                    Toast.makeText(MainActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
+        fragment.deleteAccount(password);
     }
+
+
 }

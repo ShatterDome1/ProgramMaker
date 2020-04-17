@@ -6,63 +6,143 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <EditText
-            android:id="@+id/profileFirstName"
-            android:layout_width="0dp"
+
+        <TextView
+            android:id="@+id/page_title"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginTop="64dp"
-            android:hint="@string/register_firstname"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="16dp"
+            android:text="@string/account_settings"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/profileLastName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="@string/register_lastname"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileFirstName" />
-
-        <Button
-            android:id="@+id/updateDetails"
+        <TableLayout
+            android:id="@+id/account_details_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/update_details"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/profileLastName" />
+            android:layout_marginTop="64dp"
+            android:padding="4dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/page_title">
+
+            <TableRow android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/firstNameText"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@string/register_firstname" />
+
+                <TextView
+                    android:id="@+id/profileFirstName"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="@string/register_firstname"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/edit_first_name"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/edit_first_name" />
+            </TableRow>
+
+            <TableRow android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/lastNameText"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@string/register_lastname" />
+
+                <TextView
+                    android:id="@+id/profileLastName"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="@string/register_lastname"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/edit_last_name"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/edit_last_name" />
+            </TableRow>
+
+            <TableRow android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/emailText"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@string/email" />
+
+                <TextView
+                    android:id="@+id/profileEmail"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="@string/email"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/edit_email"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/edit_email" />
+            </TableRow>
+
+            <TableRow android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/dateOfBirthText"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:gravity="center_vertical"
+                    android:text="@string/date_of_birth" />
+
+                <TextView
+                    android:id="@+id/profileDateOfBirth"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:text="@string/date_of_birth"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/edit_date_of_birth"
+                    android:src="@drawable/ic_edit"
+                    android:contentDescription="@string/edit_date_of_birth" />
+            </TableRow>
+        </TableLayout>
 
         <Button
             android:id="@+id/change_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="32dp"
+            android:text="@string/change_password"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/change_password"
-            app:layout_constraintTop_toBottomOf="@+id/updateDetails" />
+            app:layout_constraintTop_toBottomOf="@+id/account_details_table" />
 
         <Button
             android:id="@+id/delete_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:text="@string/delete_account"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:text="@string/delete_account"
             app:layout_constraintTop_toBottomOf="@+id/change_password" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

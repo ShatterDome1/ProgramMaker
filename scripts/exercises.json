@@ -284,7 +284,7 @@
         
         "Double Crunches" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -292,7 +292,7 @@
         
         "Flutter Kicks" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -300,7 +300,7 @@
         
         "Hanging Knee Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -308,7 +308,7 @@
         
         "Hanging Leg Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -316,7 +316,7 @@
         
         "Lying Leg Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -324,7 +324,7 @@
         
         "Reverse Crunches" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -332,7 +332,7 @@
         
         "Scissor Kicks" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsL"
@@ -340,7 +340,7 @@
         
         "DB Side Bends" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsS"
@@ -348,7 +348,7 @@
         
         "Decline Oblique Crunches" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsS"
@@ -356,7 +356,7 @@
         
         "Plank Hip Twists" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsS"
@@ -364,7 +364,7 @@
         
         "Plate Twists" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsS"
@@ -372,7 +372,7 @@
         
         "Side Jackknife" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsS"
@@ -380,7 +380,7 @@
         
         "Side Plank Dips" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsS"
@@ -388,7 +388,7 @@
         
         "Ab Wheel Rollouts" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -396,7 +396,7 @@
         
         "Crunches" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -404,7 +404,7 @@
         
         "Rope Pulldowns" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -412,7 +412,7 @@
         
         "Sit Ups" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -420,7 +420,7 @@
         
         "Table Top Crunch" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -428,7 +428,7 @@
         
         "Toe Touch Crunch" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -436,7 +436,7 @@
         
         "V Ups" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -444,7 +444,7 @@
         
         "Wide Leg Sit Ups" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "AbsU"
@@ -452,7 +452,7 @@
         
         "Hammer Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -460,7 +460,7 @@
 
         "Incline DB Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -468,7 +468,7 @@
 
         "Preacher Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -476,7 +476,7 @@
 
         "Reverse Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -484,7 +484,7 @@
 
         "Rope Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -492,7 +492,7 @@
 
         "Standing BB Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -500,7 +500,7 @@
 
         "Standing DB Curls" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Biceps"
@@ -508,7 +508,7 @@
 
         "Leg Press Calf Raises"  : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Calves"
@@ -516,7 +516,7 @@
 
         "Seated DB Calf Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Calves"
@@ -524,7 +524,7 @@
 
         "Standing BB Calf Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Calves"
@@ -532,7 +532,7 @@
         
         "Cable Chest fly" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -540,7 +540,7 @@
         
         "Decline DB Bench press" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -548,7 +548,7 @@
         
         "High Cable Chest Fly" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -556,7 +556,7 @@
         
         "Low Cable Chest Fly" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -564,7 +564,7 @@
         
         "Middle Cable Chest Fly" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -572,7 +572,7 @@
         
         "Arnold Press" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "FrontDelts"
@@ -580,7 +580,7 @@
         
         "Cable Front Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "FrontDelts"
@@ -588,7 +588,7 @@
         
         "DB Front Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "FrontDelts"
@@ -596,7 +596,7 @@
                 
         "Seated DB Press" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "FrontDelts"
@@ -604,7 +604,7 @@
 
         "Cable Pull Throughs" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Glutes"
@@ -612,7 +612,7 @@
             
         "Hip Abduction Machine" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : false,
             "isPersistent" : false,
             "primaryMover" : "Glutes"
@@ -620,7 +620,7 @@
 
         "Glute Ham Raise" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Hamstrings"
@@ -628,7 +628,7 @@
         
         "Leg Curl" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Hamstrings"
@@ -636,7 +636,7 @@
 
         "Stiff Leg DB Deadlift" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : false,
             "isPersistent" : false,
             "primaryMover" : "Hamstrings"
@@ -644,7 +644,7 @@
                 
         "1 Arm DB Row" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "LBack"
@@ -652,7 +652,7 @@
         
         "Back Extension" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "LBack"
@@ -660,7 +660,7 @@
 
         "Seated Cable Row" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "LBack"
@@ -668,7 +668,7 @@
 
         "Seated Good Morning" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "LBack"
@@ -676,7 +676,7 @@
 
         "Standing Cable Row" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "LBack"
@@ -684,7 +684,7 @@
         
         "Cable Lateral Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "MidDelts"
@@ -692,7 +692,7 @@
         
         "DB Lateral Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "MidDelts"
@@ -700,7 +700,7 @@
         
         "Isometric Lateral Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "MidDelts"
@@ -708,7 +708,7 @@
         
         "Seated DB Lateral Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "MidDelts"
@@ -716,7 +716,7 @@
 
         "BB Lunge" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Quads"
@@ -724,7 +724,7 @@
         
         "Bulgarian Split Squat" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Quads"
@@ -732,7 +732,7 @@
 
         "DB Lunge" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Quads"
@@ -740,7 +740,7 @@
         
         "Hip Adduction Machine" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : false,
             "isPersistent" : false,
             "primaryMover" : "Quads"
@@ -748,7 +748,7 @@
         
         "Leg Extension" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Quads"
@@ -756,7 +756,7 @@
         
         "Walking Lunges" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Quads"
@@ -764,7 +764,7 @@
         
         "Bent Over Lateral Raises" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "RearDelts"
@@ -772,7 +772,7 @@
         
         "Cable Reverse Fly" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "RearDelts"
@@ -780,7 +780,7 @@
 
         "Cable Shoulder External Rotation" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "RearDelts"
@@ -788,7 +788,7 @@
         
         "External Rotation Press" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "RearDelts"
@@ -796,7 +796,7 @@
 
         "Face Pull" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "RearDelts"
@@ -804,7 +804,7 @@
         
         "Rear Delt Fly" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "RearDelts"
@@ -812,7 +812,7 @@
 
         "BB Skullcrusher" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -820,7 +820,7 @@
 
         "Cable Push Down" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -828,7 +828,7 @@
 
         "DB Skullcrushers" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -836,7 +836,7 @@
 
         "Overhead Cable Triceps Extension" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -844,7 +844,7 @@
 
         "Overhead Triceps Extension" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -852,7 +852,7 @@
 
         "Rope Triceps Pushdown" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -860,7 +860,7 @@
 
         "Triceps Kickbacks" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Triceps"
@@ -868,7 +868,7 @@
         
         "Chin Ups" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"
@@ -876,7 +876,7 @@
 
         "Close Grip Lat Pulldown" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"
@@ -884,7 +884,7 @@
                 
         "DB Pullovers" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"
@@ -892,7 +892,7 @@
         
         "Wide Grip Lat Pulldown" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"
@@ -900,7 +900,7 @@
         
         "Pull Ups" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"
@@ -908,7 +908,7 @@
         
         "Shrugs" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"
@@ -916,7 +916,7 @@
         
         "Straight Arm Pulldown" : {
             "category" : "Accessory",
-            "repRange" : "8-15",
+            "repRange" : "8-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "UBack"

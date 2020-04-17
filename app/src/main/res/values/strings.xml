@@ -17,12 +17,24 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="date_of_birth">Date Of Birth</string>
 
-    <string name="update_details">Update Details</string>
-    <string name="delete_account">Delete Account</string>
-
     <string name="new_password">New Password</string>
     <string name="confirm_new_password">Confirm New Password</string>>
     <string name="change_password">Change Password</string>
+
+    <!-- Profile fragment -->
+    <string name="update_details">Update Personal Information</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="account_settings">Account Settings</string>
+
+    <string name="edit_first_name">Edit first name button</string>
+    <string name="edit_last_name">Edit last name button</string>
+    <string name="edit_email">Edit email button</string>
+    <string name="edit_date_of_birth">Edit date of birth button</string>
+
+    <string name="new_first_name">New First Name</string>
+    <string name="new_last_name">New Last Name</string>
+    <string name="new_email">New Email</string>
+    <string name="new_date_of_birth">New Date Of Birth</string>
 
     <!-- Navigation Bar -->
     <string name="navigation_draw_open">Open navigation drawer</string>
@@ -83,6 +95,8 @@
     <string name="cardio">Cardio</string>
 
     <string name="loading">Loading…</string>
+
+    <string name="warmup_protocol">When warming up for an exercise, do sets of prescribed repetitions starting with the empty bar. Start increasing the weight until the RPE matches the first prescribed working set. Increase/decrease 5% of the total weight for that RPE when jumping to a different one. The 5% would increase/decrease usually represent the next RPE bracket</string>
 
     <!-- RoutineFragment -->
     <string name="delete_routine">Delete routine button</string>

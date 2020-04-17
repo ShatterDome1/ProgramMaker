@@ -131,7 +131,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(RegisterActivity.this, "Verification email sent to " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(RegisterActivity.this, "Verification email sent to email: " + user.getEmail(), Toast.LENGTH_LONG).show();
                                             auth.signOut();
 
                                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
