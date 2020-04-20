@@ -133,7 +133,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void changeFirstName(final String newFirstName) {
-        if (!newFirstName.equals(user.getFirstName())) {
+        if (!newFirstName.equals(user.getFirstName()) && !newFirstName.isEmpty()) {
             Map<String, Object> updateFields = new HashMap<>();
             updateFields.put("firstName", newFirstName);
 
@@ -167,7 +167,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void changeLastName(final String newLastName) {
-        if (!newLastName.equals(user.getLastName())) {
+        if (!newLastName.equals(user.getLastName()) && !newLastName.isEmpty()) {
             Map<String, Object> updateFields = new HashMap<>();
             updateFields.put("lastName", newLastName);
 
@@ -200,7 +200,7 @@ public class ProfileFragment extends Fragment {
     }
 
     public void changeDateOfBirth(final String newDateOfBirth) {
-        if (!newDateOfBirth.equals(user.getDateOfBirth())) {
+        if (!newDateOfBirth.equals(user.getDateOfBirth()) && newDateOfBirth.contains("/")) {
             Map<String, Object> updateFields = new HashMap<>();
             updateFields.put("dateOfBirth", newDateOfBirth);
 

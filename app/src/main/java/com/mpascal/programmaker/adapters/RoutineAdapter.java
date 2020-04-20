@@ -47,6 +47,10 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
         Routine currentRoutine = routines.get(position);
 
         holder.title.setText(currentRoutine.getTitle());
+        holder.goal.setText(currentRoutine.getGoal());
+
+        String daysPerWeek = currentRoutine.getDaysAvailable().size() + " days/week";
+        holder.days.setText(daysPerWeek);
     }
 
     @Override
@@ -56,12 +60,16 @@ public class RoutineAdapter extends RecyclerView.Adapter<RoutineAdapter.RoutineV
 
     static class RoutineViewHolder extends RecyclerView.ViewHolder {
         private TextView title;
+        private TextView goal;
+        private TextView days;
         private ImageView deleteRoutine;
 
         RoutineViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             title = itemView.findViewById(R.id.routine_title);
             deleteRoutine = itemView.findViewById(R.id.delete_routine);
+            goal = itemView.findViewById(R.id.routine_goal);
+            days = itemView.findViewById(R.id.routine_total_days);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -79,6 +79,8 @@
 
     <!-- ActivityRoutineView && RecyclerRoutine -->
     <string name="title">Title</string>
+    <string name="goal">Goal</string>
+    <string name="days">Days</string>
 
     <string name="update_routine">Update Routine</string>
 
