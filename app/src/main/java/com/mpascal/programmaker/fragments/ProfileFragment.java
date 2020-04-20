@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +30,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.mpascal.programmaker.LoginActivity;
 import com.mpascal.programmaker.MainActivity;
 import com.mpascal.programmaker.R;
-import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.dialogs.ChangeDateOfBirthDialog;
-import com.mpascal.programmaker.dialogs.ChangeEmailDialog;
 import com.mpascal.programmaker.dialogs.ChangeFirstNameDialog;
 import com.mpascal.programmaker.dialogs.ChangeLastNameDialog;
 import com.mpascal.programmaker.dialogs.ChangePasswordDialog;
@@ -102,15 +99,6 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 ChangeLastNameDialog changeLastNameDialog = new ChangeLastNameDialog();
                 changeLastNameDialog.show(getFragmentManager(), "ChangeLastName");
-            }
-        });
-
-        editEmail = view.findViewById(R.id.edit_email);
-        editEmail.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ChangeEmailDialog changeEmailDialog = new ChangeEmailDialog();
-                changeEmailDialog.show(getFragmentManager(), "ChangeEmail");
             }
         });
 
@@ -204,58 +192,6 @@ public class ProfileFragment extends Fragment {
                 public void onFailure(@NonNull Exception e) {
                     Log.d(TAG, e.toString());
                     Toast.makeText(getActivity(), "Update failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            Toast.makeText(getActivity(), "No changes detected", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    public void changeEmail(final String newEmail, String password) {
-        if (!newEmail.equals(user.getEmail())) {
-            final FirebaseUser currentUser = auth.getCurrentUser();
-
-            // Get auth credentials from the user for re-authentication. The example below shows
-            // email and password credentials but there are multiple possible providers,
-            // such as GoogleAuthProvider or FacebookAuthProvider.
-            AuthCredential credential = EmailAuthProvider
-                    .getCredential(currentUser.getEmail(), password);
-
-            currentUser.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        currentUser.updateEmail(newEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                            @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()) {
-                                    currentUser.sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(getActivity(), "Verification email has been sent to new email address: " + newEmail, Toast.LENGTH_LONG).show();
-
-                                                auth.signOut();
-
-                                                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                                startActivity(intent);
-                                            } else {
-                                                Log.d(TAG, "onComplete: falied to send verification email", task.getException());
-                                                Toast.makeText(getActivity(), "Failed to send verification email", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    Log.d(TAG, "onComplete: update failed", task.getException());
-                                    Toast.makeText(getActivity(), "Email update failed", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    } else {
-                        Log.d(TAG, "onComplete: reauth failed", task.getException());
-                        Toast.makeText(getActivity(), "Authentication Failed", Toast.LENGTH_SHORT).show();
-                    }
                 }
             });
         } else {

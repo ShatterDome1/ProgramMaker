@@ -151,10 +151,12 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
 
                     startActivity(intent);
 
-                    // make the progress bar invisible
-                    loadingDialog.dismissLoadingDialog();
-                    loginProgressBar.setVisibility(View.GONE);
+
                 }
+
+                // make the progress bar invisible
+                loadingDialog.dismissLoadingDialog();
+                loginProgressBar.setVisibility(View.GONE);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

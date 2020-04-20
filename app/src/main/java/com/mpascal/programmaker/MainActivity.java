@@ -20,21 +20,11 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.dialogs.ChangeDateOfBirthDialog;
-import com.mpascal.programmaker.dialogs.ChangeEmailDialog;
 import com.mpascal.programmaker.dialogs.ChangeFirstNameDialog;
 import com.mpascal.programmaker.dialogs.ChangeLastNameDialog;
 import com.mpascal.programmaker.dialogs.ChangePasswordDialog;
@@ -47,8 +37,6 @@ import com.mpascal.programmaker.repositories.RoutineRepository;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,
         SurveyFragment.SurveyFragmentListener,
@@ -56,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DeleteAccountDialog.DeleteAccountDialogListener,
         ChangeFirstNameDialog.ChangeFirstNameDialogListener,
         ChangeLastNameDialog.ChangeLastNameDialogListener,
-        ChangeEmailDialog.ChangeEmailDialogListener,
         ChangeDateOfBirthDialog.ChangeDateOfBirthDialogListener {
 
     public static final String PACKAGE_NAME = "com.mpascal.programmaker";
@@ -373,12 +360,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void changeLastName(String newLastName) {
         ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
         fragment.changeLastName(newLastName);
-    }
-
-    @Override
-    public void changeEmail(String newEmail, String password) {
-        ProfileFragment fragment = (ProfileFragment) getSupportFragmentManager().findFragmentByTag("ProfileFragment");
-        fragment.changeEmail(newEmail, password);
     }
 
     @Override
