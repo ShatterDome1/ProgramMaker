@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,13 +52,14 @@ public class ProfileFragment extends Fragment {
 
     private ImageView editFirstName;
     private ImageView editLastName;
-    private ImageView editEmail;
     private ImageView editDateOfBirth;
 
     private Button changePasswordButton;
     private Button deleteAccount;
 
     private UserDB user;
+
+    private ProgressBar progressBar;
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -71,6 +73,9 @@ public class ProfileFragment extends Fragment {
         // Get the Bundle given by the Main Activity
         Bundle bundle = getArguments();
         user = bundle.getParcelable(MainActivity.PACKAGE_NAME + ".userDetails");
+
+        progressBar = view.findViewById(R.id.profile_progress_bar);
+        progressBar.setVisibility(View.GONE);
 
         firstName = view.findViewById(R.id.profileFirstName);
         firstName.setText(user.getFirstName());
@@ -134,6 +139,8 @@ public class ProfileFragment extends Fragment {
 
     public void changeFirstName(final String newFirstName) {
         if (!newFirstName.equals(user.getFirstName()) && !newFirstName.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+
             Map<String, Object> updateFields = new HashMap<>();
             updateFields.put("firstName", newFirstName);
 
@@ -153,12 +160,16 @@ public class ProfileFragment extends Fragment {
 
                             TextView loggedInUser = headerView.findViewById(R.id.logged_in_user);
                             loggedInUser.setText(updatedName);
+
+                            progressBar.setVisibility(View.GONE);
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.d(TAG, e.toString());
                     Toast.makeText(getActivity(), "Update failed", Toast.LENGTH_SHORT).show();
+
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -168,6 +179,8 @@ public class ProfileFragment extends Fragment {
 
     public void changeLastName(final String newLastName) {
         if (!newLastName.equals(user.getLastName()) && !newLastName.isEmpty()) {
+            progressBar.setVisibility(View.VISIBLE);
+
             Map<String, Object> updateFields = new HashMap<>();
             updateFields.put("lastName", newLastName);
 
@@ -186,12 +199,16 @@ public class ProfileFragment extends Fragment {
 
                     TextView loggedInUser = headerView.findViewById(R.id.logged_in_user);
                     loggedInUser.setText(updatedName);
+
+                    progressBar.setVisibility(View.GONE);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Log.d(TAG, e.toString());
                     Toast.makeText(getActivity(), "Update failed", Toast.LENGTH_SHORT).show();
+
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -201,6 +218,8 @@ public class ProfileFragment extends Fragment {
 
     public void changeDateOfBirth(final String newDateOfBirth) {
         if (!newDateOfBirth.equals(user.getDateOfBirth()) && newDateOfBirth.contains("/")) {
+            progressBar.setVisibility(View.VISIBLE);
+
             Map<String, Object> updateFields = new HashMap<>();
             updateFields.put("dateOfBirth", newDateOfBirth);
 
@@ -210,12 +229,16 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getActivity(), "Date of birth updated", Toast.LENGTH_SHORT).show();
                     dateOfBirth.setText(newDateOfBirth);
                     user.setDateOfBirth(newDateOfBirth);
+
+                    progressBar.setVisibility(View.GONE);
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     Toast.makeText(getActivity(), "Date of birth update failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, e.toString());
+
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         } else {
@@ -225,6 +248,8 @@ public class ProfileFragment extends Fragment {
 
     public void changePassword(String password, final String newPassStr, String newPassConfStr) {
         if (newPassConfStr.equals(newPassStr)) {
+            progressBar.setVisibility(View.VISIBLE);
+
             final FirebaseUser currentUser = auth.getCurrentUser();
 
             // Get auth credentials from the user for re-authentication. The example below shows
@@ -243,14 +268,24 @@ public class ProfileFragment extends Fragment {
                                 if (task.isSuccessful()) {
                                     Toast.makeText(getActivity(), "Password Changed", Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "onComplete: password updated");
+
+                                    progressBar.setVisibility(View.GONE);
                                 } else {
-                                    Toast.makeText(getActivity(), "Password Update Failed", Toast.LENGTH_SHORT).show();
+                                    if (task.getException().toString().contains("Password should be at least 6 characters")) {
+                                        Toast.makeText(getActivity(), "Password should be at least 6 characters", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(getActivity(), "Update failed", Toast.LENGTH_SHORT).show();
+                                    }
                                     Log.d(TAG, "onComplete: ", task.getException());
+
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             }
                         });
                     } else {
                         Toast.makeText(getActivity(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+
+                        progressBar.setVisibility(View.GONE);
                     }
                 }
             });
@@ -260,6 +295,8 @@ public class ProfileFragment extends Fragment {
     }
 
     public void deleteAccount(String password) {
+        progressBar.setVisibility(View.VISIBLE);
+
         final FirebaseUser currentUser = auth.getCurrentUser();
 
         // Get auth credentials from the user for re-authentication. The example below shows
@@ -289,7 +326,6 @@ public class ProfileFragment extends Fragment {
                             db.collection("Users").document(currentUser.getEmail()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-
                                     // Delete Authentication user
                                     currentUser.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
@@ -305,8 +341,13 @@ public class ProfileFragment extends Fragment {
                                                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                                                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                                 startActivity(intent);
+
+                                                progressBar.setVisibility(View.GONE);
                                             } else {
+                                                Toast.makeText(getActivity(), "Failed to delete account", Toast.LENGTH_SHORT).show();
                                                 Log.d(TAG, "onComplete: failed", task.getException());
+
+                                                progressBar.setVisibility(View.GONE);
                                             }
                                         }
                                     });
@@ -314,7 +355,10 @@ public class ProfileFragment extends Fragment {
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(getActivity(), "Failed to delete account", Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "onFailure: failed" + e.toString());
+
+                                    progressBar.setVisibility(View.GONE);
                                 }
                             });
                         }
@@ -322,6 +366,8 @@ public class ProfileFragment extends Fragment {
                 } else {
                     Log.d(TAG, "onComplete: reauth failed", task.getException());
                     Toast.makeText(getActivity(), "Authentication Failed", Toast.LENGTH_SHORT).show();
+
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

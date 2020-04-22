@@ -150,8 +150,6 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
                     intent.putExtra(PACKAGE_NAME + ".userDetails", user);
 
                     startActivity(intent);
-
-
                 }
 
                 // make the progress bar invisible
