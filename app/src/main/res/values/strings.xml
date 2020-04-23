@@ -88,9 +88,6 @@
     <string name="second_block">Week 5–8</string>
     <string name="third_block">Week 9–12</string>
 
-    <string name="exercises">Exercises</string>
-    <string name="intensity">Intensity</string>
-
     <string name="main">Main</string>
     <string name="secondary">Secondary</string>
     <string name="accessory">Accessory</string>
@@ -98,8 +95,17 @@
 
     <string name="loading">Loading…</string>
 
+    <string name="warmup">Warmup</string>
     <string name="warmup_protocol">When warming up for an exercise, do sets of prescribed repetitions starting with the empty bar. Start increasing the weight until the RPE matches the first prescribed working set. Increase/decrease 5% of the total weight for that RPE when jumping to a different one. The 5% would increase/decrease usually represent the next RPE bracket</string>
 
+    <string name="exercises">Exercises</string>
+    <string name="exercise_explanation">Before performing any exercise, please look up the correct form or ask a member of staff from the training facility to give you some advice.\n\nThese exercises prescriptions are flexible. If you dislike any exercise or have any prior injury which prevents you from performing it, please substitute it with one that engages the same muscles and bypasses those issues.</string>
+
+    <string name="intensity">Intensity</string>
+    <string name="intensity_explanation">Rate of Perceived Exhaustion (RPE) is how hard something feels to you at the time. It is a subjective measure of your strength at a given time. We rate this on a scale from one to ten. The higher the number, the harder the set felt. A scale has been added to the bottom of the intensity table to show what each RPE means.\n\nAs a beginner you want to create a solid foundation by prioritising movement patterns instead of using high loads. That is the reason why most of the exercises are performed at a lower RPE than usual.</string>
+
+    <string name="rpe">Rate of perceived exhaustion scale</string>
+    <string name="rpe_explanation">10: Maximal, no reps left in the tank\n\n9: Last rep is tough but still one rep left in the tank\n\n8: Weight is too heavy to maintain fast bar speed but isn’t a struggle; 2–4 reps left\n\n7: Weight moves quickly when maximal force is applied to the weight; “speed weight”\n\n6: Light speed work; moves quickly with moderate force\n\n5: Most warm-up weights\n\n4: Recovery; usually 20 plus rep sets; not hard but intended to flush the muscle\n\nAn RPE below four isn’t important.</string>
     <!-- RoutineFragment -->
     <string name="delete_routine">Delete routine button</string>
 

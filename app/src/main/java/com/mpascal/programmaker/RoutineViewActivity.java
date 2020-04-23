@@ -4,28 +4,19 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.pdf.PdfDocument;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
 import android.view.View;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
-import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -36,7 +27,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
-import androidx.core.view.ViewCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -44,11 +34,8 @@ import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.dialogs.LoadingDialog;
 import com.mpascal.programmaker.fragments.RoutineFragment;
-import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
 import com.mpascal.programmaker.viewmodels.RoutineViewActivityViewModel;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -81,6 +68,11 @@ public class RoutineViewActivity extends AppCompatActivity {
     // 2nd [] -> block
     // 3rd [] -> week
     private TextView[][][] intensityCells;
+
+    private TextView warmupProtocol;
+    private TextView exerciseExplanation;
+    private TextView intensityExplanation;
+    private TextView rpeExplanation;
 
     // Needed for creating the pdf file
     private ConstraintLayout constraintLayout;
@@ -116,13 +108,46 @@ public class RoutineViewActivity extends AppCompatActivity {
         initialiseIntensityCells();
         loadIntensity();
 
+        warmupProtocol = findViewById(R.id.warmup_protocol);
+        warmupProtocol.setText(R.string.warmup_protocol);
+
+        exerciseExplanation = findViewById(R.id.exercise_explanation);
+        exerciseExplanation.setText(R.string.exercise_explanation);
+
+        intensityExplanation = findViewById(R.id.intensity_explanation);
+        intensityExplanation.setText(R.string.intensity_explanation);
+
+        rpeExplanation = findViewById(R.id.rpe_explanation);
+        rpeExplanation.setText(R.string.rpe_explanation);
+
         constraintLayout = findViewById(R.id.routine_view_layout);
+        constraintLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                int exerciseTableWidth = exerciseTableLayout.getWidth();
+                int intensityTableWidth = intensityTableLayout.getWidth();
+
+                int maxWidth = 0;
+                if (exerciseTableWidth >= intensityTableWidth) {
+                    maxWidth = exerciseTableWidth;
+                }
+                if (intensityTableWidth >= exerciseTableWidth) {
+                    maxWidth = intensityTableWidth;
+                }
+
+                warmupProtocol.setWidth(maxWidth);
+                exerciseExplanation.setWidth(maxWidth);
+                intensityExplanation.setWidth(maxWidth);
+                rpeExplanation.setWidth(maxWidth);
+            }
+        });
 
         viewModelProvider = new ViewModelProvider(this);
         routineViewActivityViewModel = viewModelProvider.get(RoutineViewActivityViewModel.class);
 
         routineViewActivityViewModel.init(currentUser.getEmail());
 
+        loadingDialog = new LoadingDialog(this);
         routineViewActivityViewModel.getIsFetchingData().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
@@ -135,7 +160,6 @@ public class RoutineViewActivity extends AppCompatActivity {
             }
         });
 
-        loadingDialog = new LoadingDialog(this);
         routineViewActivityViewModel.getIsUpdatingRoutine().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
@@ -316,6 +340,10 @@ public class RoutineViewActivity extends AppCompatActivity {
             for (int k = maxNoOfExercises; k < 7; k++) {
                 exerciseTableRows[i][k].setVisibility(View.GONE);
             }
+
+            // Set the last viewable row to have bottom padding so that the training blocks are
+            // separated
+            exerciseTableRows[i][maxNoOfExercises-1].setPadding(0,0,0,32);
         }
 
         return maxNoOfExercises;
@@ -619,6 +647,8 @@ public class RoutineViewActivity extends AppCompatActivity {
                     if (exercise[0].equals("Cardio")) {
                         exerciseCells[i][day][j].setTextColor(Color.BLACK);
                     }
+
+                    exerciseCells[i][day][j].setPadding(16,0,16,0);
                 }
 
                 ++dayTemplate;
@@ -713,6 +743,8 @@ public class RoutineViewActivity extends AppCompatActivity {
                     if (intensityDetails[0].equals("Cardio")) {
                         intensityCells[exerciseType][i][j].setTextColor(Color.BLACK);
                     }
+
+                    intensityCells[exerciseType][i][j].setPadding(16,0,16,0);
 
                     ++exerciseType;
                 }

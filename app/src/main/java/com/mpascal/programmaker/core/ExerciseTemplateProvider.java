@@ -47,39 +47,39 @@ public class ExerciseTemplateProvider {
                 }
 
                 if (daysAvailable == 3) {
-                        /**
-                         * FB (Full Body) exercise selection:
-                         *
-                         *      Day1                Day2                   Day3
-                         * Main Legs      |     Secondary Legs      |   Main Back
-                         * Main Chest     |     Main Shoulders      |   Secondary Chest
-                         * Secondary Back |     Secondary Back      |   Secondary Legs
-                         * Accessory AbsL |     Accessory AbsU      |   Accessory AbsS
-                         *
-                         */
-                        daysTemplates = new String[3];
-                        daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
-                        daysTemplates[1] = "Secondary Legs|Main Shoulders|Secondary Back|Accessory AbsU";
-                        daysTemplates[2] = "Main Back|Secondary Chest|Secondary Legs|Accessory AbsS";
+                    /**
+                     * FB (Full Body) exercise selection:
+                     *
+                     *      Day1                Day2                   Day3
+                     * Main Legs      |     Secondary Legs      |   Main Back
+                     * Main Chest     |     Main Shoulders      |   Secondary Chest
+                     * Secondary Back |     Secondary Back      |   Secondary Legs
+                     * Accessory AbsL |     Accessory AbsU      |   Accessory AbsS
+                     *
+                     */
+                    daysTemplates = new String[3];
+                    daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
+                    daysTemplates[1] = "Secondary Legs|Main Shoulders|Secondary Back|Accessory AbsU";
+                    daysTemplates[2] = "Main Back|Secondary Chest|Secondary Legs|Accessory AbsS";
                 }
                 break;
 
             case "FB+GPP":
-                    /**
-                     * FB+GPP (Full Body + General Physical Preparedness) exercise selection:
-                     *
-                     *      Day1                Day2               Day3                 Day4
-                     * Main Legs      |     Secondary Legs |    Main Back       |   Accessory UBack
-                     * Main Chest     |     Main Shoulders |    Secondary Chest |   Accessory Triceps
-                     * Secondary Back |     Secondary Back |    Secondary Legs  |   Accessory Biceps
-                     * Accessory AbsL |     Accessory AbsU |    Accessory AbsS  |   Cardio LISS
-                     *
-                     */
-                    daysTemplates = new String[4];
-                    daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
-                    daysTemplates[1] = "Secondary Legs|Main Shoulders|Secondary Back|Accessory AbsU";
-                    daysTemplates[2] = "Main Back|Secondary Chest|Secondary Legs|Accessory AbsS";
-                    daysTemplates[3] = "Accessory UBack|Accessory Triceps|Accessory Biceps|Cardio LISS";
+                /**
+                 * FB+GPP (Full Body + General Physical Preparedness) exercise selection:
+                 *
+                 *      Day1                Day2               Day3                 Day4
+                 * Main Legs      |     Secondary Legs |    Main Back       |   Accessory UBack
+                 * Main Chest     |     Main Shoulders |    Secondary Chest |   Accessory Triceps
+                 * Secondary Back |     Secondary Back |    Secondary Legs  |   Accessory Biceps
+                 * Accessory AbsL |     Accessory AbsU |    Accessory AbsS  |   Cardio LISS
+                 *
+                 */
+                daysTemplates = new String[4];
+                daysTemplates[0] = "Main Legs|Main Chest|Secondary Back|Accessory AbsL";
+                daysTemplates[1] = "Secondary Legs|Main Shoulders|Secondary Back|Accessory AbsU";
+                daysTemplates[2] = "Main Back|Secondary Chest|Secondary Legs|Accessory AbsS";
+                daysTemplates[3] = "Accessory UBack|Accessory Triceps|Accessory Biceps|Cardio LISS";
                 break;
 
             case "UL":
@@ -117,50 +117,50 @@ public class ExerciseTemplateProvider {
                     daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulders|Accessory UBack|Accessory Biceps|Accessory Triceps";
                     daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsL";
                     daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory UBack|Accessory Triceps|Accessory Biceps";
-                    daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU|Accessory AbsS";
+                    daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU";
                 }
                 break;
 
             case "UL+GPP":
-            daysTemplates = new String[5];
-            /**
-             * UL + GPP (Upper Lower) Hypertrophy exercise selection:
-             *
-             *      Day1                       Day2                  Day3                  Day4                     Day5
-             * Main Back            |     Main Legs        |    Main Shoulders    |   Secondary Legs       |    Accessory AbsL
-             * Main Chest           |     Secondary Legs   |    Secondary Back    |   Accessory Glutes     |    Accessory AbsU
-             * Accessory MidDelts   |     Accessory Quads  |    Accessory Chest   |   Accessory Hamstrings |    Accessory AbsS
-             * Accessory UBack      |     Accessory LBack  |    Accessory UBack   |   Accessory LBack      |    Cardio LISS
-             * Accessory Biceps     |     Accessory Calves |    Accessory Biceps  |   Accessory Calves     |
-             * Accessory Triceps    |     Accessory AbsL   |    Accessory Triceps |   Accessory AbsU       |
-             */
-            if (goal.equals("Hypertrophy")) {
-                daysTemplates[0] = "Main Back|Main Chest|Accessory MidDelts|Accessory UBack|Accessory Biceps|Accessory Triceps";
-                daysTemplates[1] = "Main Legs|Secondary Legs|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsL";
-                daysTemplates[2] = "Main Shoulders|Secondary Back|Accessory Chest|Accessory UBack|Accessory Biceps|Accessory Triceps";
-                daysTemplates[3] = "Secondary Legs|Accessory Glutes|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU";
-                daysTemplates[4] = "Accessory AbsL|Accessory AbsU|Accessory AbsS|Cardio LISS";
-            }
+                daysTemplates = new String[5];
+                /**
+                 * UL + GPP (Upper Lower) Hypertrophy exercise selection:
+                 *
+                 *      Day1                       Day2                  Day3                  Day4                     Day5
+                 * Main Back            |     Main Legs        |    Main Shoulders    |   Secondary Legs       |    Accessory AbsL
+                 * Main Chest           |     Secondary Legs   |    Secondary Back    |   Accessory Glutes     |    Accessory AbsU
+                 * Accessory MidDelts   |     Accessory Quads  |    Accessory Chest   |   Accessory Hamstrings |    Accessory AbsS
+                 * Accessory UBack      |     Accessory LBack  |    Accessory UBack   |   Accessory LBack      |    Cardio LISS
+                 * Accessory Biceps     |     Accessory Calves |    Accessory Biceps  |   Accessory Calves     |
+                 * Accessory Triceps    |     Accessory AbsL   |    Accessory Triceps |   Accessory AbsU       |
+                 */
+                if (goal.equals("Hypertrophy")) {
+                    daysTemplates[0] = "Main Back|Main Chest|Accessory MidDelts|Accessory UBack|Accessory Biceps|Accessory Triceps";
+                    daysTemplates[1] = "Main Legs|Secondary Legs|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsL";
+                    daysTemplates[2] = "Main Shoulders|Secondary Back|Accessory Chest|Accessory UBack|Accessory Biceps|Accessory Triceps";
+                    daysTemplates[3] = "Secondary Legs|Accessory Glutes|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU";
+                    daysTemplates[4] = "Accessory AbsL|Accessory AbsU|Accessory AbsS|Cardio LISS";
+                }
 
-            /**
-             * UL + GPP (Upper Lower) Strength exercise selection:
-             *
-             *      Day1                    Day2                 Day3                  Day4                       Day5
-             * Main Back           |     Secondary Legs   |    Secondary Back    |   Main Legs            |   Accessory AbsL
-             * Main Chest          |     Secondary Back   |    Main Shoulders    |   Secondary Back       |   Accessory AbsU
-             * Secondary Shoulders |     Accessory Quads  |    Secondary Chest   |   Accessory Hamstrings |   Accessory AbsS
-             * Accessory UBack     |     Accessory LBack  |    Accessory UBack   |   Accessory LBack      |   Cardio LISS
-             * Accessory Triceps   |     Accessory AbsL   |    Accessory Biceps  |   Accessory AbsU       |
-             *
-             */
-            if (goal.equals("Strength") || goal.equals("Fat Loss")) {
-                daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulders|Accessory UBack|Accessory Biceps|Accessory Triceps";
-                daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsL";
-                daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory UBack|Accessory Triceps|Accessory Biceps";
-                daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU|Accessory AbsS";
-                daysTemplates[4] = "Accessory AbsL|Accessory AbsU|Accessory AbsS|Cardio LISS";
-            }
-            break;
+                /**
+                 * UL + GPP (Upper Lower) Strength exercise selection:
+                 *
+                 *      Day1                    Day2                 Day3                  Day4                       Day5
+                 * Main Back           |     Secondary Legs   |    Secondary Back    |   Main Legs            |   Accessory AbsL
+                 * Main Chest          |     Secondary Back   |    Main Shoulders    |   Secondary Back       |   Accessory AbsU
+                 * Secondary Shoulders |     Accessory Quads  |    Secondary Chest   |   Accessory Hamstrings |   Accessory AbsS
+                 * Accessory UBack     |     Accessory LBack  |    Accessory UBack   |   Accessory LBack      |   Cardio LISS
+                 * Accessory Triceps   |     Accessory AbsL   |    Accessory Biceps  |   Accessory AbsU       |
+                 *
+                 */
+                if (goal.equals("Strength") || goal.equals("Fat Loss")) {
+                    daysTemplates[0] = "Main Back|Main Chest|Secondary Shoulders|Accessory UBack|Accessory Biceps|Accessory Triceps";
+                    daysTemplates[1] = "Secondary Legs|Secondary Back|Accessory Quads|Accessory LBack|Accessory Calves|Accessory AbsL";
+                    daysTemplates[2] = "Secondary Back|Main Shoulders|Secondary Chest|Accessory UBack|Accessory Triceps|Accessory Biceps";
+                    daysTemplates[3] = "Main Legs|Secondary Back|Accessory Hamstrings|Accessory LBack|Accessory Calves|Accessory AbsU";
+                    daysTemplates[4] = "Accessory AbsL|Accessory AbsU|Accessory AbsS|Cardio LISS";
+                }
+                break;
 
             case "PPL":
                 /**

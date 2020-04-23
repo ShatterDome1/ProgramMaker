@@ -41,23 +41,50 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/warmup_protocol_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="@string/warmup"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@+id/routine_view_update_routine" />
+
+            <TextView
+                android:id="@+id/warmup_protocol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/warmup_protocol_text" />
+
+            <TextView
                 android:id="@+id/exercises_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/exercises"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/routine_view_update_routine" />
+                app:layout_constraintTop_toBottomOf="@+id/warmup_protocol" />
+
+            <TextView
+                android:id="@+id/exercise_explanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/exercises_text"/>
 
             <TableLayout
                 android:id="@+id/table_exercises"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/exercises_text">
+                app:layout_constraintTop_toBottomOf="@+id/exercise_explanation">
 
                 <TableRow>
 
@@ -1342,14 +1369,22 @@
                 android:textStyle="bold"
                 app:layout_constraintTop_toBottomOf="@+id/table_exercises" />
 
+            <TextView
+                android:id="@+id/intensity_explanation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/intensity_text"/>
+
             <TableLayout
                 android:id="@+id/table_intensity"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="16dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/intensity_text">
+                app:layout_constraintTop_toBottomOf="@+id/intensity_explanation">
 
                 <TableRow>
 
@@ -1508,7 +1543,7 @@
 
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:paddingBottom="8dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1658,7 +1693,7 @@
                         android:gravity="center" />
                 </TableRow>
 
-                <TableRow>
+                <TableRow android:paddingBottom="8dp">
 
                     <TextView
                         android:layout_width="match_parent"
@@ -1847,6 +1882,26 @@
                 </TableRow>
 
             </TableLayout>
+
+            <TextView
+                android:id="@+id/rpe_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/rpe"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/table_intensity"/>
+
+            <TextView
+                android:id="@+id/rpe_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rpe_text"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
