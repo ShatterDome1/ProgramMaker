@@ -65,12 +65,12 @@
     <string name="saturday">Saturday</string>
     <string name="sunday">Sunday</string>
 
-    <string name="survey_height">What is your height?</string>
+    <string name="survey_weight">What is your weight?</string>
     <string name="survey_weight_hint">Weight</string>
     <string name="survey_kg">Kg</string>
     <string name="survey_lbs">Lbs</string>
 
-    <string name="survey_weight">What is your weight?</string>
+    <string name="survey_height">What is your height? (For Ft use ?\'? e.g: 5\'7)</string>
     <string name="survey_height_hint">Height</string>
     <string name="survey_cm">Cm</string>
     <string name="survey_feet">Ft</string>

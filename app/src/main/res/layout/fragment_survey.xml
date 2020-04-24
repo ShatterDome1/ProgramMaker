@@ -147,6 +147,7 @@
             android:hint="@string/survey_height_hint"
             android:importantForAutofill="no"
             android:inputType="textShortMessage"
+            android:digits="0123456789'"
             android:maxLength="4"
             app:layout_constraintTop_toBottomOf="@id/survey_text_height" />
 
