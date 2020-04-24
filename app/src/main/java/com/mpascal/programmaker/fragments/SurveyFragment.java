@@ -1,11 +1,14 @@
 package com.mpascal.programmaker.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -63,7 +66,7 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_survey, container, false);
+        final View view = inflater.inflate(R.layout.fragment_survey, container, false);
 
         loadingDialog = new LoadingDialog(getActivity());
 
@@ -189,15 +192,18 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
                         Log.d(TAG, "onChanged: In progress of adding routine");
                     } else {
                         loadingDialog.dismissLoadingDialog();
-                        RoutineFragment routineFragment = new RoutineFragment();
-                        Bundle bundle = getArguments();
-                        routineFragment.setArguments(bundle);
-                        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                routineFragment).commit();
+
+                        getActivity().getSupportFragmentManager().popBackStack();
+                        hideKeyboardFrom(getContext(), getView());
                     }
                 }
             });
         }
+    }
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public void addRoutine(String goal, ArrayList<Integer> daysAvailable, String weight, String height, int age) {

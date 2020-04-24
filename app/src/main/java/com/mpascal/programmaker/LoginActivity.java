@@ -111,7 +111,7 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
                         if (user.isEmailVerified()) {
                             getLoggedInUserDetails(usernameStr);
                         } else {
-                            Toast.makeText(LoginActivity.this, "Email is not verified", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Please verify email", Toast.LENGTH_SHORT).show();
 
                             // show that something is done after the login button is pressed
                             auth.signOut();
@@ -120,8 +120,12 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
                     } else {
                         // If sign in fails, display a message to the user.
                         Log.w(TAG, "signInWithEmail:failure", task.getException());
-                        Toast.makeText(LoginActivity.this, "Authentication failed",
-                                Toast.LENGTH_SHORT).show();
+                        if (task.getException().toString().contains("The password is invalid or the user does not have a password") ||
+                                task.getException().toString().contains("There is no user record corresponding to this identifier")) {
+                            Toast.makeText(LoginActivity.this, "Incorrect email or password", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(LoginActivity.this, "Authentication failed", Toast.LENGTH_SHORT).show();
+                        }
 
                         loginProgressBar.setVisibility(View.GONE);
                     }
@@ -147,9 +151,10 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
                     UserDB user = documentSnapshot.toObject(UserDB.class);
                     user.setEmail(email);
                     Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(PACKAGE_NAME + ".userDetails", user);
-
                     startActivity(intent);
+                    finish();
                 }
 
                 // make the progress bar invisible

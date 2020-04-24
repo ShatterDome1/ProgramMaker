@@ -12,6 +12,36 @@
         android:padding="16dp">
 
         <EditText
+            android:id="@+id/r_firstname"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="64dp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:ems="10"
+            android:hint="@string/register_firstname"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/r_lastname"
+            android:layout_width="0dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:ems="10"
+            android:hint="@string/register_lastname"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/r_firstname" />
+
+
+
+        <EditText
             android:id="@+id/r_email"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -38,42 +68,6 @@
             app:layout_constraintTop_toBottomOf="@+id/r_email" />
 
         <EditText
-            android:id="@+id/r_firstname"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="64dp"
-            android:ems="10"
-            android:hint="@string/register_firstname"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <EditText
-            android:id="@+id/r_lastname"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="16dp"
-            android:ems="10"
-            android:hint="@string/register_lastname"
-            android:importantForAutofill="no"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/r_firstname" />
-
-        <Button
-            android:id="@+id/register_action"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:text="@string/action_register"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/registerProgress" />
-
-        <EditText
             android:id="@+id/r_confpassword"
             android:layout_width="0dp"
             android:layout_height="45dp"
@@ -95,6 +89,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/r_confpassword" />
+
+        <Button
+            android:id="@+id/register_action"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/action_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/registerProgress" />
 
         <ProgressBar
             android:id="@+id/registerProgress"

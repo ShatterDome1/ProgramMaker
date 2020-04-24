@@ -12,6 +12,7 @@
         android:hint="@string/new_last_name"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

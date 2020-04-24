@@ -4,7 +4,7 @@
         
         "Bench Press" : {
             "category" : "Main",
-            "repRange" : "1-10",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Chest"
@@ -12,7 +12,7 @@
         
         "Deadlift" : {
             "category" : "Main",
-            "repRange" : "1-10",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Back"
@@ -20,7 +20,7 @@
         
         "Overhead Press" : {
             "category" : "Main",
-            "repRange" : "1-10",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Shoulders"
@@ -28,7 +28,7 @@
 
         "Squat" : {
             "category" : "Main",
-            "repRange" : "1-10",
+            "repRange" : "1-12",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Legs"
@@ -36,7 +36,7 @@
         
         "Barbell Row" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "8-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Back"
@@ -52,7 +52,7 @@
         
         "Deficit Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Back"
@@ -68,9 +68,17 @@
         
         "Romanian Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "8-15",
             "isSuitableForElders" : true,
-            "isPersistent" : false,
+            "isPersistent" : true,
+            "primaryMover" : "Back"
+        },
+        
+        "Stiff Leg Deadlift" : {
+            "category" : "Secondary",
+            "repRange" : "1-12",
+            "isSuitableForElders" : true,
+            "isPersistent" : true,
             "primaryMover" : "Back"
         },
         
@@ -84,7 +92,7 @@
         
         "Trap Bar Deadlift" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Back"
@@ -108,7 +116,7 @@
         
         "Close Grip Bench" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -116,7 +124,7 @@
         
         "DB Bench press" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -124,13 +132,13 @@
         
         "Decline BB Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "8-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
         },
         
-        "Dips" : {
+        "Dips or Assisted Dips" : {
             "category" : "Secondary",
             "repRange" : "1-12",
             "isSuitableForElders" : true,
@@ -156,7 +164,7 @@
         
         "Incline BB Bench" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "8-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -164,7 +172,7 @@
         
         "Incline DB Bench press" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "8-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -180,7 +188,7 @@
         
         "Spoto Bench" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Chest"
@@ -212,15 +220,15 @@
         
         "BB Hip Thurst" : {
             "category" : "Secondary",
-            "repRange" : "8-12",
+            "repRange" : "8-15",
             "isSuitableForElders" : true,
-            "isPersistent" : false,
+            "isPersistent" : true,
             "primaryMover" : "Legs"
         },
         
-        "Good Morning Squat" : {
+        "Hack Squats" : {
             "category" : "Secondary",
-            "repRange" : "1-8",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Legs"
@@ -228,7 +236,7 @@
         
         "Leg Press" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : true,
             "primaryMover" : "Legs"
@@ -244,7 +252,7 @@
         
         "Push Press" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Shoulders"
@@ -252,7 +260,7 @@
         
         "Pin Press @ Chin" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Shoulders"
@@ -260,7 +268,7 @@
         
         "Pin Press @ Forehead" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Shoulders"
@@ -268,7 +276,7 @@
 
         "Pin Press @ Shoulders" : {
             "category" : "Secondary",
-            "repRange" : "1-12",
+            "repRange" : "1-15",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Shoulders"
@@ -601,6 +609,14 @@
             "isPersistent" : false,
             "primaryMover" : "FrontDelts"
         },
+        
+        "Glute Bridge" : {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Glutes"
+        },
 
         "Cable Pull Throughs" : {
             "category" : "Accessory",
@@ -609,7 +625,23 @@
             "isPersistent" : false,
             "primaryMover" : "Glutes"
         },
-            
+        
+        "Cable Kickbacks" : {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Glutes"
+        },
+        
+        "Goblet Squat" : {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Glutes"
+        },
+        
         "Hip Abduction Machine" : {
             "category" : "Accessory",
             "repRange" : "8-18",
@@ -617,10 +649,42 @@
             "isPersistent" : false,
             "primaryMover" : "Glutes"
         },
+        
+        "Reverse Hyperextenstion": {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Glutes"
+        },
+        
+        "DB Romanian Deadlift" : {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : false,
+            "isPersistent" : false,
+            "primaryMover" : "Hamstrings"
+        },
 
         "Glute Ham Raise" : {
             "category" : "Accessory",
             "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Hamstrings"
+        },
+        
+        "Kettlebell Swings" : {
+            "category" : "Accessory",
+            "repRange" : "12-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Hamstrings"
+        },
+            
+        "Medicine Ball Leg Curl" : {
+            "category" : "Accessory",
+            "repRange" : "12-18",
             "isSuitableForElders" : true,
             "isPersistent" : false,
             "primaryMover" : "Hamstrings"
@@ -633,8 +697,8 @@
             "isPersistent" : false,
             "primaryMover" : "Hamstrings"
         },
-
-        "Stiff Leg DB Deadlift" : {
+        
+        "Nordic Hamstring Curl" : {
             "category" : "Accessory",
             "repRange" : "8-18",
             "isSuitableForElders" : false,
@@ -682,6 +746,14 @@
             "primaryMover" : "LBack"
         },
         
+        "Supermans" : {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "LBack"
+        },
+        
         "Cable Lateral Raises" : {
             "category" : "Accessory",
             "repRange" : "8-18",
@@ -713,14 +785,6 @@
             "isPersistent" : false,
             "primaryMover" : "MidDelts"
         },
-
-        "BB Lunge" : {
-            "category" : "Accessory",
-            "repRange" : "8-18",
-            "isSuitableForElders" : true,
-            "isPersistent" : false,
-            "primaryMover" : "Quads"
-        },
         
         "Bulgarian Split Squat" : {
             "category" : "Accessory",
@@ -731,6 +795,14 @@
         },
 
         "DB Lunge" : {
+            "category" : "Accessory",
+            "repRange" : "8-18",
+            "isSuitableForElders" : true,
+            "isPersistent" : false,
+            "primaryMover" : "Quads"
+        },
+        
+        "DB Reverse Lunge" : {
             "category" : "Accessory",
             "repRange" : "8-18",
             "isSuitableForElders" : true,
@@ -754,7 +826,7 @@
             "primaryMover" : "Quads"
         },
         
-        "Walking Lunges" : {
+        "Low Box DB Step Up" : {
             "category" : "Accessory",
             "repRange" : "8-18",
             "isSuitableForElders" : true,

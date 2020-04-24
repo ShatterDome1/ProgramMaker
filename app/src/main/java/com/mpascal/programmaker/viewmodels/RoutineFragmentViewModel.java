@@ -25,6 +25,7 @@ public class RoutineFragmentViewModel extends ViewModel {
     private RoutineRepository routineRepository;
 
     private MutableLiveData<Boolean> isFetchingData = new MutableLiveData<>();
+    private MutableLiveData<Integer> isDeletingRoutine = new MutableLiveData<>();
 
     private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -41,7 +42,10 @@ public class RoutineFragmentViewModel extends ViewModel {
         routines = routineRepository.getRoutines(email, isFetchingData);
     }
 
-    public void deleteRoutine(final String userEmail, final int position, final RoutineAdapter adapter) {
+    public void deleteRoutine(final String userEmail, final int position) {
+        // Starting value to show the delete started
+        isDeletingRoutine.postValue(-1);
+
         final ArrayList<Routine> currentRoutines = routines.getValue();
         // Delete the Routine from the database
         final RoutineDB routine = new RoutineDB(currentRoutines.get(position));
@@ -52,12 +56,17 @@ public class RoutineFragmentViewModel extends ViewModel {
                 Log.d(TAG, "onSuccess: " + routine.getTitle() + " deleted");
                 currentRoutines.remove(position);
                 routines.postValue(currentRoutines);
-                adapter.notifyItemRemoved(position);
+
+                // Position where the item was deleted to notify the adapter
+                isDeletingRoutine.postValue(position);
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d(TAG, e.toString());
+
+                // Failure checked in observer
+                isDeletingRoutine.postValue(-2);
             }
         });
     }
@@ -69,5 +78,9 @@ public class RoutineFragmentViewModel extends ViewModel {
 
     public LiveData<Boolean> getIsFetchingData() {
         return isFetchingData;
+    }
+
+    public MutableLiveData<Integer> getIsDeletingRoutine() {
+        return isDeletingRoutine;
     }
 }

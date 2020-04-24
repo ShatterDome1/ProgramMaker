@@ -77,6 +77,16 @@ public class ChangeDateOfBirthDialog extends DialogFragment implements DatePicke
                 Calendar.getInstance().get(Calendar.MONTH),
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
+
+        // Set minimum age 18
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.YEAR, -18);
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+
+        // Set max age 100
+        c.add(Calendar.YEAR, -83);
+        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+
         datePickerDialog.show();
     }
 

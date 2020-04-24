@@ -1,5 +1,6 @@
 package com.mpascal.programmaker;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -83,6 +84,15 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 Calendar.getInstance().get(Calendar.DAY_OF_MONTH)
         );
 
+        // Set minimum age 18
+        Calendar c = Calendar.getInstance();
+        c.add(Calendar.YEAR, -18);
+        datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
+
+        // Set max age 100
+        c.add(Calendar.YEAR, -83);
+        datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
+
         datePickerDialog.show();
     }
 
@@ -109,7 +119,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 !lastNameStr.isEmpty() &&
                 !emailStr.isEmpty() &&
                 !passwordStr.isEmpty() &&
-                !dateOfBirthStr.isEmpty() &&
+                !dateOfBirthStr.equals("Date Of Birth") &&
                 passwordStr.equals(confPassStr)) {
 
             final UserDB newUser = new UserDB(firstNameStr, lastNameStr, emailStr, dateOfBirthStr);
@@ -135,7 +145,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                                             auth.signOut();
 
                                             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                             startActivity(intent);
 
                                         } else {
@@ -178,7 +188,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
             });
 
         } else {
-            Toast.makeText(this, "Fields incorrectly populated!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please fill in all the fields", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.GONE);
         }
 

@@ -6,7 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +27,8 @@ import com.mpascal.programmaker.core.Routine;
 import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.viewmodels.RoutineFragmentViewModel;
 
+import java.util.ArrayList;
+
 public class RoutineFragment extends Fragment {
     private static final String TAG = "RoutineFragment";
     public static final String PACKAGE_NAME = "com.mpascal.programmaker.fragments";
@@ -32,6 +36,8 @@ public class RoutineFragment extends Fragment {
     private RecyclerView recyclerView;
     private static RoutineAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+
+    private ImageView noRoutinesImage;
 
     private UserDB currentUser;
 
@@ -44,11 +50,14 @@ public class RoutineFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_routines, container, false);
 
         progressBar = view.findViewById(R.id.routines_progress_bar);
         progressBar.setVisibility(View.GONE);
+
+        noRoutinesImage = view.findViewById(R.id.no_routines_image);
+        noRoutinesImage.setVisibility(View.GONE);
 
         // Get the current user
         final Bundle bundle = getArguments();
@@ -59,6 +68,25 @@ public class RoutineFragment extends Fragment {
 
         routineFragmentViewModel.init(currentUser.getEmail());
 
+        routineFragmentViewModel.getIsDeletingRoutine().observe(getViewLifecycleOwner(), new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if (integer == -1) {
+                    progressBar.setVisibility(View.VISIBLE);
+                } else if (integer == -2) {
+                    progressBar.setVisibility(View.GONE);
+                    Toast.makeText(getActivity(), "Delete routine failed", Toast.LENGTH_SHORT).show();
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    adapter.notifyItemRemoved(integer);
+                    
+                    if (adapter.getItemCount() == 0) {
+                        noRoutinesImage.setVisibility(View.VISIBLE);
+                    }
+                }
+            }
+        });
+
         buildRecyclerView(view);
 
         createRoutine = view.findViewById(R.id.fragment_create_routine);
@@ -67,8 +95,10 @@ public class RoutineFragment extends Fragment {
             public void onClick(View v) {
                 SurveyFragment surveyFragment = new SurveyFragment();
                 surveyFragment.setArguments(bundle);
-                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        surveyFragment, "SurveyFragment").addToBackStack(null).commit();
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, surveyFragment, "SurveyFragment")
+                        .addToBackStack(null)
+                        .commit();
             }
         });
 
@@ -81,16 +111,26 @@ public class RoutineFragment extends Fragment {
 
         adapter = new RoutineAdapter(routineFragmentViewModel.getRoutines().getValue());
 
+        if (adapter.getItemCount() == 0) {
+            noRoutinesImage.setVisibility(View.VISIBLE);
+        }
+
         routineFragmentViewModel.getIsFetchingData().observe(getViewLifecycleOwner(), new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean) {
-                    progressBar.setVisibility(View.VISIBLE);
                     Log.d(TAG, "onChanged: data is being fetched");
+                    progressBar.setVisibility(View.VISIBLE);
+                    noRoutinesImage.setVisibility(View.GONE);
                 } else {
                     Log.d(TAG, "onChanged: notified");
                     adapter.notifyDataSetChanged();
                     progressBar.setVisibility(View.GONE);
+
+                    // Show that the user doesn't have any routines
+                    if (adapter.getItemCount() == 0) {
+                        noRoutinesImage.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
@@ -113,7 +153,7 @@ public class RoutineFragment extends Fragment {
             @Override
             public void onDeleteClick(int position) {
                 Log.d(TAG, "onDeleteClick: " + position);
-                routineFragmentViewModel.deleteRoutine(currentUser.getEmail(), position, adapter);
+                routineFragmentViewModel.deleteRoutine(currentUser.getEmail(), position);
             }
         });
     }

@@ -235,7 +235,7 @@ public class ProfileFragment extends Fragment {
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
-                    Toast.makeText(getActivity(), "Date of birth update failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Update failed", Toast.LENGTH_SHORT).show();
                     Log.d(TAG, e.toString());
 
                     progressBar.setVisibility(View.GONE);
@@ -266,7 +266,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onComplete(@NonNull Task<Void> task) {
                                 if (task.isSuccessful()) {
-                                    Toast.makeText(getActivity(), "Password Changed", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Password changed", Toast.LENGTH_SHORT).show();
                                     Log.d(TAG, "onComplete: password updated");
 
                                     progressBar.setVisibility(View.GONE);
@@ -283,14 +283,19 @@ public class ProfileFragment extends Fragment {
                             }
                         });
                     } else {
-                        Toast.makeText(getActivity(), "Authentication Failed!", Toast.LENGTH_SHORT).show();
+                        Log.d(TAG, "onComplete: reauth failed", task.getException());
+                        if (task.getException().toString().contains("The password is invalid or the user does not have a password")) {
+                            Toast.makeText(getActivity(), "Incorrect password", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                        }
 
                         progressBar.setVisibility(View.GONE);
                     }
                 }
             });
         } else {
-            Toast.makeText(getActivity(), "New Passwords Don't Match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "New passwords don't match", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -365,7 +370,11 @@ public class ProfileFragment extends Fragment {
                     });
                 } else {
                     Log.d(TAG, "onComplete: reauth failed", task.getException());
-                    Toast.makeText(getActivity(), "Authentication Failed", Toast.LENGTH_SHORT).show();
+                    if (task.getException().toString().contains("The password is invalid or the user does not have a password")) {
+                        Toast.makeText(getActivity(), "Incorrect password", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), "Authentication failed", Toast.LENGTH_SHORT).show();
+                    }
 
                     progressBar.setVisibility(View.GONE);
                 }

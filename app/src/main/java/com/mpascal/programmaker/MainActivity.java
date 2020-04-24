@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -116,12 +119,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         routineFragment.setArguments(bundle);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    routineFragment, "RoutineFragment").commit();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, routineFragment, "RoutineFragment")
+                    .commit();
             navigationView.setCheckedItem(R.id.nav_routines);
         }
     }
 
+    //Styling for double press back button
+    private static long back_pressed;
     @Override
     public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -129,17 +135,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else {
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
             if (currentFragment != null &&
-                    currentFragment.getClass() == SurveyFragment.class &&
-                    !daysAvailable.isEmpty()) {
+                    currentFragment.getClass() == SurveyFragment.class) {
                 daysAvailable = new ArrayList<>();
-            } else if (currentFragment.getClass() != SurveyFragment.class) {
-                // When the user signs out, clear the data from the RoutinesRepository
-                RoutineRepository routineRepository = RoutineRepository.getInstance();
-                routineRepository.clearData();
-
-                auth.signOut();
+                super.onBackPressed();
+            } else if (currentFragment != null && currentFragment.getClass() != SurveyFragment.class) {
+                if (back_pressed + 2000 > System.currentTimeMillis()) {
+                    RoutineRepository routineRepository = RoutineRepository.getInstance();
+                    routineRepository.clearData();
+                    super.onBackPressed();
+                } else {
+                    Toast.makeText(getBaseContext(), "Press once again to exit", Toast.LENGTH_SHORT).show();
+                    back_pressed = System.currentTimeMillis();
+                }
             }
-            super.onBackPressed();
         }
     }
 
@@ -168,8 +176,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Fragment profileFragment = new ProfileFragment();
                 profileFragment.setArguments(bundle);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        profileFragment, "ProfileFragment").commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, profileFragment, "ProfileFragment")
+                        .commit();
                 break;
 
             case R.id.nav_routines:
@@ -177,8 +186,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Fragment routineFragment = new RoutineFragment();
                 routineFragment.setArguments(bundle);
 
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        routineFragment, "RoutineFragment").commit();
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, routineFragment, "RoutineFragment")
+                        .commit();
                 break;
 
             case R.id.nav_logout:
@@ -344,7 +354,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         routineRepository.clearData();
 
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 

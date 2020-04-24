@@ -41,14 +41,34 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/warmup_protocol_text"
+                android:id="@+id/rpe_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
+                android:text="@string/rpe"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/routine_view_update_routine"/>
+
+            <TextView
+                android:id="@+id/rpe_explanation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textSize="15sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rpe_text"/>
+
+            <TextView
+                android:id="@+id/warmup_protocol_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
                 android:text="@string/warmup"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@+id/routine_view_update_routine" />
+                app:layout_constraintTop_toBottomOf="@+id/rpe_explanation" />
 
             <TextView
                 android:id="@+id/warmup_protocol"
@@ -1882,26 +1902,6 @@
                 </TableRow>
 
             </TableLayout>
-
-            <TextView
-                android:id="@+id/rpe_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/rpe"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/table_intensity"/>
-
-            <TextView
-                android:id="@+id/rpe_explanation"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:textSize="15sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rpe_text"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
