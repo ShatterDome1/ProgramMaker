@@ -112,7 +112,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/survey_height"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/survey_radio_height"
             app:layout_constraintTop_toBottomOf="@+id/survey_sunday" />
 
         <RadioGroup
@@ -144,11 +146,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:digits="0123456789'"
             android:hint="@string/survey_height_hint"
             android:importantForAutofill="no"
             android:inputType="textShortMessage"
-            android:digits="0123456789'"
             android:maxLength="4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/survey_text_height" />
 
         <TextView
@@ -157,14 +161,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="@string/survey_weight"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/survey_radio_weight"
             app:layout_constraintTop_toBottomOf="@+id/survey_height" />
 
         <RadioGroup
             android:id="@+id/survey_radio_weight"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layout_constraintRight_toRightOf="parent"
@@ -193,6 +198,8 @@
             android:hint="@string/survey_weight_hint"
             android:inputType="number"
             android:maxLength="3"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/survey_text_weight" />
 
         <Button
