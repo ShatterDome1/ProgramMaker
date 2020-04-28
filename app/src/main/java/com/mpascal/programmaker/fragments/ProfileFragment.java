@@ -148,7 +148,6 @@ public class ProfileFragment extends Fragment {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText(getActivity(), "First name updated", Toast.LENGTH_SHORT).show();
                             String updatedName = newFirstName + " " + user.getLastName();
 
                             firstName.setText(newFirstName);
@@ -161,6 +160,7 @@ public class ProfileFragment extends Fragment {
                             TextView loggedInUser = headerView.findViewById(R.id.logged_in_user);
                             loggedInUser.setText(updatedName);
 
+                            Toast.makeText(getActivity(), "First name updated", Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
                     }).addOnFailureListener(new OnFailureListener() {

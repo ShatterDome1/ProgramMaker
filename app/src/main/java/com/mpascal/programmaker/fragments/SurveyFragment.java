@@ -32,6 +32,8 @@ import com.mpascal.programmaker.db.UserDB;
 import com.mpascal.programmaker.dialogs.LoadingDialog;
 import com.mpascal.programmaker.viewmodels.SurveyFragmentViewModel;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 
 public class SurveyFragment extends Fragment implements AdapterView.OnItemSelectedListener {
@@ -206,7 +208,17 @@ public class SurveyFragment extends Fragment implements AdapterView.OnItemSelect
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public void addRoutine(String goal, ArrayList<Integer> daysAvailable, String weight, String height, int age) {
+    public void addRoutine(String goal, ArrayList<Integer> daysAvailable, String weight, String height) {
+        // Calculate the age
+        String[] strDateOfBirth = currentUser.getDateOfBirth().split("/");
+        Log.d(TAG, "onSurveyCompleted: " + strDateOfBirth[0] + " " + strDateOfBirth[1] + " " + strDateOfBirth[2]);
+        LocalDate currentDate = LocalDate.now();
+        LocalDate dateOfBirth = LocalDate.of(Integer.parseInt(strDateOfBirth[2]),
+                Integer.parseInt(strDateOfBirth[1]),
+                Integer.parseInt(strDateOfBirth[0]));
+
+        int age = Period.between(dateOfBirth, currentDate).getYears();
+
         // Get copies of the exercise lists, if we don't get a copy we pass the lists as reference to the new routine object
         // which will affect the exercise lists values in the repository if a delete/add operation is made
         ArrayList<ExerciseDB> mainExercises = new ArrayList<>(surveyFragmentViewModel.getExercises("Main"));

@@ -66,9 +66,8 @@ public class RoutineViewActivityViewModel extends ViewModel {
             public void onSuccess(Void aVoid) {
                 // Deletion from database successful. Add new routine.
                 routine.setTitle(newTitle);
-                RoutineDB updatedRoutine = new RoutineDB(routine);
 
-                db.collection("Routines").document(routine.getEmail() + routine.getTitle()).set(updatedRoutine).addOnSuccessListener(new OnSuccessListener<Void>() {
+                db.collection("Routines").document(routine.getEmail() + routine.getTitle()).set(routine).addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Overwrite the old routine with the new title

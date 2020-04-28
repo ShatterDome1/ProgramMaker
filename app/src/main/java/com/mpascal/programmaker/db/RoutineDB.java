@@ -17,7 +17,6 @@ public class RoutineDB {
 
 
     // This is used to store the Routine object in the online database
-
     public RoutineDB(String title, String goal, ArrayList<Integer> daysAvailable, Double bmi, String routineSplit, int age, String intensityPerBlockStr, String exercisesPerBlockStr, String email) {
         this.title = title;
         this.goal = goal;
@@ -28,18 +27,6 @@ public class RoutineDB {
         this.email = email;
         this.intensityPerBlockStr = intensityPerBlockStr;
         this.exercisesPerBlockStr = exercisesPerBlockStr;
-    }
-
-    public RoutineDB(Routine routine) {
-        this.title = routine.getTitle();
-        this.goal = routine.getGoal();
-        this.daysAvailable = routine.getDaysAvailable();
-        this.bmi = routine.getBmi();
-        this.routineSplit = routine.getRoutineSplit();
-        this.age = routine.getAge();
-        this.email = routine.getEmail();
-        this.intensityPerBlockStr = routine.getIntensityPerBlockStr();
-        this.exercisesPerBlockStr = routine.getExercisesPerBlockStr();
     }
 
     public RoutineDB() {

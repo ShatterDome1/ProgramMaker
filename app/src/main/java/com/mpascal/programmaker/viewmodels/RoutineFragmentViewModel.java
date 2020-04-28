@@ -47,8 +47,7 @@ public class RoutineFragmentViewModel extends ViewModel {
         isDeletingRoutine.postValue(-1);
 
         final ArrayList<Routine> currentRoutines = routines.getValue();
-        // Delete the Routine from the database
-        final RoutineDB routine = new RoutineDB(currentRoutines.get(position));
+        final Routine routine = currentRoutines.get(position);
 
         db.collection("Routines").document(userEmail + routine.getTitle()).delete().addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override

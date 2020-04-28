@@ -90,7 +90,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
         datePickerDialog.getDatePicker().setMaxDate(c.getTimeInMillis());
 
         // Set max age 100
-        c.add(Calendar.YEAR, -83);
+        c.add(Calendar.YEAR, -82);
         datePickerDialog.getDatePicker().setMinDate(c.getTimeInMillis());
 
         datePickerDialog.show();
@@ -105,12 +105,12 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
     }
 
     private void register() {
-        String firstNameStr = firstName.getText().toString();
-        String lastNameStr = lastName.getText().toString();
+        final String firstNameStr = firstName.getText().toString();
+        final String lastNameStr = lastName.getText().toString();
         final String emailStr = email.getText().toString();
         String passwordStr = password.getText().toString();
         String confPassStr = confPass.getText().toString();
-        String dateOfBirthStr = dateOfBirth.getText().toString();
+        final String dateOfBirthStr = dateOfBirth.getText().toString();
 
         // show that something is happening using the progress bar
         progressBar.setVisibility(View.VISIBLE);
@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                 !dateOfBirthStr.equals("Date Of Birth") &&
                 passwordStr.equals(confPassStr)) {
 
-            final UserDB newUser = new UserDB(firstNameStr, lastNameStr, emailStr, dateOfBirthStr);
+
 
             // Check if user already exists
             auth.createUserWithEmailAndPassword(emailStr, passwordStr).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -133,6 +133,7 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         Log.d(TAG, "createUserWithEmail:success");
                         final FirebaseUser user = auth.getCurrentUser();
 
+                        final UserDB newUser = new UserDB(firstNameStr, lastNameStr, emailStr, dateOfBirthStr);
                         // Add user to firestore
                         db.collection("Users").document(emailStr).set(newUser).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
@@ -174,9 +175,9 @@ public class RegisterActivity extends AppCompatActivity implements DatePickerDia
                         Log.w(TAG, "createUserWithEmail:failure", task.getException());
 
                         if (task.getException().toString().contains("The email address is already in use by another account")) {
-                            Toast.makeText(RegisterActivity.this, "Email already in use!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Email already in use", Toast.LENGTH_SHORT).show();
                         } else if (task.getException().toString().contains("Password should be at least 6 characters")) {
-                            Toast.makeText(RegisterActivity.this, "Password should be at least 6 characters!", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Password should be at least 6 characters", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(RegisterActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
                         }

@@ -100,8 +100,7 @@ public class SurveyFragmentViewModel extends ViewModel {
         }
 
         // Add the routine to the Database
-        RoutineDB newRoutine = new RoutineDB(routine);
-        db.collection("Routines").document(routine.getEmail() + routine.getTitle()).set(newRoutine).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("Routines").document(routine.getEmail() + routine.getTitle()).set(routine).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.d(TAG, "onSuccess: " + routine.getTitle() + " added");

@@ -53,7 +53,6 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
         FirebaseUser currentUser = auth.getCurrentUser();
         if (currentUser != null) {
             if (currentUser.isEmailVerified()) {
-                loginProgressBar.setVisibility(View.VISIBLE);
                 loadingDialog.showLoadingDialog();
                 getLoggedInUserDetails(currentUser.getEmail());
             } else {
@@ -176,16 +175,20 @@ public class LoginActivity extends AppCompatActivity implements ForgotPasswordDi
 
     @Override
     public void sendForgotPasswordEmail(String email) {
-        auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()) {
-                    Toast.makeText(LoginActivity.this, "Reset password email sent", Toast.LENGTH_SHORT).show();
-                } else {
-                    Log.d(TAG, "onComplete: failure", task.getException());
-                    Toast.makeText(LoginActivity.this, "Reset password email not sent", Toast.LENGTH_SHORT).show();
+        if (!email.isEmpty()) {
+            auth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Reset password email sent", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Log.d(TAG, "onComplete: failure", task.getException());
+                        Toast.makeText(LoginActivity.this, "Reset password email not sent", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        } else {
+            Toast.makeText(this, "Please enter email address", Toast.LENGTH_SHORT).show();
+        }
     }
 }

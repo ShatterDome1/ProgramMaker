@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.firebase.firestore.Exclude;
 import com.mpascal.programmaker.db.ExerciseDB;
 import com.mpascal.programmaker.db.RoutineDB;
 
@@ -427,6 +428,7 @@ public class Routine extends RoutineDB implements Parcelable {
         return weightValue / (heightValue * heightValue);
     }
 
+    @Exclude
     public String[][] getExercisesPerBlock() {
         return exercisesPerBlock;
     }
@@ -435,6 +437,7 @@ public class Routine extends RoutineDB implements Parcelable {
         this.exercisesPerBlock = exercisesPerBlock;
     }
 
+    @Exclude
     public String[][] getIntensityPerBlock() {
         return intensityPerBlock;
     }

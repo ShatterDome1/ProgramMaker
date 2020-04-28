@@ -63,7 +63,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private UserDB user;
 
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
-    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -203,18 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onSurveyCompleted(String goal, String weight, String height) {
-
-        String[] strDateOfBirth = user.getDateOfBirth().split("/");
-        Log.d(TAG, "onSurveyCompleted: " + strDateOfBirth[0] + " " + strDateOfBirth[1] + " " + strDateOfBirth[2]);
-        LocalDate currentDate = LocalDate.now();
-        LocalDate dateOfBirth = LocalDate.of(Integer.parseInt(strDateOfBirth[2]),
-                Integer.parseInt(strDateOfBirth[1]),
-                Integer.parseInt(strDateOfBirth[0]));
-
-        int age = Period.between(dateOfBirth, currentDate).getYears();
-
         boolean ok = true;
-
 
         if (daysAvailable.size() != 0) {
             // If the user has picked 7 days then remove Wednesday and and create the routine
@@ -275,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             // take strings and send to routine fragment
             SurveyFragment fragment = (SurveyFragment) getSupportFragmentManager().findFragmentByTag("SurveyFragment");
-            fragment.addRoutine(goal, daysAvailable, weight, height, age);
+            fragment.addRoutine(goal, daysAvailable, weight, height);
 
             // Reinitialise the daysAvailable array so that it's empty when creating
             // a new routine

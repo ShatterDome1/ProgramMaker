@@ -22,6 +22,7 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class ExerciseRepository {
 
     private static ExerciseRepository instance;
+
     private ArrayList<ExerciseDB> mainExercises = new ArrayList<>();
     private ArrayList<ExerciseDB> secondaryExercises = new ArrayList<>();
     private ArrayList<ExerciseDB> accessoryExercises = new ArrayList<>();

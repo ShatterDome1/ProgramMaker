@@ -38,7 +38,6 @@ public class RoutineRepository {
     // Make the default constructor private for singleton pattern
     private RoutineRepository() {}
 
-    // Pretend to get data from database
     public MutableLiveData<ArrayList<Routine>> getRoutines(String email, MutableLiveData<Boolean> isFetchingData) {
         // check if the routines have already been fetched
         if (!isRoutinesSet) {
