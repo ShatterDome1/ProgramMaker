@@ -1,3 +1,4 @@
+// Reused from https://stackoverflow.com/questions/46640981/how-to-import-csv-or-json-to-firebase-cloud-firestore
 const admin = require('firebase-admin');
 const serviceAccount = require("./programmaker-ae036-firebase-adminsdk-tvwwq-e2705edb59.json");
 
